@@ -1,28 +1,35 @@
 {
   "expo": {
-    "name": "cuidadoresufrgsapp",
-    "slug": "cuidadoresufrgsapp",
+    "name": "Cuidadores UFRGS",
+    "slug": "cuidadoresufrgs",
+    "platforms": [
+      "ios",
+      "android"
+    ],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
-    "userInterfaceStyle": "automatic",
+    "scheme": "cuidadoresufrgs",
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#e0e0e0"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "enabled": false
     },
     "assetBundlePatterns": [
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "buildNumber": "10000000",
+      "bundleIdentifier": "br.com.ufrgs.cuidadores",
     },
-    "web": {
-      "favicon": "./assets/images/favicon.png"
+    "android": {
+      "versionCode": 10000000,
+      "package": "br.com.ufrgs.cuidadores"
     }
   }
 }
