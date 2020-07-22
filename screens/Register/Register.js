@@ -15,10 +15,13 @@ import i18n from '../../i18n';
 import Screen from '../../components/Screen';
 import TextLabel from '../../components/TextLabel';
 import FormTextInput from '../../components/FormTextInput';
+import DatePicker from '../../components/DatePicker';
+import CustomBtn from '../../components/CustomBtn';
+import UserService from '../../services/UserService';
 
-const btnWidth = Dimensions.get('window').width * 0.5 - 25;
+const btnWidth = Dimensions.get('window').width * 0.7;
 
-class ClientForm extends React.Component {
+class Register extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -26,8 +29,16 @@ class ClientForm extends React.Component {
       refreshing: false,
       fetchError: false,
       animatedValue: new Animated.Value(0),
+      step: 0,
+      passwordConfirm: '',
       user: {
-        
+        name: '',
+        cpf: '',
+        birthDate: undefined,
+        city: '',
+        uf: '',
+        email: '',
+        password: '',
       },
     }
   }
@@ -45,8 +56,44 @@ class ClientForm extends React.Component {
     }
   }
 
+  isUserInvalid = () => {
+    const { user } = this.state;
+    return (
+      user.name.length < 3
+      || user.cpf.length < 14
+      || !user.birthDate
+      || user.city.length === 0
+      || user.uf.length === 0
+    )
+  }
+
+  isCredentialInvalid = () => {
+    const { user, passwordConfirm } = this.state;
+    return (
+      user.email.length < 3
+      || !user.email.includes('@')
+      || user.password !== passwordConfirm
+    )
+  }
+
+  next = () => {
+    if (this.state.step === 0 && !this.isUserInvalid()) {
+      this.setState({ step: 1 });
+    } else if (!this.isCredentialInvalid()) {
+      this.save();
+    }
+  }
+
   save = async () => {
     this.props.setLoader(true);
+    const { user } = this.state;
+    const response = await UserService.post(user);
+    this.props.setLoader(false);
+    if (response.success) {
+      alert('success');
+    } else {
+      alert('error');
+    }
   }
 
   render() {
@@ -57,41 +104,103 @@ class ClientForm extends React.Component {
           <View style={styles.logoView}>
             <Image
               source={require('../../assets/images/icon.png')}
-              style={{ height: Dimensions.get('window').height * 0.1, width: Dimensions.get('window').height * 0.1 }}
+              style={{
+                height: Dimensions.get('window').height * 0.1,
+                width: Dimensions.get('window').height * 0.1,
+              }}
               resizeMode={'contain'}
             />
           </View>
           <ScrollView contentContainerStyle={styles.scroll}>
-            <View style={styles.field}>
-              <TextLabel type={'subtitle'}>{i18n.t('Register.name')}</TextLabel>
-              <FormTextInput
-                inputType={'form'}
-                value={user.name}
-                onChangeText={(name) => this.setState({ user: { ...user, name } })}
-              />
-            </View>
-            <View style={styles.field}>
-              <TextLabel type={'subtitle'}>{i18n.t('Register.cpf')}</TextLabel>
-              <FormTextInput
-                inputType={'form'}
-                value={user.cpf}
-                onChangeText={(cpf) => this.setState({ user: { ...user, cpf } })}
-                masked={true}
-                options={{ format: '999.999.999-99' }}
-                type={'cpf'}
-              />
-            </View>
-            <View style={styles.field}>
-              <TextLabel type={'subtitle'}>{i18n.t('Register.birthDate')}</TextLabel>
-              <FormTextInput
-                inputType={'form'}
-                value={user.cpf}
-                onChangeText={(cpf) => this.setState({ user: { ...user, cpf } })}
-                masked={true}
-                options={{ format: '999.999.999-99' }}
-                type={'cpf'}
-              />
-            </View>
+            {this.state.step === 0 && <View>
+              <View style={styles.field}>
+                <TextLabel type={'subtitle'}>{i18n.t('Register.name')}</TextLabel>
+                <FormTextInput
+                  inputType={'form'}
+                  value={user.name}
+                  onChangeText={(name) => this.setState({ user: { ...user, name } })}
+                />
+              </View>
+              <View style={styles.field}>
+                <TextLabel type={'subtitle'}>{i18n.t('Register.cpf')}</TextLabel>
+                <FormTextInput
+                  inputType={'form'}
+                  value={user.cpf}
+                  onChangeText={(cpf) => this.setState({ user: { ...user, cpf } })}
+                  masked={true}
+                  options={{ format: '999.999.999-99' }}
+                  type={'cpf'}
+                />
+              </View>
+              <View style={styles.field}>
+                <TextLabel type={'subtitle'}>{i18n.t('Register.birthDate')}</TextLabel>
+                <DatePicker
+                  date={user.birthDate}
+                  maxDate={new Date()}
+                  handleDate={(birthDate) => this.setState({ user: { ...user, birthDate } })}
+                />
+              </View>
+              <View style={styles.fieldsInline}>
+                <View style={styles.field70}>
+                  <TextLabel type={'subtitle'}>{i18n.t('Register.city')}</TextLabel>
+                  <FormTextInput
+                    inputType={'form'}
+                    value={user.city}
+                    onChangeText={(city) => this.setState({ user: { ...user, city } })}
+                  />
+                </View>
+                <View style={styles.field30}>
+                  <TextLabel type={'subtitle'}>{i18n.t('Register.uf')}</TextLabel>
+                  <FormTextInput
+                    inputType={'form'}
+                    value={user.uf}
+                    onChangeText={(uf) => this.setState({ user: { ...user, uf } })}
+                  />
+                </View>
+              </View>
+              <View style={styles.btnCenter}>
+                <CustomBtn
+                  text={i18n.t('Register.next')}
+                  onPress={this.next}
+                  width={btnWidth}
+                  disabled={this.isUserInvalid}
+                />
+              </View>
+            </View>}
+            {this.state.step === 1 && <View>
+              <View style={styles.field}>
+                <TextLabel type={'subtitle'}>{i18n.t('Register.email')}</TextLabel>
+                <FormTextInput
+                  inputType={'form'}
+                  value={user.email}
+                  onChangeText={(email) => this.setState({ user: { ...user, email } })}
+                />
+              </View>
+              <View style={styles.field}>
+                <TextLabel type={'subtitle'}>{i18n.t('Register.password')}</TextLabel>
+                <FormTextInput
+                  inputType={'form'}
+                  value={user.password}
+                  onChangeText={(password) => this.setState({ user: { ...user, password } })}
+                />
+              </View>
+              <View style={styles.field}>
+                <TextLabel type={'subtitle'}>{i18n.t('Register.password')}</TextLabel>
+                <FormTextInput
+                  inputType={'form'}
+                  value={this.state.passwordConfirm}
+                  onChangeText={(passwordConfirm) => this.setState({ passwordConfirm })}
+                />
+              </View>
+              <View style={styles.btnCenter}>
+                <CustomBtn
+                  text={i18n.t('Register.next')}
+                  onPress={this.next}
+                  width={btnWidth}
+                  disabled={this.isUserInvalid}
+                />
+              </View>
+            </View>}
           </ScrollView>
         </View>
       </Screen>
@@ -99,10 +208,10 @@ class ClientForm extends React.Component {
   }
 }
 
-ClientForm.propTypes = {
+Register.propTypes = {
   navigation: PropTypes.object,
   setModalConfirm: PropTypes.func,
   setLoader: PropTypes.func,
 };
 
-export default ClientForm;
+export default Register;

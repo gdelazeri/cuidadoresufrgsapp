@@ -37,5 +37,11 @@ export default {
     name: 'Seu nome',
     cpf: 'CPF',
     birthDate: 'Nascimento',
+    city: 'Cidade',
+    uf: 'Estado',
+    email: 'Seu e-mail',
+    password: 'Crie uma senha',
+    passwordConfirm: 'Repita a senha',
+    next: 'Avançar',
   }
 };
