@@ -1,10 +1,8 @@
 import { StyleSheet, Dimensions } from 'react-native';
-import colors from '../../constants/colors';
-
-const { width, height } = Dimensions.get('window');
 
 export default StyleSheet.create({
-    wrapper: {
+  wrapper: {
     flex: 1,
+    padding: 20,
   },
 });

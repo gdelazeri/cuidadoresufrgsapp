@@ -33,6 +33,8 @@ export default class App extends React.Component {
         "Material Icons": require('react-native-vector-icons/Fonts/MaterialIcons.ttf'),
         "MaterialIcons": require('react-native-vector-icons/Fonts/MaterialIcons.ttf'),
         "Ionicons": require('react-native-vector-icons/Fonts/Ionicons.ttf'),
+        'quicksand-bold': require('./assets/fonts/Quicksand-Bold.ttf'),
+        'quicksand': require('./assets/fonts/Quicksand-Regular.ttf'),
       }),
     ]);
   };

@@ -9,10 +9,12 @@ export default StyleSheet.create({
   },
   title: {
     marginBottom: 20,
+    fontFamily: 'quicksand',
     fontSize: 20,
   },
   text: {
     marginBottom: 20,
+    fontFamily: 'quicksand',
     fontSize: 18,
   },
   btnContinue: {

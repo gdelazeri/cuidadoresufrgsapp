@@ -4,10 +4,12 @@ import colors from '../../constants/colors';
 export default StyleSheet.create({
   textPrimary: {
     color: '#fff',
+    fontFamily: 'quicksand',
     fontSize: 16,
   },
   textSecondary: {
     color: colors.grey,
+    fontFamily: 'quicksand',
     fontSize: 16,
   },
   btnPrimary: {

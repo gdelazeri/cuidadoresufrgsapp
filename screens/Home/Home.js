@@ -8,6 +8,7 @@ import {
 import Constants from 'expo-constants';
 
 import styles from './styles';
+import i18n from '../../i18n';
 import Screen from '../../components/Screen';
 import TextLabel from '../../components/TextLabel';
 import NavigationService from '../../navigation/NavigationService';
@@ -29,14 +30,10 @@ class Home extends React.Component {
     return (
       <Screen loading={this.state.loading} navigation={this.props.navigation}>
       <View style={{ height: Constants.statusBarHeight }} />
-        <View style={styles.wrapper}>
-          <TouchableOpacity onPress={async () => {
-            await AsyncStorage.clear();
-            NavigationService.reset('LoginNavigator');
-          }}>
-            <TextLabel>Sair</TextLabel>
-          </TouchableOpacity>
-        </View>
+      <View style={styles.wrapper}>
+        <TextLabel type={'title'}>{i18n.t('Home.hi')}</TextLabel>
+        <TextLabel type={'titleHighlight'}>{this.props.user.name.split(' ')[0]}</TextLabel>
+      </View>
       </Screen>
     );
   }
@@ -44,6 +41,7 @@ class Home extends React.Component {
 
 Home.propTypes = {
   navigation: PropTypes.object,
+  user: PropTypes.object,
 };
 
 export default Home;

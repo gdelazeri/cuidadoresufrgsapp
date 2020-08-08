@@ -46,5 +46,9 @@ export default {
     next: 'Avançar',
     error: 'Ocorreu um erro ao salvar o seu cadastro.',
     btnError: 'Ok',
+  },
+  Home: {
+    hi: 'Olá,',
+    
   }
 };
