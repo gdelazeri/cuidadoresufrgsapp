@@ -5,8 +5,8 @@ import {
   TouchableOpacity,
   Image,
   Dimensions,
-  AsyncStorage,
 } from 'react-native';
+import jwtDecode from 'jwt-decode';
 
 import styles from './styles';
 import i18n from '../../i18n';
@@ -16,6 +16,7 @@ import FormTextInput from '../../components/FormTextInput';
 import TextLabel from '../../components/TextLabel';
 import CustomBtn from '../../components/CustomBtn';
 import UserService from '../../services/UserService';
+import NavigationService from '../../navigation/NavigationService';
 
 const { width } = Dimensions.get('window');
 
@@ -25,8 +26,8 @@ class Login extends React.Component {
     this.state = {
       loading: true,
       processing: false,
-      email: '',
-      password: '',
+      email: 'delazeri1997@gmail.com',
+      password: '123',
     }
   }
 
@@ -39,13 +40,20 @@ class Login extends React.Component {
   }
 
   loginToken = async () => {
-    const jwtToken = await AsyncStorage.getItem('jwtToken');
-    if (jwtToken) {
-      Request.setToken(jwtToken);
+    const token = await UserService.getToken();
+    if (token) {
+      Request.setToken(token);
       const response = await UserService.refreshToken();
-      
+      if (response.success) {
+        await UserService.setToken(response.result.token);
+        Request.setToken(response.result.token);
+        this.props.setUser(jwtDecode(response.result.token));
+        this.setState({ loading: false });
+        NavigationService.reset('LoggedNavigator');
+      }
+    } else {
+      this.setState({ loading: false });
     }
-    this.setState({ loading: false });
   }
 
   login = async () => {
@@ -62,16 +70,19 @@ class Login extends React.Component {
     }
 
     const response = await UserService.login(email, password);
-    this.setState({ processing: false });
-    
-  }
-
-  setUser = (user) => {
-    this.props.setUser({
-      id: user.id,
-      email: user.email,
-      name: user.name,
-    })
+    if (response.success) {
+      await UserService.setToken(response.result.token);
+      Request.setToken(response.result.token);
+      this.props.setUser(jwtDecode(response.result.token));
+      this.setState({ processing: false });
+      NavigationService.reset('LoggedNavigator');
+    } else {
+      this.setState({ processing: false });
+      this.props.setModalConfirm({
+        text: i18n.t('Login.errorGeneric'),
+        btnSuccessText: i18n.t('Login.btnError'),
+      });
+    }
   }
 
   isEmailValid = (email) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)
@@ -110,7 +121,6 @@ class Login extends React.Component {
               onPress={this.login}
               loading={this.state.processing}
               width={(width * 0.7) - 30}
-              disabled={true}
             />
             <TouchableOpacity onPress={() => this.props.navigation.navigate('Register')} style={{ marginTop: 20 }} activeOpacity={0.7}>
               <TextLabel type={'login'}>{i18n.t('Login.btnRegister')}</TextLabel>

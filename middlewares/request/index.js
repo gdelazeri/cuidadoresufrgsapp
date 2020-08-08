@@ -16,9 +16,9 @@ class Request {
   
   put = async (path, body) => this.request('PUT', path, body);
 
-  setToken = (jwtToken) => {
-    if (jwtToken) {
-      this.headers.Authorization = `Bearer ${jwtToken}`;
+  setToken = (token) => {
+    if (token) {
+      this.headers.Authorization = `Bearer ${token}`;
     } else {
       delete this.headers.Authorization;
     }
@@ -26,6 +26,7 @@ class Request {
 
   request = async (method, path, body) => {
     try {
+      console.log(`${API_URL}${path}`);
       const resp = await fetch(`${API_URL}${path}`, {
         method,
         body: JSON.stringify(body),

@@ -9,6 +9,7 @@ export default {
     errorLoginMessage: 'Senha e/ou usuário inválido',
     errorCredentialsMessage: 'Credenciais inválidas',
     errorProfile: 'Perfil não autorizado.',
+    errorGeneric: 'Ocorreu um erro inesperado',
     btnContinue: 'Entrar',
     btnError: 'Ok',
     btnRegister: 'Cadastre-se'
