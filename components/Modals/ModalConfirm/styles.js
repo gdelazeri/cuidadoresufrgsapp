@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 
 export default StyleSheet.create({
   overlay: {
@@ -16,6 +16,8 @@ export default StyleSheet.create({
     justifyContent: 'space-around',
   },
   oneButton: {
-    width: '100%',
+    width: Dimensions.get('window').width * 0.7 - 10,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

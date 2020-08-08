@@ -44,5 +44,7 @@ export default {
     password: 'Crie uma senha',
     passwordConfirm: 'Repita a senha',
     next: 'Avançar',
+    error: 'Ocorreu um erro ao salvar o seu cadastro.',
+    btnError: 'Ok',
   }
 };

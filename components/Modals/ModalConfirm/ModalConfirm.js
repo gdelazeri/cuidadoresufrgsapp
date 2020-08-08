@@ -34,12 +34,14 @@ const ModalConfirm = ({
         <CustomBtn
           text={modalConfirm.btnSuccessText || i18n.t('ModalConfirm.success')}
           onPress={modalConfirm.btnSuccess}
+          width={btnWidth}
         />
       </View>}
       {!modalConfirm.btnSuccess && !modalConfirm.btnCancel && <View style={styles.oneButton}>
         <CustomBtn
           text={modalConfirm.btnSuccessText || i18n.t('ModalConfirm.success')}
           onPress={() => setModalConfirm({})}
+          width={btnWidth}
         />
       </View>}
     </View>

@@ -26,19 +26,18 @@ class Request {
 
   request = async (method, path, body) => {
     try {
-      console.log(`${API_URL}${path}`);
       const resp = await fetch(`${API_URL}${path}`, {
         method,
         body: JSON.stringify(body),
         headers: this.headers,
-      });
+      })
 
-      if (resp.ok) {
-        let response = await resp.json();
+      if (resp && resp.ok) {
+        const response = await resp.json();
         return response;
       }
 
-      if (resp.status === 401) {
+      if (resp && resp.status === 401) {
         console.log({
           error401: {
             Authorization: this.headers.Authorization,
@@ -53,7 +52,8 @@ class Request {
         return { success: false };
       }
 
-      return { success: false };
+      const response = await resp.json();
+      return response;
     } catch (e) {
       return { success: false, exception: e };
     }

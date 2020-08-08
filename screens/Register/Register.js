@@ -9,6 +9,7 @@ import {
   View,
   Image,
 } from 'react-native';
+import jwtDecode from 'jwt-decode';
 
 import styles from './styles';
 import i18n from '../../i18n';
@@ -18,6 +19,8 @@ import FormTextInput from '../../components/FormTextInput';
 import DatePicker from '../../components/DatePicker';
 import CustomBtn from '../../components/CustomBtn';
 import UserService from '../../services/UserService';
+import Request from '../../middlewares/request';
+import NavigationService from '../../navigation/NavigationService';
 
 const btnWidth = Dimensions.get('window').width * 0.7;
 
@@ -87,12 +90,24 @@ class Register extends React.Component {
   save = async () => {
     this.props.setLoader(true);
     const { user } = this.state;
-    const response = await UserService.post(user);
-    this.props.setLoader(false);
+    let response = await UserService.post(user);
     if (response.success) {
-      alert('success');
+      response = await UserService.login(user.email, user.password);
+      await UserService.setToken(response.result.token);
+      Request.setToken(response.result.token);
+      this.props.setUser(jwtDecode(response.result.token));
+      this.props.setLoader(false);
+      NavigationService.reset('LoggedNavigator');
     } else {
-      alert('error');
+      this.props.setLoader(false);
+      let error = i18n.t('Register.error');
+      if (Array.isArray(response.errors) && response.errors.length > 0) {
+        error = response.errors.map((err) => `Erro ${err.code}: ${err.message}`).join('\n');
+      }
+      this.props.setModalConfirm({
+        text: error,
+        btnSuccessText: i18n.t('Register.btnError'),
+      });
     }
   }
 
@@ -111,7 +126,7 @@ class Register extends React.Component {
               resizeMode={'contain'}
             />
           </View>
-          <ScrollView contentContainerStyle={styles.scroll}>
+          <ScrollView keyboardShouldPersistTaps={'handled'} contentContainerStyle={styles.scroll}>
             {this.state.step === 0 && <View>
               <View style={styles.field}>
                 <TextLabel type={'subtitle'}>{i18n.t('Register.name')}</TextLabel>
@@ -163,7 +178,6 @@ class Register extends React.Component {
                   text={i18n.t('Register.next')}
                   onPress={this.next}
                   width={btnWidth}
-                  disabled={this.isUserInvalid}
                 />
               </View>
             </View>}
@@ -197,7 +211,6 @@ class Register extends React.Component {
                   text={i18n.t('Register.next')}
                   onPress={this.next}
                   width={btnWidth}
-                  disabled={this.isUserInvalid}
                 />
               </View>
             </View>}
@@ -212,6 +225,7 @@ Register.propTypes = {
   navigation: PropTypes.object,
   setModalConfirm: PropTypes.func,
   setLoader: PropTypes.func,
+  setUser: PropTypes.func,
 };
 
 export default Register;
