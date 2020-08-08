@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import {
   View,
   TouchableOpacity,
-  AsyncStorage,
 } from 'react-native';
 import Constants from 'expo-constants';
 
@@ -11,7 +10,6 @@ import styles from './styles';
 import i18n from '../../i18n';
 import Screen from '../../components/Screen';
 import TextLabel from '../../components/TextLabel';
-import NavigationService from '../../navigation/NavigationService';
 
 class Home extends React.Component {
   constructor(props) {
