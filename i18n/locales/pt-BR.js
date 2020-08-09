@@ -49,6 +49,6 @@ export default {
   },
   Home: {
     hi: 'Olá,',
-    
+    contents: 'Artigos',
   }
 };

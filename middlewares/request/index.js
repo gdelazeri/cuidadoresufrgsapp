@@ -1,5 +1,6 @@
-import { API_URL } from 'react-native-dotenv';
+// import { API_URL } from 'react-native-dotenv';
 import { AsyncStorage } from 'react-native';
+const API_URL = 'http://192.168.15.103:7100';
 
 import NavigationService from '../../navigation/NavigationService';
 
@@ -26,6 +27,7 @@ class Request {
 
   request = async (method, path, body) => {
     try {
+      console.log(`${API_URL}${path}`);
       const resp = await fetch(`${API_URL}${path}`, {
         method,
         body: JSON.stringify(body),
