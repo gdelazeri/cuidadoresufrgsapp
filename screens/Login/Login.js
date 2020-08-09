@@ -41,11 +41,9 @@ class Login extends React.Component {
 
   loginToken = async () => {
     const token = await UserService.getToken();
-    console.log(token);
     if (token) {
       Request.setToken(token);
       const response = await UserService.refreshToken();
-      console.log(response);
       if (response.success) {
         await UserService.setToken(response.result.token);
         Request.setToken(response.result.token);

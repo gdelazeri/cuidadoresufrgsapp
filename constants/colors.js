@@ -3,5 +3,5 @@ export default {
   primary: '#2bb673',
   text: '#333333',
   grey: '#797d82',
-  light: '#C4C4C4',
+  light: '#E6E6E6', // '#C4C4C4',
 };

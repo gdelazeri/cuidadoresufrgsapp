@@ -59,7 +59,7 @@ export default class App extends React.Component {
         const prefix = Linking.makeUrl('/');
         return <Provider store={store}>
           <View style={{ flex: 1, backgroundColor: '#fff' }}>
-            {Platform.OS === 'ios' && <StatusBar barStyle='light-content' />}
+            {Platform.OS === 'ios' && <StatusBar barStyle='dark-content' />}
             <AppNavigator
               ref={(navigatorRef) => NavigationService.setTopLevelNavigator(navigatorRef)}
               uriPrefix={prefix}

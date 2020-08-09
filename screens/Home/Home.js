@@ -56,7 +56,7 @@ class Home extends React.Component {
         <FlatList
           data={this.state.contents}
           contentContainerStyle={styles.contents}
-          renderItem={({item}) => <ContentHome content={item} />}
+          renderItem={({item}) => <ContentHome content={item} onPress={() => this.props.navigation.navigate('Content', { _id: item._id })} />}
           ItemSeparatorComponent={() => <View style={styles.separator} />}
           horizontal={true}
           showsHorizontalScrollIndicator={false}

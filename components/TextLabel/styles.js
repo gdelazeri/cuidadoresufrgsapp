@@ -20,7 +20,12 @@ export default StyleSheet.create({
   subtitle: {  // text style 3
     color: colors.grey,
     fontFamily: 'quicksand',
-    fontSize: 15,
+    fontSize: 14,
+  },
+  text: {  // text style 3
+    color: colors.text,
+    fontFamily: 'quicksand',
+    fontSize: 16,
   },
   menu: {  // text style 4
     color: colors.grey,

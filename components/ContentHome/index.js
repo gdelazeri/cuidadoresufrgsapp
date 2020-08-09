@@ -11,7 +11,7 @@ const ContentHome = ({ content, onPress }) => <TouchableOpacity style={styles.wr
     style={styles.image}
   />
   <View style={styles.text}>
-    <TextLabel type={'subtitle'}>{'Categoria'}</TextLabel>
+    {content.category && <TextLabel type={'subtitle'}>{content.category.name}</TextLabel>}
     <TextLabel type={'title'} numberOfLines={1}>{content.title}</TextLabel>
   </View>
 </TouchableOpacity>

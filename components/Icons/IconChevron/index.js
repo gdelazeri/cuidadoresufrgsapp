@@ -7,7 +7,7 @@ import colors from '../../../constants/colors';
 const IconChevron = ({ size = 25, containerStyle, side, color = colors.grey }) => (
   <Icon
     type={'material-community'}
-    name={`chevron-${side}`}
+    name={`arrow-${side}`}
     size={size}
     color={color}
     containerStyle={containerStyle}

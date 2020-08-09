@@ -27,7 +27,6 @@ class Request {
 
   request = async (method, path, body) => {
     try {
-      console.log(`${API_URL}${path}`);
       const resp = await fetch(`${API_URL}${path}`, {
         method,
         body: JSON.stringify(body),
