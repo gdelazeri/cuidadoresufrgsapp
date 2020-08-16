@@ -5,7 +5,7 @@ import { View, TouchableOpacity, Image } from 'react-native';
 import styles from './styles';
 import TextLabel from '../TextLabel';
 
-const ContentHome = ({ content, onPress }) => <TouchableOpacity style={styles.wrapper} activeOpacity={0.7} onPress={onPress}>
+const ContentItemHome = ({ content, onPress }) => <TouchableOpacity style={styles.wrapper} activeOpacity={0.7} onPress={onPress}>
   <Image
     source={{ uri: content.imageUrl }}
     style={styles.image}
@@ -16,8 +16,8 @@ const ContentHome = ({ content, onPress }) => <TouchableOpacity style={styles.wr
   </View>
 </TouchableOpacity>
 
-ContentHome.propTypes = {
+ContentItemHome.propTypes = {
   content: PropTypes.object,
 };
 
-export default ContentHome;
+export default ContentItemHome;

@@ -11,7 +11,7 @@ import i18n from '../../i18n';
 import Screen from '../../components/Screen';
 import TextLabel from '../../components/TextLabel';
 import ContentService from '../../services/ContentService';
-import ContentHome from '../../components/ContentHome';
+import ContentItemHome from '../../components/ContentItemHome';
 
 class Home extends React.Component {
   constructor(props) {
@@ -56,7 +56,7 @@ class Home extends React.Component {
         <FlatList
           data={this.state.contents}
           contentContainerStyle={styles.contents}
-          renderItem={({item}) => <ContentHome content={item} onPress={() => this.props.navigation.navigate('Content', { _id: item._id })} />}
+          renderItem={({item}) => <ContentItemHome content={item} onPress={() => this.props.navigation.navigate('Content', { _id: item._id })} />}
           ItemSeparatorComponent={() => <View style={styles.separator} />}
           horizontal={true}
           showsHorizontalScrollIndicator={false}
