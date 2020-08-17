@@ -69,6 +69,7 @@ class Content extends React.Component {
         </View>
       case 'IMAGE':
         return <View>
+          {typeof body.topic === 'string' && body.topic.length > 0 && <TextLabel type={'text'} bold style={styles.text}>{body.topic}</TextLabel>}
           <Image source={{ uri: body.url }} style={styles.image} />
           <TextLabel type={'subtitle'} style={styles.textImage}>{body.text}</TextLabel>
         </View>
