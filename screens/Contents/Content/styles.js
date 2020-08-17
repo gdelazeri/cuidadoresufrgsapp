@@ -1,9 +1,6 @@
 import { StyleSheet, Dimensions } from 'react-native';
 
 export default StyleSheet.create({
-  wrapper: {
-    paddingBottom: 15,
-  },
   image: {
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height * 0.3,

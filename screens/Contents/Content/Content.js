@@ -4,11 +4,11 @@ import Constants from 'expo-constants';
 import {
   View,
   ScrollView,
-  Image,
   RefreshControl,
   ImageBackground,
   Dimensions,
 } from 'react-native';
+import AutoHeightImage from 'react-native-auto-height-image';
 
 import styles from './styles';
 import formatDate from '../../../utils/formatDate';
@@ -70,7 +70,7 @@ class Content extends React.Component {
       case 'IMAGE':
         return <View>
           {typeof body.topic === 'string' && body.topic.length > 0 && <TextLabel type={'text'} bold style={styles.text}>{body.topic}</TextLabel>}
-          <Image source={{ uri: body.url }} style={styles.image} />
+          <AutoHeightImage source={{ uri: body.url }} width={Dimensions.get('window').width} />
           <TextLabel type={'subtitle'} style={styles.textImage}>{body.text}</TextLabel>
         </View>
     }
@@ -83,7 +83,6 @@ class Content extends React.Component {
         <View style={{ height: Constants.statusBarHeight }} />
         <ScrollView
           refreshControl={<RefreshControl refreshing={this.state.refreshing} onRefresh={() => this.load(true)} />}
-          contentContainerStyle={styles.wrapper}
         >
           <ImageBackground
             source={{ uri: this.state.content.imageUrl }}
@@ -93,7 +92,7 @@ class Content extends React.Component {
           </ImageBackground>
         
           <View style={styles.contentHeader}>
-            <TextLabel type={'title'}>{this.state.content.title}</TextLabel>
+            <TextLabel type={'titleHighlight'}>{this.state.content.title}</TextLabel>
             <View style={styles.source}>
               {typeof this.state.content.source === 'string' && <TextLabel type={'subtitle'}>{this.state.content.source}</TextLabel>}
               <TextLabel type={'subtitle'}>{formatDate(this.state.content.createdAt)}</TextLabel>

@@ -6483,6 +6483,13 @@ react-native-appearance@~0.3.1:
     invariant "^2.2.4"
     use-subscription "^1.0.0"
 
+react-native-auto-height-image@^3.2.2:
+  version "3.2.2"
+  resolved "https://registry.yarnpkg.com/react-native-auto-height-image/-/react-native-auto-height-image-3.2.2.tgz#da34fccd097351a701dcdeb0481a8e8bb6ae4832"
+  integrity sha512-MPTwuGt+TFvYoKkuKLA8XgcpBqHR3tQOlPCp63zECsq21w4IIPqLc/HACiaUH0UsvtdLPpo012K815IxtT1PWA==
+  dependencies:
+    prop-types "^15.7.2"
+
 react-native-dotenv@0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/react-native-dotenv/-/react-native-dotenv-0.2.0.tgz#311551cb6a35a3dcfede648bded55c0e3ece579d"
@@ -6610,10 +6617,10 @@ react-native-web@0.11.7:
     prop-types "^15.6.0"
     react-timer-mixin "^0.13.4"
 
-react-native-webview@^10.6.0:
-  version "10.6.0"
-  resolved "https://registry.yarnpkg.com/react-native-webview/-/react-native-webview-10.6.0.tgz#83a574871a52540fec6b8a813f8f6432a07429c8"
-  integrity sha512-y1/zYx9LuoiPVSM3oxf77WQjRebaYG22Kya4lr2tmIESaR1GkKzwKSpKPyEZYfu8U/WNRSrrS/i78o+R1aQRTA==
+react-native-webview@7.4.3:
+  version "7.4.3"
+  resolved "https://registry.yarnpkg.com/react-native-webview/-/react-native-webview-7.4.3.tgz#e00e92e17f7389d84d09f5900652501ff2665915"
+  integrity sha512-4n72B2D7n1xOQSoCSD1qk9D7JksyT4d6nk8QG9guZKZn3KXQL5EejwE2yhh1TxZRQpr+OD3a96rb+rA/UEnvrQ==
   dependencies:
     escape-string-regexp "2.0.0"
     invariant "2.2.4"
