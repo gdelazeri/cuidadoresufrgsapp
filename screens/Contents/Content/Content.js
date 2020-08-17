@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Constants from 'expo-constants';
 import {
   View,
-  ScrollView,
+  FlatList,
   RefreshControl,
   ImageBackground,
   Dimensions,
@@ -14,8 +14,11 @@ import styles from './styles';
 import formatDate from '../../../utils/formatDate';
 import Screen from '../../../components/Screen';
 import TextLabel from '../../../components/TextLabel';
-import ContentService from '../../../services/ContentService';
 import BackBtn from '../../../components/BackBtn';
+import ContentListHome from '../../../components/ContentListHome';
+import i18n from '../../../i18n';
+import ContentService from '../../../services/ContentService';
+const SIMILARS_SIZE = 4;
 
 class Content extends React.Component {
   constructor(props) {
@@ -25,6 +28,7 @@ class Content extends React.Component {
       fetchError: false,
       refreshing: false,
       content: {},
+      similars: [],
     }
   }
 
@@ -40,10 +44,16 @@ class Content extends React.Component {
   load = async (refreshing = false) => {
     this.setState({ refreshing });
     const _id = this.props.navigation.getParam('_id');
-    const response = await ContentService.get(_id);
+    let response = await ContentService.get(_id);
     if (response.success) {
       const content = response.result;
       this.setState({ content, refreshing: false, loading: false, fetchError: false });
+      
+      response = await ContentService.list(0, SIMILARS_SIZE, content.title);
+      if (response.success) {
+        const similars = response.result.filter(r => r._id !== content._id);
+        this.setState({ similars });
+      }
     } else {
       this.setState({ refreshing: false, loading: false, fetchError: false });
     }
@@ -81,30 +91,39 @@ class Content extends React.Component {
     return (
       <Screen loading={this.state.loading} navigation={this.props.navigation} error={this.state.fetchError}>
         <View style={{ height: Constants.statusBarHeight }} />
-        <ScrollView
+        <FlatList
           refreshControl={<RefreshControl refreshing={this.state.refreshing} onRefresh={() => this.load(true)} />}
-        >
-          <ImageBackground
-            source={{ uri: this.state.content.imageUrl }}
-            style={styles.image}
-          >
-            <BackBtn navigation={this.props.navigation} />
-          </ImageBackground>
-        
-          <View style={styles.contentHeader}>
-            <TextLabel type={'titleHighlight'}>{this.state.content.title}</TextLabel>
-            <View style={styles.source}>
-              {typeof this.state.content.source === 'string' && <TextLabel type={'subtitle'}>{this.state.content.source}</TextLabel>}
-              <TextLabel type={'subtitle'}>{formatDate(this.state.content.createdAt)}</TextLabel>
+          ListHeaderComponent={<View>
+            <ImageBackground
+              source={{ uri: this.state.content.imageUrl }}
+              style={styles.image}
+            >
+              <BackBtn navigation={this.props.navigation} />
+            </ImageBackground>
+          
+            <View style={styles.contentHeader}>
+              <TextLabel type={'titleHighlight'}>{this.state.content.title}</TextLabel>
+              <View style={styles.source}>
+                {typeof this.state.content.source === 'string' && <TextLabel type={'subtitle'}>{this.state.content.source}</TextLabel>}
+                <TextLabel type={'subtitle'}>{formatDate(this.state.content.createdAt)}</TextLabel>
+              </View>
+              {typeof this.state.content.subtitle === 'string' && <View style={styles.source}>
+                <TextLabel type={'subtitle'} bold style={styles.textSubtitle}>{this.state.content.subtitle}</TextLabel>
+              </View>}
             </View>
-            {typeof this.state.content.subtitle === 'string' && <View style={styles.source}>
-              <TextLabel type={'subtitle'} bold style={styles.textSubtitle}>{this.state.content.subtitle}</TextLabel>
-            </View>}
-          </View>
-          {Array.isArray(this.state.content.body) && this.state.content.body.map((body, index) => <View key={`body${index}`}>
-            {this.renderBody(body)}
-          </View>)}
-        </ScrollView>
+          </View>}
+          data={this.state.content.body}
+          renderItem={({ item }) => this.renderBody(item)}
+          keyExtractor={(item, index) => `body${index}`}
+          ListFooterComponent={this.state.similars.length > 0 && <View style={styles.similars}>
+            <ContentListHome
+              list={this.state.similars}
+              title={i18n.t('Content.similars')}
+              seeAll={false}
+              navigation={this.props.navigation}
+            />
+          </View>}
+        />
       </Screen>
     );
   }

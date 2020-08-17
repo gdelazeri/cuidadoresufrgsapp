@@ -1,15 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { View, FlatList } from 'react-native';
+import { View } from 'react-native';
 import Constants from 'expo-constants';
 
 import styles from './styles';
 import i18n from '../../i18n';
 import Screen from '../../components/Screen';
 import TextLabel from '../../components/TextLabel';
+import ContentListHome from '../../components/ContentListHome';
 import ContentService from '../../services/ContentService';
-import ContentItemHome from '../../components/ContentItemHome';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 class Home extends React.Component {
   constructor(props) {
@@ -50,22 +49,12 @@ class Home extends React.Component {
           <TextLabel type={'title'}>{i18n.t('Home.hi')}</TextLabel>
           <TextLabel type={'titleHighlight'}>{this.props.user.name.split(' ')[0]}</TextLabel>
         </View>
-        <View style={styles.contentsHeader}>
-          <TextLabel type={'title'}>{i18n.t('Home.contents')}</TextLabel>
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('ContentList')}>
-            <TextLabel type={'subtitle'} bold>{i18n.t('Home.seeAll')}</TextLabel>
-          </TouchableOpacity>
-        </View>
-        <FlatList
-          data={this.state.contents}
-          contentContainerStyle={styles.contents}
-          renderItem={({item}) => <ContentItemHome content={item} onPress={() => this.props.navigation.navigate('Content', { _id: item._id })} />}
-          ItemSeparatorComponent={() => <View style={styles.separator} />}
-          horizontal={true}
-          keyExtractor={(item) => item._id}
-          showsHorizontalScrollIndicator={false}
+        <ContentListHome
+          list={this.state.contents}
+          seeAll={true}
+          title={i18n.t('Home.contents')}
+          navigation={this.props.navigation}
         />
-
       </Screen>
     );
   }

@@ -22,4 +22,8 @@ export default StyleSheet.create({
   source: {
     marginTop: 10,
   },
+  similars: {
+    marginTop: 10,
+    paddingVertical: 15
+  },
 });

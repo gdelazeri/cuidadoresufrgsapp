@@ -56,6 +56,9 @@ export default {
     contents: 'Artigos',
     empty: 'Nenhum conteúdo foi encontrado',
   },
+  Content: {
+    similars: 'Conteúdos Relacionados',
+  },
   Search: {
     placeholder: 'Buscar',
     cancel: 'Cancelar',
