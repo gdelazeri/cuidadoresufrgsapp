@@ -50,6 +50,8 @@ class Login extends React.Component {
         this.props.setUser(jwtDecode(response.result.token));
         this.setState({ loading: false });
         NavigationService.reset('LoggedNavigator');
+      } else {
+        this.setState({ loading: false });
       }
     } else {
       this.setState({ loading: false });
