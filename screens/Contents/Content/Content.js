@@ -41,17 +41,25 @@ class Content extends React.Component {
     this.load();
   }
 
-  load = async (refreshing = false) => {
-    this.setState({ refreshing });
+  componentDidUpdate = () => {
     const _id = this.props.navigation.getParam('_id');
-    let response = await ContentService.get(_id);
+    if (_id !== this._id) {
+      this.reload();
+      this.refs.FlatList.scrollToOffset({x: 0, y: 0, animated: true});
+    }
+  }
+
+  load = async (refreshing = false, loading = false) => {
+    this.setState({ refreshing });
+    this._id = this.props.navigation.getParam('_id');
+    let response = await ContentService.get(this._id);
     if (response.success) {
       const content = response.result;
       this.setState({ content, refreshing: false, loading: false, fetchError: false });
       
       response = await ContentService.list(0, SIMILARS_SIZE, content.title);
       if (response.success) {
-        const similars = response.result.filter(r => r._id !== content._id);
+        const similars = response.result.filter(r => r._id !== this._id);
         this.setState({ similars });
       }
     } else {
@@ -87,11 +95,17 @@ class Content extends React.Component {
     return null;
   }
 
+  reload = () => {
+    this.setState({ loading: true });
+    this.load();
+  }
+
   render() {
     return (
-      <Screen loading={this.state.loading} navigation={this.props.navigation} error={this.state.fetchError}>
+      <Screen loading={this.state.loading} navigation={this.props.navigation} error={this.state.fetchError} reload={this.reload}>
         <View style={{ height: Constants.statusBarHeight }} />
         <FlatList
+          ref={'FlatList'}
           refreshControl={<RefreshControl refreshing={this.state.refreshing} onRefresh={() => this.load(true)} />}
           ListHeaderComponent={<View>
             <ImageBackground
