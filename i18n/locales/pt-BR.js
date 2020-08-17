@@ -50,6 +50,14 @@ export default {
   Home: {
     hi: 'Olá,',
     contents: 'Artigos',
+    seeAll: 'Ver todos',
+  },
+  ContentList: {
+    contents: 'Artigos',
+  },
+  Search: {
+    placeholder: 'Buscar',
+    cancel: 'Cancelar',
   },
   date: {
     jan: 'Janeiro',

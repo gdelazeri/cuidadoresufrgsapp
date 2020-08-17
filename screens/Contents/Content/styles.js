@@ -25,13 +25,4 @@ export default StyleSheet.create({
   source: {
     marginTop: 10,
   },
-  backBtn: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    width: 30,
-    height: 30,
-    borderRadius: 15,
-    margin: 15
-  }
 });

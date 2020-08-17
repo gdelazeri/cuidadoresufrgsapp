@@ -7,16 +7,15 @@ import {
   Image,
   RefreshControl,
   ImageBackground,
+  Dimensions,
 } from 'react-native';
 
 import styles from './styles';
 import formatDate from '../../../utils/formatDate';
-import IconChevron from '../../../components/Icons/IconChevron';
 import Screen from '../../../components/Screen';
 import TextLabel from '../../../components/TextLabel';
 import ContentService from '../../../services/ContentService';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import colors from '../../../constants/colors';
+import BackBtn from '../../../components/BackBtn';
 
 class Content extends React.Component {
   constructor(props) {
@@ -50,6 +49,17 @@ class Content extends React.Component {
     }
   }
 
+  calcWidthHeight = () => {
+    const { width } = Dimensions.get('window');
+    const widthYoutube = 727;
+    const heightYoutube = 409;
+    const resp = {
+      width: width,
+      height: (width*heightYoutube) / widthYoutube,
+    }
+    return resp;
+  }
+
   renderBody = (body) => {
     switch (body.type) {
       case 'TEXT':
@@ -59,8 +69,8 @@ class Content extends React.Component {
           <Image source={{ uri: body.url }} style={styles.image} />
           <TextLabel type={'subtitle'} style={styles.textImage}>{body.text}</TextLabel>
         </View>
-      return null;
     }
+    return null;
   }
 
   render() {
@@ -75,11 +85,8 @@ class Content extends React.Component {
             source={{ uri: this.state.content.imageUrl }}
             style={styles.image}
           >
-            <TouchableOpacity onPress={() => this.props.navigation.goBack()} style={styles.backBtn} activeOpacity={0.7}>
-              <IconChevron side={'left'} color={colors.text} />
-            </TouchableOpacity>
+            <BackBtn navigation={this.props.navigation} />
           </ImageBackground>
-   
         
           <View style={styles.contentHeader}>
             <TextLabel type={'title'}>{this.state.content.title}</TextLabel>

@@ -4,10 +4,11 @@ import { TouchableOpacity } from 'react-native';
 
 import IconChevron from '../Icons/IconChevron';
 import colors from '../../constants/colors';
+import styles from './styles';
 
-const BackBtn = ({ navigation, color = colors.primary }) => (
-  <TouchableOpacity onPress={() => navigation.goBack()} activeOpacity={0.7}>
-    <IconChevron containerStyle={{ paddingHorizontal: 10 }} side={'left'} color={color} />
+const BackBtn = ({ navigation, color = colors.text }) => (
+  <TouchableOpacity onPress={() => navigation.goBack()} activeOpacity={0.7} style={styles.backBtn}>
+    <IconChevron side={'left'} color={color} />
   </TouchableOpacity>
 )
 
