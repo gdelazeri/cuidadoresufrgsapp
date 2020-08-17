@@ -7,6 +7,7 @@ import {
   RefreshControl,
   ImageBackground,
   Dimensions,
+  AsyncStorage,
 } from 'react-native';
 import AutoHeightImage from 'react-native-auto-height-image';
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import {
   Platform,
@@ -7,7 +8,6 @@ import {
   Animated,
   ScrollView,
   View,
-  Image,
 } from 'react-native';
 import jwtDecode from 'jwt-decode';
 
@@ -90,6 +90,10 @@ class Register extends React.Component {
   save = async () => {
     this.props.setLoader(true);
     const { user } = this.state;
+    if (user.birthDate) {
+      const split = user.birthDate.split('/');
+      user.birthDate = moment(`${split[2]}-${split[1]}-${split[0]}`).format();
+    }
     let response = await UserService.post(user);
     if (response.success) {
       response = await UserService.login(user.email, user.password);
@@ -117,14 +121,14 @@ class Register extends React.Component {
       <Screen loading={this.state.loading} error={this.state.fetchError} navigation={this.props.navigation}>
         <View style={styles.wrapper}>
           <View style={styles.logoView}>
-            <Image
+            {/* <Image
               source={require('../../assets/images/icon.png')}
               style={{
                 height: Dimensions.get('window').height * 0.1,
                 width: Dimensions.get('window').height * 0.1,
               }}
               resizeMode={'contain'}
-            />
+            /> */}
           </View>
           <ScrollView keyboardShouldPersistTaps={'handled'} contentContainerStyle={styles.scroll}>
             {this.state.step === 0 && <View>
@@ -149,10 +153,13 @@ class Register extends React.Component {
               </View>
               <View style={styles.field}>
                 <TextLabel type={'subtitle'}>{i18n.t('Register.birthDate')}</TextLabel>
-                <DatePicker
-                  date={user.birthDate}
-                  maxDate={new Date()}
-                  handleDate={(birthDate) => this.setState({ user: { ...user, birthDate } })}
+                <FormTextInput
+                  inputType={'form'}
+                  value={user.birthDate}
+                  onChangeText={(birthDate) => this.setState({ user: { ...user, birthDate } })}
+                  masked={true}
+                  options={{ format: '99/99/9999' }}
+                  type={'datetime'}
                 />
               </View>
               <View style={styles.fieldsInline}>
@@ -199,7 +206,7 @@ class Register extends React.Component {
                 />
               </View>
               <View style={styles.field}>
-                <TextLabel type={'subtitle'}>{i18n.t('Register.password')}</TextLabel>
+                <TextLabel type={'subtitle'}>{i18n.t('Register.passwordConfirm')}</TextLabel>
                 <FormTextInput
                   inputType={'form'}
                   value={this.state.passwordConfirm}

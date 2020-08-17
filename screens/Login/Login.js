@@ -26,8 +26,8 @@ class Login extends React.Component {
     this.state = {
       loading: true,
       processing: false,
-      email: 'delazeri1997@gmail.com',
-      password: '123',
+      email: '',
+      password: '',
     }
   }
 
@@ -43,10 +43,12 @@ class Login extends React.Component {
     const token = await UserService.getToken();
     if (token) {
       Request.setToken(token);
+      console.log(jwtDecode(token));
       const response = await UserService.refreshToken();
       if (response.success) {
         await UserService.setToken(response.result.token);
         Request.setToken(response.result.token);
+        console.log(jwtDecode(response.result.token));
         this.props.setUser(jwtDecode(response.result.token));
         this.setState({ loading: false });
         NavigationService.reset('LoggedNavigator');

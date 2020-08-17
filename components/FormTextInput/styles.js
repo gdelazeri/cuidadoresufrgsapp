@@ -16,7 +16,7 @@ export default StyleSheet.create({
     color: colors.text,
     fontFamily: 'quicksand',
     fontSize: 16,
-    borderColor: colors.light,
+    borderColor: colors.grey,
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
   formInput: {
