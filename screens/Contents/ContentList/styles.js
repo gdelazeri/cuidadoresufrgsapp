@@ -7,10 +7,14 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   contents: {
-    marginTop: 10,
+    paddingBottom: 10,
     paddingHorizontal: 20,
   },
   separator: {
     height: 15,
   },
+  center: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  }
 });

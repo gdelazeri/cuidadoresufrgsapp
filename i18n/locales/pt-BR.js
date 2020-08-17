@@ -54,6 +54,7 @@ export default {
   },
   ContentList: {
     contents: 'Artigos',
+    empty: 'Nenhum conteúdo foi encontrado',
   },
   Search: {
     placeholder: 'Buscar',

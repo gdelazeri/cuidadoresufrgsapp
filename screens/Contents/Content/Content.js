@@ -63,7 +63,10 @@ class Content extends React.Component {
   renderBody = (body) => {
     switch (body.type) {
       case 'TEXT':
-        return <TextLabel type={'text'} style={styles.text}>{body.text}</TextLabel>
+        return <View>
+          {typeof body.topic === 'string' && body.topic.length > 0 && <TextLabel type={'text'} bold style={styles.text}>{body.topic}</TextLabel>}
+          <TextLabel type={'text'} style={styles.text}>{body.text}</TextLabel>
+        </View>
       case 'IMAGE':
         return <View>
           <Image source={{ uri: body.url }} style={styles.image} />
