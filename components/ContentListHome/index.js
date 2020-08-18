@@ -5,7 +5,7 @@ import { View, FlatList, TouchableOpacity } from 'react-native';
 import styles from './styles';
 import i18n from '../../i18n';
 import TextLabel from '../../components/TextLabel';
-import ContentItemHome from '../../components/ContentItemHome';
+import ContentItemHome from '../HomeItem';
 
 const ContentListHome = ({ list = [], seeAll = true, title = i18n.t('Home.contents'), navigation }) => <View>
   <View style={styles.contentsHeader}>
