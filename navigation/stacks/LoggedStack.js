@@ -5,11 +5,15 @@ import colors from '../../constants/colors';
 import Home from '../../screens/Home';
 import Content from '../../screens/Contents/Content';
 import ContentList from '../../screens/Contents/ContentList';
+import Form from '../../screens/Forms/Form';
+import FormList from '../../screens/Forms/FormList';
 
 const LoggedStack = createStackNavigator({
   Home,
   Content,
   ContentList,
+  Form,
+  FormList,
 }, {
   mode: 'card', 
   headerLayoutPreset: 'center',

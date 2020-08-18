@@ -5,21 +5,20 @@ import { View, TouchableOpacity, Image } from 'react-native';
 import styles from './styles';
 import TextLabel from '../TextLabel';
 
-const ContentItem = ({ item, onPress }) => <TouchableOpacity style={styles.wrapper} activeOpacity={0.7} onPress={onPress}>
+const FormItem = ({ item, onPress }) => <TouchableOpacity style={styles.wrapper} activeOpacity={0.7} onPress={onPress}>
   <Image
     source={{ uri: item.imageUrl }}
     style={styles.image}
   />
   <View style={styles.text}>
-    {item.category && <TextLabel type={'subtitle'}>{item.category.name}</TextLabel>}
     <TextLabel type={'title'} numberOfLines={1}>{item.title}</TextLabel>
-    <TextLabel type={'subtitle'} numberOfLines={2}>{item.subtitle}</TextLabel>
+    <TextLabel type={'subtitle'} numberOfLines={2}>{item.description}</TextLabel>
   </View>
 </TouchableOpacity>
 
-ContentItem.propTypes = {
+FormItem.propTypes = {
   item: PropTypes.object,
   onPress: PropTypes.func,
 };
 
-export default ContentItem;
+export default FormItem;

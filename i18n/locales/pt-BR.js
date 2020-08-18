@@ -53,6 +53,10 @@ export default {
     forms: 'Testes',
     seeAll: 'Ver todos',
   },
+  FormList: {
+    forms: 'Testes',
+    empty: 'Nenhum conteúdo foi encontrado',
+  },
   ContentList: {
     contents: 'Artigos',
     empty: 'Nenhum conteúdo foi encontrado',
