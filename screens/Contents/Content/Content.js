@@ -16,7 +16,7 @@ import formatDate from '../../../utils/formatDate';
 import Screen from '../../../components/Screen';
 import TextLabel from '../../../components/TextLabel';
 import BackBtn from '../../../components/BackBtn';
-import ContentListHome from '../../../components/ContentListHome';
+import HomeList from '../../../components/HomeList';
 import i18n from '../../../i18n';
 import ContentService from '../../../services/ContentService';
 const SIMILARS_SIZE = 4;
@@ -131,7 +131,7 @@ class Content extends React.Component {
           renderItem={({ item }) => this.renderBody(item)}
           keyExtractor={(item, index) => `body${index}`}
           ListFooterComponent={this.state.similars.length > 0 && <View style={styles.similars}>
-            <ContentListHome
+            <HomeList
               list={this.state.similars}
               title={i18n.t('Content.similars')}
               seeAll={false}

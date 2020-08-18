@@ -50,6 +50,7 @@ export default {
   Home: {
     hi: 'Olá,',
     contents: 'Artigos',
+    forms: 'Testes',
     seeAll: 'Ver todos',
   },
   ContentList: {

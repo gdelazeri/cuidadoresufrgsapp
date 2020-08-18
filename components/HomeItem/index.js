@@ -6,10 +6,10 @@ import styles from './styles';
 import TextLabel from '../TextLabel';
 
 const HomeItem = ({ item, onPress }) => <TouchableOpacity style={styles.wrapper} activeOpacity={0.7} onPress={onPress}>
-  <Image
+  {typeof item.imageUrl === 'string' && item.imageUrl.length > 0 && <Image
     source={{ uri: item.imageUrl }}
     style={styles.image}
-  />
+  />}
   <View style={styles.text}>
     {item.category && <TextLabel type={'subtitle'}>{item.category.name}</TextLabel>}
     <TextLabel type={'title'} numberOfLines={1}>{item.title}</TextLabel>

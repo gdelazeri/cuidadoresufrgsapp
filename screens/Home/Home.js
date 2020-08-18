@@ -7,8 +7,9 @@ import styles from './styles';
 import i18n from '../../i18n';
 import Screen from '../../components/Screen';
 import TextLabel from '../../components/TextLabel';
-import ContentListHome from '../../components/ContentListHome';
+import HomeList from '../../components/HomeList';
 import ContentService from '../../services/ContentService';
+import FormService from '../../services/FormService';
 
 class Home extends React.Component {
   constructor(props) {
@@ -18,6 +19,7 @@ class Home extends React.Component {
       fetchError: false,
       refreshing: false,
       contents: [],
+      forms: [],
     }
   }
 
@@ -32,10 +34,12 @@ class Home extends React.Component {
 
   load = async (refreshing = false) => {
     this.setState({ refreshing });
-    const response = await ContentService.list(0, 5, undefined, true);
-    if (response.success) {
-      const contents = response.result;
-      this.setState({ contents, refreshing: false, loading: false, fetchError: false });
+    const responseContent = await ContentService.list(0, 5, undefined, true);
+    const responseForm = await FormService.list(0, 5, undefined, true);
+    if (responseContent.success && responseForm.success) {
+      const contents = responseContent.result;
+      const forms = responseForm.result;
+      this.setState({ contents, forms, refreshing: false, loading: false, fetchError: false });
     } else {
       this.setState({ refreshing: false, loading: false, fetchError: false });
     }
@@ -49,10 +53,19 @@ class Home extends React.Component {
           <TextLabel type={'title'}>{i18n.t('Home.hi')}</TextLabel>
           <TextLabel type={'titleHighlight'}>{this.props.user.name.split(' ')[0]}</TextLabel>
         </View>
-        <ContentListHome
+        <HomeList
           list={this.state.contents}
-          seeAll={true}
+          listScreen={'ContentList'}
+          itemScreen={'Content'}
           title={i18n.t('Home.contents')}
+          navigation={this.props.navigation}
+        />
+        <View style={{ height: 20 }} />
+        <HomeList
+          list={this.state.forms}
+          listScreen={'FormList'}
+          itemScreen={'Form'}
+          title={i18n.t('Home.forms')}
           navigation={this.props.navigation}
         />
       </Screen>

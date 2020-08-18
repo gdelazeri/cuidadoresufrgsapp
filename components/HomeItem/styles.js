@@ -7,7 +7,7 @@ export default StyleSheet.create({
     backgroundColor: colors.light,
     overflow: 'hidden',
     width: Dimensions.get('window').width * 0.6,
-    height: Dimensions.get('window').width * 0.6,
+    height: Dimensions.get('window').width * 0.55,
   },
   image: {
     resizeMode: 'cover',
@@ -15,7 +15,8 @@ export default StyleSheet.create({
     height: Dimensions.get('window').width * 0.4,
   },
   text: {
-    height: Dimensions.get('window').width * 0.2,
-    padding: 10,
+    height: Dimensions.get('window').width * 0.15,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
   }
 });

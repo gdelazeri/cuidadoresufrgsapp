@@ -1,14 +1,14 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
-  contents: {
+  list: {
     marginTop: 10,
     paddingHorizontal: 20,
   },
   separator: {
     width: 15,
   },
-  contentsHeader: {
+  header: {
     paddingHorizontal: 20,
     flexDirection: 'row',
     flexWrap: 'wrap',

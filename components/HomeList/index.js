@@ -4,20 +4,20 @@ import { View, FlatList, TouchableOpacity } from 'react-native';
 
 import styles from './styles';
 import i18n from '../../i18n';
-import TextLabel from '../../components/TextLabel';
-import ContentItemHome from '../HomeItem';
+import TextLabel from '../TextLabel';
+import HomeItem from '../HomeItem';
 
-const ContentListHome = ({ list = [], seeAll = true, title = i18n.t('Home.contents'), navigation }) => <View>
-  <View style={styles.contentsHeader}>
+const HomeList = ({ list = [], listScreen, itemScreen, title, navigation }) => <View>
+  <View style={styles.header}>
     <TextLabel type={'title'}>{title}</TextLabel>
-    {seeAll && <TouchableOpacity onPress={() => navigation.navigate('ContentList')}>
+    {typeof listScreen === 'string' && <TouchableOpacity onPress={() => navigation.navigate(listScreen)}>
       <TextLabel type={'subtitle'} bold>{i18n.t('Home.seeAll')}</TextLabel>
     </TouchableOpacity>}
   </View>
   <FlatList
     data={list}
-    contentContainerStyle={styles.contents}
-    renderItem={({item}) => <ContentItemHome content={item} onPress={() => navigation.navigate('Content', { _id: item._id })} />}
+    contentContainerStyle={styles.list}
+    renderItem={({item}) => <HomeItem item={item} onPress={() => navigation.navigate(itemScreen, { _id: item._id })} />}
     ItemSeparatorComponent={() => <View style={styles.separator} />}
     horizontal={true}
     keyExtractor={(item) => item._id}
@@ -25,11 +25,12 @@ const ContentListHome = ({ list = [], seeAll = true, title = i18n.t('Home.conten
   />
 </View>
 
-ContentListHome.propTypes = {
+HomeList.propTypes = {
   list: PropTypes.array,
-  seeAll: PropTypes.bool,
+  listScreen: PropTypes.string,
+  itemScreen: PropTypes.string,
   title: PropTypes.string,
   navigation: PropTypes.object,
 };
 
-export default ContentListHome;
+export default HomeList;
