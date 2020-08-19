@@ -84,13 +84,13 @@ class Content extends React.Component {
       case 'TEXT':
         return <View>
           {typeof body.topic === 'string' && body.topic.length > 0 && <TextLabel type={'text'} bold style={styles.text}>{body.topic}</TextLabel>}
-          <TextLabel type={'text'} style={styles.text}>{body.text}</TextLabel>
+          {typeof body.text === 'string' && body.text.length > 0 && <TextLabel type={'text'} style={styles.text}>{body.text}</TextLabel>}
         </View>
       case 'IMAGE':
         return <View>
           {typeof body.topic === 'string' && body.topic.length > 0 && <TextLabel type={'text'} bold style={styles.text}>{body.topic}</TextLabel>}
-          <AutoHeightImage source={{ uri: body.url }} width={Dimensions.get('window').width} />
-          <TextLabel type={'subtitle'} style={styles.textImage}>{body.text}</TextLabel>
+          {typeof body.url === 'string' && body.url.length > 0 && <AutoHeightImage source={{ uri: body.url }} width={Dimensions.get('window').width} />}
+          {typeof body.text === 'string' && body.text.length > 0 && <TextLabel type={'subtitle'} style={styles.textImage}>{body.text}</TextLabel>}
         </View>
     }
     return null;
