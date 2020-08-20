@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 import colors from '../../../constants/colors';
 
 export default StyleSheet.create({
@@ -15,7 +15,9 @@ export default StyleSheet.create({
     borderRadius: 10,
     borderColor: colors.light,
     padding: 15,
+    paddingVertical: 0,
     marginHorizontal: 15,
+    height: Dimensions.get('window').height * 0.5,
   },
   question: {
     paddingHorizontal: 15,
@@ -35,9 +37,12 @@ export default StyleSheet.create({
   },
   pagination: {
     paddingHorizontal: 20,
-    paddingVertical: 30,
+    paddingVertical: 5,
     justifyContent: 'space-between',
     flexDirection: 'row',
     flexWrap: 'wrap',
-  }
+  },
+  paginationBtn: {
+    padding: 10,
+  },
 });

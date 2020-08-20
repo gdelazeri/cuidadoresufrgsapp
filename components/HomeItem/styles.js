@@ -7,16 +7,17 @@ export default StyleSheet.create({
     backgroundColor: colors.light,
     overflow: 'hidden',
     width: Dimensions.get('window').width * 0.6,
-    height: Dimensions.get('window').width * 0.55,
+    height: Dimensions.get('window').width * 0.48,
   },
   image: {
     resizeMode: 'cover',
     width: Dimensions.get('window').width * 0.6,
-    height: Dimensions.get('window').width * 0.4,
+    height: Dimensions.get('window').width * 0.33,
   },
   text: {
     height: Dimensions.get('window').width * 0.15,
     paddingHorizontal: 10,
     paddingVertical: 5,
+    justifyContent: 'space-around',
   }
 });
