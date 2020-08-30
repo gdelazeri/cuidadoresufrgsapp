@@ -6,4 +6,6 @@ export default class FormService {
   static listAll = (search = '') => Request.get(`/form?search=${search}`);
   
   static get = (id) => Request.get(`/form/${id}`);
+
+  static result = (id, userId) => Request.get(`/form/result/${id}?userId=${userId}`);
 }

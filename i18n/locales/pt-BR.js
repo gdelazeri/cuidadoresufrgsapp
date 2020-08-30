@@ -57,6 +57,10 @@ export default {
     forms: 'Testes',
     empty: 'Nenhum conteúdo foi encontrado',
   },
+  Form: {
+    result: 'Resultado',
+    resultError: 'Erro ao calcular seus resultados',
+  },
   ContentList: {
     contents: 'Artigos',
     empty: 'Nenhum conteúdo foi encontrado',

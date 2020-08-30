@@ -24,6 +24,20 @@ export default StyleSheet.create({
     marginBottom: 15,
     marginTop: 15,
   },
+  introductionTitle: {
+    marginBottom: 10,
+    marginTop: 15,
+  },
+  introductionText: {
+    marginBottom: 15,
+  },
+  resultTitle: {
+    marginBottom: 10,
+    marginTop: 15,
+  },
+  resultDomain: {
+    marginBottom: 15,
+  },
   option: {
     borderWidth: 1,
     borderRadius: 10,

@@ -5,9 +5,9 @@ import {
   View,
   TouchableOpacity,
   ScrollView,
-  ActivityIndicator,
 } from 'react-native';
 
+import i18n from '../../../i18n';
 import styles from './styles';
 import Screen from '../../../components/Screen';
 import TextLabel from '../../../components/TextLabel';
@@ -17,6 +17,12 @@ import colors from '../../../constants/colors';
 import FormService from '../../../services/FormService';
 import FormAnswerService from '../../../services/FormAnswerService';
 
+const Stages = {
+  INTRODUCTION: 0,
+  QUESTIONS: 1,
+  RESULT: 1,
+}
+
 class Form extends React.Component {
   constructor(props) {
     super(props);
@@ -24,10 +30,12 @@ class Form extends React.Component {
       loading: true,
       fetchError: false,
       refreshing: false,
-      form: { questions: [] },
+      form: { introduction: {}, questions: [] },
       formAnswer: { questions: [] },
+      result: [],
       index: 0,
       answer: undefined,
+      stage: Stages.INTRODUCTION,
     }
   }
 
@@ -53,7 +61,8 @@ class Form extends React.Component {
           formAnswer = response.result;
         }
       }
-      this.setState({ form, formAnswer, refreshing: false, loading: false, fetchError: false });
+      const stage = form.introduction ? Stages.INTRODUCTION : Stages.QUESTIONS;
+      this.setState({ stage, form, formAnswer, refreshing: false, loading: false, fetchError: false });
     } else {
       this.setState({ refreshing: false, loading: false, fetchError: false });
     }
@@ -71,9 +80,15 @@ class Form extends React.Component {
   }
 
   next = async () => {
-    const { form, formAnswer, index } = this.state;
+    const { stage, form, formAnswer, index } = this.state;
     let question, selected;
-    if (index >= 0 && Array.isArray(form.questions) && index < form.questions.length) {
+    if (stage === Stages.INTRODUCTION) {
+      this.setState({ stage: Stages.QUESTIONS, index: 0 });
+    } else if (
+      stage === Stages.QUESTIONS
+      && index >= 0 && Array.isArray(form.questions)
+      && index < form.questions.length
+    ) {
       question = form.questions[index];
       const answer = Array.isArray(formAnswer.questions) ? formAnswer.questions.find((q) => q.label === question.label) : undefined;
       selected = answer ? answer.value : undefined;
@@ -84,6 +99,12 @@ class Form extends React.Component {
         await this.save();
         this.setState({ index: index + 1 });
       }
+    } else if (
+      stage === Stages.QUESTIONS
+      && index+1 === form.questions.length
+    ) {
+      this.props.setLoader(true);
+      this.getResult();
     }
   }
 
@@ -108,11 +129,25 @@ class Form extends React.Component {
     }
   }
 
+  getResult = async () => {
+    const response = await FormService.result(this._id, this.props.user._id);
+    if (response.success) {
+      this.setState({ stage: Stages.RESULT, result: response.result });
+      this.props.setLoader(false);
+    } else {
+      this.props.setLoader(false);
+      this.setState({
+        stage: Stages.RESULT,
+        result: [{ text: i18n.t('Form.resultError') }],
+      });
+    }
+  }
+
   renderAnswer = (question, index, selected) => {
     switch (question.type) {
       case "LEVEL":
         return Array.isArray(question.options) && question.options.map((option, idx) => <TouchableOpacity key={`q${index}o${idx}`} activeOpacity={0.7} onPress={() => this.select(question, option.value)} style={[styles.option, selected === option.value ? styles.selected : undefined]}>
-          <TextLabel type={'text'}>{option.value} - {option.label}</TextLabel>
+          <TextLabel type={'text'}>{option.label}</TextLabel>
         </TouchableOpacity>)
     }
     return null;
@@ -124,7 +159,7 @@ class Form extends React.Component {
   }
 
   render() {
-    const { form, formAnswer, index } = this.state;
+    const { form, formAnswer, index, stage, result } = this.state;
     let question, selected;
     if (index >= 0 && Array.isArray(form.questions) && index < form.questions.length) {
       question = form.questions[index];
@@ -140,17 +175,27 @@ class Form extends React.Component {
           <TextLabel type={'titleHighlight'}>{form.title}</TextLabel>
           <TextLabel type={'text'} style={styles.description}>{form.description}</TextLabel>
         </View>
-        {question && <View style={styles.box}>
+        <View style={styles.box}>
           <ScrollView showsVerticalScrollIndicator={false}>
-            <TextLabel type={'text'} bold style={styles.question}>{question.label}</TextLabel>
-            {this.renderAnswer(question, index, selected)}
+            {stage === Stages.INTRODUCTION && <View>
+              <TextLabel type={'text'} bold style={styles.introductionTitle}>{form.introduction.title}</TextLabel>
+              <TextLabel type={'text'} style={styles.introductionText}>{form.introduction.text}</TextLabel>
+            </View>}
+            {stage === Stages.QUESTIONS && question && <View>
+              <TextLabel type={'text'} bold style={styles.question}>{question.label}</TextLabel>
+              {this.renderAnswer(question, index, selected)}
+            </View>}
+            {stage === Stages.RESULT && <View>
+              <TextLabel type={'text'} bold style={styles.resultTitle}>{i18n.t('Form.result')}</TextLabel>
+              
+            </View>}
           </ScrollView>
-        </View>}
+        </View>
         {Array.isArray(form.questions) && <View style={styles.pagination}>
           <TouchableOpacity disabled={index === 0} style={styles.paginationBtn} onPress={() => this.setState({ index: index-1 })}>
             <IconChevron side={'left'} color={index === 0 ? colors.light : colors.grey} />
           </TouchableOpacity>
-          <TextLabel type={'text'} style={styles.paginationBtn} bold>{index+1}/{form.questions.length}</TextLabel>
+          {stage === Stages.QUESTIONS && <TextLabel type={'text'} style={styles.paginationBtn} bold>{index+1}/{form.questions.length}</TextLabel>}
           <TouchableOpacity disabled={nextDisabled} style={styles.paginationBtn} onPress={this.next}>
             <IconChevron side={'right'} color={nextDisabled ? colors.light : colors.grey} />
           </TouchableOpacity>
