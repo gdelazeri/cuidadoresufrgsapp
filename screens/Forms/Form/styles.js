@@ -36,7 +36,7 @@ export default StyleSheet.create({
     marginTop: 15,
   },
   resultDomain: {
-    marginBottom: 15,
+    marginBottom: 10,
   },
   option: {
     borderWidth: 1,

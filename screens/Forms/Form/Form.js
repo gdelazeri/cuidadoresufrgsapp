@@ -5,6 +5,7 @@ import {
   View,
   TouchableOpacity,
   ScrollView,
+  Image,
 } from 'react-native';
 
 import i18n from '../../../i18n';
@@ -20,7 +21,7 @@ import FormAnswerService from '../../../services/FormAnswerService';
 const Stages = {
   INTRODUCTION: 0,
   QUESTIONS: 1,
-  RESULT: 1,
+  RESULT: 2,
 }
 
 class Form extends React.Component {
@@ -82,12 +83,13 @@ class Form extends React.Component {
   next = async () => {
     const { stage, form, formAnswer, index } = this.state;
     let question, selected;
+    console.log({ stage, index });
     if (stage === Stages.INTRODUCTION) {
-      this.setState({ stage: Stages.QUESTIONS, index: 0 });
+      this.setState({ stage: Stages.QUESTIONS, index: 25 });
     } else if (
       stage === Stages.QUESTIONS
       && index >= 0 && Array.isArray(form.questions)
-      && index < form.questions.length
+      && index+1 < form.questions.length
     ) {
       question = form.questions[index];
       const answer = Array.isArray(formAnswer.questions) ? formAnswer.questions.find((q) => q.label === question.label) : undefined;
@@ -138,7 +140,7 @@ class Form extends React.Component {
       this.props.setLoader(false);
       this.setState({
         stage: Stages.RESULT,
-        result: [{ text: i18n.t('Form.resultError') }],
+        result: [{ title: i18n.t('Form.resultError') }],
       });
     }
   }
@@ -179,6 +181,7 @@ class Form extends React.Component {
           <ScrollView showsVerticalScrollIndicator={false}>
             {stage === Stages.INTRODUCTION && <View>
               <TextLabel type={'text'} bold style={styles.introductionTitle}>{form.introduction.title}</TextLabel>
+              {/* imageUrl: this.form.domains[i].imageUrl, */}
               <TextLabel type={'text'} style={styles.introductionText}>{form.introduction.text}</TextLabel>
             </View>}
             {stage === Stages.QUESTIONS && question && <View>
@@ -187,7 +190,12 @@ class Form extends React.Component {
             </View>}
             {stage === Stages.RESULT && <View>
               <TextLabel type={'text'} bold style={styles.resultTitle}>{i18n.t('Form.result')}</TextLabel>
-              
+              {result.map((res) => <View style={styles.resultDomain}>
+                {typeof res.title === 'string' && res.title.length && <TextLabel type={'text'}>{res.title}</TextLabel>}
+                {/* res.imageUrl: this.form.domains[i].imageUrl, */}
+                {typeof res.text === 'string' && res.text.length && <TextLabel type={'subtitle'}>{res.text}</TextLabel>}
+                {typeof res.classification === 'string' && res.classification.length && <TextLabel type={'subtitle'}>{res.classification}</TextLabel>}
+              </View>)}
             </View>}
           </ScrollView>
         </View>
