@@ -58,7 +58,7 @@ export default {
     empty: 'Nenhum conteúdo foi encontrado',
   },
   Form: {
-    result: 'Resultado',
+    result: 'Seu resultado',
     resultError: 'Erro ao calcular seus resultados',
   },
   ContentList: {

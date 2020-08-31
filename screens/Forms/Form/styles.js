@@ -38,6 +38,15 @@ export default StyleSheet.create({
   resultDomain: {
     marginBottom: 10,
   },
+  imageView: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginVertical: 5,
+  },
+  image: {
+    height: Dimensions.get('window').height * 0.15,
+    width: Dimensions.get('window').width - 30,
+  },
   option: {
     borderWidth: 1,
     borderRadius: 10,

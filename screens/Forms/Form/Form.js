@@ -36,6 +36,7 @@ class Form extends React.Component {
       result: [],
       index: 0,
       answer: undefined,
+      hasChange: false,
       stage: Stages.INTRODUCTION,
     }
   }
@@ -77,15 +78,27 @@ class Form extends React.Component {
     } else {
       formAnswer.questions.push({ label: question.label, value });
     }
-    this.setState({ formAnswer });
+    this.setState({ formAnswer, hasChange: true });
   }
 
+  back = async () => {
+    const { stage, index, hasChange } = this.state;
+    if (stage === Stages.QUESTIONS && index === 0) {
+      if (hasChange) this.save();
+      this.setState({ stage: Stages.INTRODUCTION, hasChange: false });
+    } else if (stage === Stages.QUESTIONS && index > 0) {
+      if (hasChange) this.save();
+      this.setState({ index: index - 1, hasChange: false });
+    } else if (stage === Stages.RESULT) {
+      this.setState({ stage: Stages.QUESTIONS });
+    }
+  }
+  
   next = async () => {
-    const { stage, form, formAnswer, index } = this.state;
+    const { stage, form, formAnswer, index, hasChange } = this.state;
     let question, selected;
-    console.log({ stage, index });
     if (stage === Stages.INTRODUCTION) {
-      this.setState({ stage: Stages.QUESTIONS, index: 25 });
+      this.setState({ stage: Stages.QUESTIONS, index: 0 });
     } else if (
       stage === Stages.QUESTIONS
       && index >= 0 && Array.isArray(form.questions)
@@ -95,17 +108,18 @@ class Form extends React.Component {
       const answer = Array.isArray(formAnswer.questions) ? formAnswer.questions.find((q) => q.label === question.label) : undefined;
       selected = answer ? answer.value : undefined;
       if (question.required && selected) {
-        await this.save();
-        this.setState({ index: index + 1 });
+        if (hasChange) this.save();
+        this.setState({ index: index + 1, hasChange: false });
       } else if (!question.required) {
-        await this.save();
-        this.setState({ index: index + 1 });
+        if (hasChange) this.save();
+        this.setState({ index: index + 1, hasChange: false });
       }
     } else if (
       stage === Stages.QUESTIONS
       && index+1 === form.questions.length
     ) {
       this.props.setLoader(true);
+      if (hasChange) await this.save();
       this.getResult();
     }
   }
@@ -116,6 +130,8 @@ class Form extends React.Component {
     if (formAnswer._id) {
       response = await FormAnswerService.put(formAnswer);
     } else {
+      formAnswer.userId = this.props.user._id;
+      formAnswer.formId = this._id;
       response = await FormAnswerService.post(formAnswer);
     }
     if (response.success) {
@@ -134,11 +150,12 @@ class Form extends React.Component {
   getResult = async () => {
     const response = await FormService.result(this._id, this.props.user._id);
     if (response.success) {
-      this.setState({ stage: Stages.RESULT, result: response.result });
+      this.setState({ stage: Stages.RESULT, result: response.result, hasChange: false });
       this.props.setLoader(false);
     } else {
       this.props.setLoader(false);
       this.setState({
+        hasChange: false,
         stage: Stages.RESULT,
         result: [{ title: i18n.t('Form.resultError') }],
       });
@@ -168,7 +185,7 @@ class Form extends React.Component {
       const answer = Array.isArray(formAnswer.questions) ? formAnswer.questions.find((q) => q.label === question.label) : undefined;
       selected = answer ? answer.value : undefined;
     }
-    const nextDisabled = question && question.required && !selected;
+    const nextDisabled = stage === Stages.QUESTIONS && question && question.required && !selected;
     return (
       <Screen loading={this.state.loading} navigation={this.props.navigation} error={this.state.fetchError} reload={this.reload}>
         <View style={{ height: Constants.statusBarHeight }} />
@@ -178,10 +195,12 @@ class Form extends React.Component {
           <TextLabel type={'text'} style={styles.description}>{form.description}</TextLabel>
         </View>
         <View style={styles.box}>
-          <ScrollView showsVerticalScrollIndicator={false}>
+          <ScrollView ref={'scrollView'} showsVerticalScrollIndicator={false}>
             {stage === Stages.INTRODUCTION && <View>
               <TextLabel type={'text'} bold style={styles.introductionTitle}>{form.introduction.title}</TextLabel>
-              {/* imageUrl: this.form.domains[i].imageUrl, */}
+              {typeof form.introduction.imageUrl === 'string' && form.introduction.imageUrl.length && <View style={styles.imageView}>
+                <Image source={{ uri: form.introduction.imageUrl }} resizeMode={'contain'} style={styles.image} />
+              </View>}
               <TextLabel type={'text'} style={styles.introductionText}>{form.introduction.text}</TextLabel>
             </View>}
             {stage === Stages.QUESTIONS && question && <View>
@@ -190,9 +209,11 @@ class Form extends React.Component {
             </View>}
             {stage === Stages.RESULT && <View>
               <TextLabel type={'text'} bold style={styles.resultTitle}>{i18n.t('Form.result')}</TextLabel>
-              {result.map((res) => <View style={styles.resultDomain}>
+              {result.map((res, idx) => <View key={`result${idx}`} style={styles.resultDomain}>
                 {typeof res.title === 'string' && res.title.length && <TextLabel type={'text'}>{res.title}</TextLabel>}
-                {/* res.imageUrl: this.form.domains[i].imageUrl, */}
+                {typeof res.imageUrl === 'string' && res.imageUrl.length && <View style={styles.imageView}>
+                  <Image source={{ uri: res.imageUrl }} resizeMode={'contain'} style={styles.image} />
+                </View>}
                 {typeof res.text === 'string' && res.text.length && <TextLabel type={'subtitle'}>{res.text}</TextLabel>}
                 {typeof res.classification === 'string' && res.classification.length && <TextLabel type={'subtitle'}>{res.classification}</TextLabel>}
               </View>)}
@@ -200,8 +221,8 @@ class Form extends React.Component {
           </ScrollView>
         </View>
         {Array.isArray(form.questions) && <View style={styles.pagination}>
-          <TouchableOpacity disabled={index === 0} style={styles.paginationBtn} onPress={() => this.setState({ index: index-1 })}>
-            <IconChevron side={'left'} color={index === 0 ? colors.light : colors.grey} />
+          <TouchableOpacity disabled={stage === Stages.INTRODUCTION} style={styles.paginationBtn} onPress={this.back}>
+            <IconChevron side={'left'} color={stage === Stages.INTRODUCTION ? colors.light : colors.grey} />
           </TouchableOpacity>
           {stage === Stages.QUESTIONS && <TextLabel type={'text'} style={styles.paginationBtn} bold>{index+1}/{form.questions.length}</TextLabel>}
           <TouchableOpacity disabled={nextDisabled} style={styles.paginationBtn} onPress={this.next}>
