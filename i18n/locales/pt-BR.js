@@ -60,6 +60,8 @@ export default {
   Form: {
     result: 'Seu resultado',
     resultError: 'Erro ao calcular seus resultados',
+    finish: 'Finalizar',
+    remake: 'Refazer',
   },
   ContentList: {
     contents: 'Artigos',

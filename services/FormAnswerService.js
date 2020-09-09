@@ -6,4 +6,6 @@ export default class FormAnswerService {
   static put = (body) => Request.put(`/formAnswer/${body._id}`, body);
 
   static get = (userId, formId) => Request.get(`/formAnswer?userId=${userId}&formId=${formId}`);
+
+  static finish = (id) => Request.put(`/formAnswer/finish/${id}`);
 }

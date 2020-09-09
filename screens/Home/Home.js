@@ -10,6 +10,7 @@ import TextLabel from '../../components/TextLabel';
 import HomeList from '../../components/HomeList';
 import ContentService from '../../services/ContentService';
 import FormService from '../../services/FormService';
+import { NavigationEvents } from 'react-navigation';
 
 class Home extends React.Component {
   constructor(props) {
@@ -28,10 +29,6 @@ class Home extends React.Component {
     header: null,
   }
 
-  componentDidMount = () => {
-    this.load();
-  }
-
   load = async (refreshing = false) => {
     this.setState({ refreshing });
     const responseContent = await ContentService.list(0, 5, undefined, true);
@@ -47,28 +44,31 @@ class Home extends React.Component {
 
   render() {
     return (
-      <Screen loading={this.state.loading} navigation={this.props.navigation} error={this.state.fetchError}>
-        <View style={{ height: Constants.statusBarHeight }} />
-        <View style={styles.header}>
-          <TextLabel type={'title'}>{i18n.t('Home.hi')}</TextLabel>
-          <TextLabel type={'titleHighlight'}>{this.props.user.name.split(' ')[0]}</TextLabel>
-        </View>
-        <HomeList
-          list={this.state.contents}
-          listScreen={'ContentList'}
-          itemScreen={'Content'}
-          title={i18n.t('Home.contents')}
-          navigation={this.props.navigation}
-        />
-        <View style={{ height: 20 }} />
-        <HomeList
-          list={this.state.forms}
-          listScreen={'FormList'}
-          itemScreen={'Form'}
-          title={i18n.t('Home.forms')}
-          navigation={this.props.navigation}
-        />
-      </Screen>
+      <View>
+        <NavigationEvents onDidFocus={this.load} />
+        <Screen loading={this.state.loading} navigation={this.props.navigation} error={this.state.fetchError}>
+          <View style={{ height: Constants.statusBarHeight }} />
+          <View style={styles.header}>
+            <TextLabel type={'title'}>{i18n.t('Home.hi')}</TextLabel>
+            <TextLabel type={'titleHighlight'}>{this.props.user.name.split(' ')[0]}</TextLabel>
+          </View>
+          <HomeList
+            list={this.state.forms}
+            listScreen={'FormList'}
+            itemScreen={'Form'}
+            title={i18n.t('Home.forms')}
+            navigation={this.props.navigation}
+          />
+          <View style={{ height: 20 }} />
+          <HomeList
+            list={this.state.contents}
+            listScreen={'ContentList'}
+            itemScreen={'Content'}
+            title={i18n.t('Home.contents')}
+            navigation={this.props.navigation}
+          />
+        </Screen>
+      </View>
     );
   }
 }

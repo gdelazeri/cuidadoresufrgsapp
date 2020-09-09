@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Image,
+  Dimensions,
 } from 'react-native';
 
 import i18n from '../../../i18n';
@@ -13,6 +14,7 @@ import styles from './styles';
 import Screen from '../../../components/Screen';
 import TextLabel from '../../../components/TextLabel';
 import BackBtn from '../../../components/BackBtn';
+import CustomBtn from '../../../components/CustomBtn';
 import IconChevron from '../../../components/Icons/IconChevron';
 import colors from '../../../constants/colors';
 import FormService from '../../../services/FormService';
@@ -172,6 +174,20 @@ class Form extends React.Component {
     return null;
   }
 
+  reset = () => {
+    this.setState({
+      result: [],
+      index: 0,
+      stage: Stages.INTRODUCTION,
+    })
+  }
+
+  finish = async () => {
+    const { formAnswer } = this.state;
+    await FormAnswerService.finish(formAnswer._id);
+    this.props.navigation.goBack();
+  }
+
   reload = () => {
     this.setState({ loading: true });
     this.load();
@@ -220,7 +236,7 @@ class Form extends React.Component {
             </View>}
           </ScrollView>
         </View>
-        {Array.isArray(form.questions) && <View style={styles.pagination}>
+        {stage !== Stages.RESULT && Array.isArray(form.questions) && <View style={styles.pagination}>
           <TouchableOpacity disabled={stage === Stages.INTRODUCTION} style={styles.paginationBtn} onPress={this.back}>
             <IconChevron side={'left'} color={stage === Stages.INTRODUCTION ? colors.light : colors.grey} />
           </TouchableOpacity>
@@ -228,6 +244,18 @@ class Form extends React.Component {
           <TouchableOpacity disabled={nextDisabled} style={styles.paginationBtn} onPress={this.next}>
             <IconChevron side={'right'} color={nextDisabled ? colors.light : colors.grey} />
           </TouchableOpacity>
+        </View>}
+        {stage === Stages.RESULT && <View style={styles.pagination}>
+          <CustomBtn
+            text={i18n.t('Form.remake')}
+            width={Dimensions.get('window').width/3}
+            onPress={this.reset}
+          />
+          <CustomBtn
+            text={i18n.t('Form.finish')}
+            width={Dimensions.get('window').width/3}
+            onPress={this.finish}
+          />
         </View>}
       </Screen>
     );

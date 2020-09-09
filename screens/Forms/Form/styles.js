@@ -60,7 +60,7 @@ export default StyleSheet.create({
   },
   pagination: {
     paddingHorizontal: 20,
-    paddingVertical: 5,
+    paddingVertical: 10,
     justifyContent: 'space-between',
     flexDirection: 'row',
     flexWrap: 'wrap',

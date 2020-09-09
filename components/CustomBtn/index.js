@@ -36,7 +36,10 @@ const CustomBtn = ({
   titleStyle = {
     ...titleStyle,
     ...textStyle,
-    paddingBottom: 2,
+    paddingBottom: 0,
+    paddingTop: 0,
+    margin: 0,
+    lineHeight: 20,
     borderColor: '#fff',
     textAlignVertical: 'center',
   }

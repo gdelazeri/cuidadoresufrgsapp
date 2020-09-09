@@ -25,7 +25,7 @@
     "ios": {
       "supportsTablet": true,
       "buildNumber": "10000000",
-      "bundleIdentifier": "br.com.ufrgs.cuidadores",
+      "bundleIdentifier": "br.com.ufrgs.cuidadores"
     },
     "android": {
       "versionCode": 10000000,

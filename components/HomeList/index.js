@@ -7,7 +7,7 @@ import i18n from '../../i18n';
 import TextLabel from '../TextLabel';
 import HomeItem from '../HomeItem';
 
-const HomeList = ({ list = [], listScreen, itemScreen, title, navigation }) => <View>
+const HomeList = ({ list = [], listScreen, itemScreen, title, navigation, width }) => <View>
   <View style={styles.header}>
     <TextLabel type={'title'}>{title}</TextLabel>
     {typeof listScreen === 'string' && <TouchableOpacity onPress={() => navigation.navigate(listScreen)}>
@@ -17,7 +17,13 @@ const HomeList = ({ list = [], listScreen, itemScreen, title, navigation }) => <
   <FlatList
     data={list}
     contentContainerStyle={styles.list}
-    renderItem={({item}) => <HomeItem item={item} onPress={() => navigation.navigate(itemScreen, { _id: item._id })} />}
+    renderItem={({item}) => (
+      <HomeItem
+        item={item}
+        onPress={() => navigation.navigate(itemScreen, { _id: item._id })}
+        width={width}
+      />
+    )}
     ItemSeparatorComponent={() => <View style={styles.separator} />}
     horizontal={true}
     keyExtractor={(item) => item._id}
@@ -31,6 +37,7 @@ HomeList.propTypes = {
   itemScreen: PropTypes.string,
   title: PropTypes.string,
   navigation: PropTypes.object,
+  width: PropTypes.number,
 };
 
 export default HomeList;
