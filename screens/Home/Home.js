@@ -32,7 +32,7 @@ class Home extends React.Component {
   load = async (refreshing = false) => {
     this.setState({ refreshing });
     const responseContent = await ContentService.list(0, 5, undefined, true);
-    const responseForm = await FormService.list(0, 5, undefined, true);
+    const responseForm = await FormService.list(this.props.user._id, 0, 5, undefined, true);
     if (responseContent.success && responseForm.success) {
       const contents = responseContent.result;
       const forms = responseForm.result;
