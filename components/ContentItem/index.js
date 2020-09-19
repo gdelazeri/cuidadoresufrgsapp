@@ -13,7 +13,7 @@ const ContentItem = ({ item, onPress }) => <TouchableOpacity style={styles.wrapp
   <View style={styles.text}>
     {item.category && <TextLabel type={'subtitle'}>{item.category.name}</TextLabel>}
     <TextLabel type={'title'} numberOfLines={1}>{item.title}</TextLabel>
-    <TextLabel type={'subtitle'} numberOfLines={2}>{item.subtitle}</TextLabel>
+    <TextLabel type={'subtitle'} numberOfLines={1}>{item.description}</TextLabel>
   </View>
 </TouchableOpacity>
 

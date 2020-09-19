@@ -58,10 +58,11 @@ export default {
     empty: 'Nenhum conteúdo foi encontrado',
   },
   Form: {
-    result: 'Seu resultado',
+    result: 'Resultado',
     resultError: 'Erro ao calcular seus resultados',
     finish: 'Finalizar',
     remake: 'Refazer',
+    answerHere: 'Responda aqui...',
   },
   ContentList: {
     contents: 'Artigos',

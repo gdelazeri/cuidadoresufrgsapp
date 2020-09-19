@@ -55,6 +55,17 @@ export default StyleSheet.create({
     paddingVertical: 10,
     marginBottom: 15,
   },
+  text: {
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: colors.light,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    height: Dimensions.get('window').height * 0.3,
+    color: colors.text,
+    fontFamily: 'quicksand',
+    fontSize: 16,
+  },
   selected: {
     backgroundColor: colors.light,
   },

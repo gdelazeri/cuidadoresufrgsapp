@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Constants from 'expo-constants';
 import {
   View,
+  TextInput,
   TouchableOpacity,
   ScrollView,
   Image,
@@ -16,6 +17,7 @@ import TextLabel from '../../../components/TextLabel';
 import BackBtn from '../../../components/BackBtn';
 import CustomBtn from '../../../components/CustomBtn';
 import IconChevron from '../../../components/Icons/IconChevron';
+import QuestionTypes from '../../../constants/questionTypes';
 import colors from '../../../constants/colors';
 import FormService from '../../../services/FormService';
 import FormAnswerService from '../../../services/FormAnswerService';
@@ -72,7 +74,7 @@ class Form extends React.Component {
     }
   }
 
-  select = (question, value) => {
+  setAnswer = (question, value) => {
     const { formAnswer } = this.state;
     const index = formAnswer.questions.findIndex((q) => q.label === question.label);
     if (index !== -1) {
@@ -109,13 +111,7 @@ class Form extends React.Component {
       question = form.questions[index];
       const answer = Array.isArray(formAnswer.questions) ? formAnswer.questions.find((q) => q.label === question.label) : undefined;
       selected = answer ? answer.value : undefined;
-      if (question.required && selected) {
-        if (hasChange) this.save();
-        this.setState({ index: index + 1, hasChange: false });
-      } else if (!question.required) {
-        if (hasChange) this.save();
-        this.setState({ index: index + 1, hasChange: false });
-      }
+      this.checkAnswer(question, selected, hasChange, index);
     } else if (
       stage === Stages.QUESTIONS
       && index+1 === form.questions.length
@@ -124,6 +120,34 @@ class Form extends React.Component {
       if (hasChange) await this.save();
       this.getResult();
     }
+  }
+
+  checkAnswer = (question, selected, hasChange, index) => {
+    if (hasChange) {
+      if (question.required) {
+        if (
+          (question.type === QuestionTypes.LEVEL || question.type === QuestionTypes.BINARY || question.type === QuestionTypes.CHOOSE)
+          && selected
+        ) {
+          this.save();
+          this.setState({ index: index + 1, hasChange: false });
+          return true;
+        }
+        if (question.type === QuestionTypes.TEXT && selected) {
+          this.save();
+          this.setState({ index: index + 1, hasChange: false });
+          return true;
+        }
+      } else {
+        this.setAnswer(question, selected);
+        this.save();
+        this.setState({ index: index + 1, hasChange: false });
+        return true;
+      }
+    }
+    this.setAnswer(question, selected);
+    this.setState({ index: index + 1, hasChange: false });
+    return false;
   }
 
   save = async () => {
@@ -166,10 +190,24 @@ class Form extends React.Component {
 
   renderAnswer = (question, index, selected) => {
     switch (question.type) {
-      case "LEVEL":
-        return Array.isArray(question.options) && question.options.map((option, idx) => <TouchableOpacity key={`q${index}o${idx}`} activeOpacity={0.7} onPress={() => this.select(question, option.value)} style={[styles.option, selected === option.value ? styles.selected : undefined]}>
+      case QuestionTypes.LEVEL:
+      case QuestionTypes.BINARY:
+      case QuestionTypes.CHOOSE:
+        return Array.isArray(question.options) && question.options.map((option, idx) => <TouchableOpacity key={`q${index}o${idx}`} activeOpacity={0.7} onPress={() => this.setAnswer(question, option.value)} style={[styles.option, selected === option.value ? styles.selected : undefined]}>
           <TextLabel type={'text'}>{option.label}</TextLabel>
         </TouchableOpacity>)
+      case QuestionTypes.TEXT:
+        return <TextInput
+          value={selected}
+          onChangeText={(value) => this.setAnswer(question, value.replace('\n', '\\n'))}
+          style={styles.text}
+          multiline={true}
+          textAlignVertical={'top'}
+          placeholder={i18n.t('Form.answerHere')}
+          placeholderTextColor={colors.grey}
+        />
+      case QuestionTypes.CHOOSE_MULTIPLE:
+        return null;
     }
     return null;
   }
@@ -224,7 +262,7 @@ class Form extends React.Component {
               {this.renderAnswer(question, index, selected)}
             </View>}
             {stage === Stages.RESULT && <View>
-              <TextLabel type={'text'} bold style={styles.resultTitle}>{i18n.t('Form.result')}</TextLabel>
+              <TextLabel type={'text'} bold style={styles.resultTitle}>{form.resultTitle || i18n.t('Form.result')}</TextLabel>
               {result.map((res, idx) => <View key={`result${idx}`} style={styles.resultDomain}>
                 {typeof res.title === 'string' && res.title.length && <TextLabel type={'text'}>{res.title}</TextLabel>}
                 {typeof res.imageUrl === 'string' && res.imageUrl.length && <View style={styles.imageView}>

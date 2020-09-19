@@ -12,7 +12,7 @@ const FormItem = ({ item, onPress }) => <TouchableOpacity style={styles.wrapper}
   />
   <View style={styles.text}>
     <TextLabel type={'title'} numberOfLines={1}>{item.title}</TextLabel>
-    <TextLabel type={'subtitle'} numberOfLines={2}>{item.description}</TextLabel>
+    <TextLabel type={'subtitle'} numberOfLines={1}>{item.description}</TextLabel>
   </View>
 </TouchableOpacity>
 
