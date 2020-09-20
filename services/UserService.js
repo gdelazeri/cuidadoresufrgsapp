@@ -6,9 +6,13 @@ export default class UserService {
 
   static refreshToken = () => Request.post('/user/login/refresh');
   
+  static get = (_id) => Request.get(`/user/${_id}`);
+
   static post = (payload) => Request.post('/user', payload);
+  
+  static acceptConsentTerm = (_id) => Request.patch(`/user/acceptConsentTerm/${_id}`);
 
   static setToken = (token) => AsyncStorage.setItem('token', token);
   
-  static getToken = (token) => AsyncStorage.getItem('token');
+  static getToken = () => AsyncStorage.getItem('token');
 }

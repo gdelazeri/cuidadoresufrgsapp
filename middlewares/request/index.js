@@ -16,6 +16,8 @@ class Request {
   
   put = async (path, body) => this.request('PUT', path, body);
 
+  patch = async (path, body) => this.request('PATCH', path, body);
+
   setToken = (token) => {
     if (token) {
       this.headers.Authorization = `Bearer ${token}`;

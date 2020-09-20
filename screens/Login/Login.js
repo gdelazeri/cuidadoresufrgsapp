@@ -47,9 +47,14 @@ class Login extends React.Component {
       if (response.success) {
         await UserService.setToken(response.result.token);
         Request.setToken(response.result.token);
-        this.props.setUser(jwtDecode(response.result.token));
+        const user = jwtDecode(response.result.token);
+        this.props.setUser(user);
         this.setState({ loading: false });
-        NavigationService.reset('LoggedNavigator');
+        if (response.result.consentTermAcceptedAt) {
+          NavigationService.reset('LoggedNavigator');
+        } else {
+          this.props.navigation.navigate('ConsentTerm', { userId: user._id });
+        }
       } else {
         this.setState({ loading: false });
       }
@@ -75,9 +80,14 @@ class Login extends React.Component {
     if (response.success) {
       await UserService.setToken(response.result.token);
       Request.setToken(response.result.token);
-      this.props.setUser(jwtDecode(response.result.token));
+      const user = jwtDecode(response.result.token);
+      this.props.setUser(user);
       this.setState({ processing: false });
-      NavigationService.reset('LoggedNavigator');
+      if (response.result.consentTermAcceptedAt) {
+        NavigationService.reset('LoggedNavigator');
+      } else {
+        this.props.navigation.navigate('ConsentTerm', { userId: user._id });
+      }
     } else {
       this.setState({ processing: false });
       this.props.setModalConfirm({

@@ -75,6 +75,12 @@ export default {
     placeholder: 'Buscar',
     cancel: 'Cancelar',
   },
+  ConsentTerm: {
+    title: 'Termo de Consentimento',
+    acceptError: 'Erro ao aceitar termo de consentimento',
+    btnError: 'Ok',
+    btnContinue: 'Aceito',
+  },
   date: {
     jan: 'Janeiro',
     feb: 'Fevereiro',

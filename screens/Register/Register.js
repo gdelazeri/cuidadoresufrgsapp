@@ -99,9 +99,14 @@ class Register extends React.Component {
       response = await UserService.login(user.email, user.password);
       await UserService.setToken(response.result.token);
       Request.setToken(response.result.token);
-      this.props.setUser(jwtDecode(response.result.token));
+      const user = jwtDecode(response.result.token);
+      this.props.setUser(user);
       this.props.setLoader(false);
-      NavigationService.reset('LoggedNavigator');
+      if (response.result.consentTermAcceptedAt) {
+        NavigationService.reset('LoggedNavigator');
+      } else {
+        this.props.navigation.navigate('ConsentTerm', { userId: user._id });
+      }
     } else {
       this.props.setLoader(false);
       let error = i18n.t('Register.error');
