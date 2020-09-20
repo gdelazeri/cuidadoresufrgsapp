@@ -3,4 +3,5 @@ export default {
   TEXT: "TEXT",
   BINARY: "BINARY",
   CHOOSE: "CHOOSE",
+  CHOOSE_MULTIPLE: "CHOOSE_MULTIPLE",
 }

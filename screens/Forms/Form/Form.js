@@ -78,7 +78,17 @@ class Form extends React.Component {
     const { formAnswer } = this.state;
     const index = formAnswer.questions.findIndex((q) => q.label === question.label);
     if (index !== -1) {
-      formAnswer.questions[index].value = value;
+      if (question.type === QuestionTypes.CHOOSE_MULTIPLE) {
+        if (formAnswer.questions[index].value.includes(value)) {
+          formAnswer.questions[index].value = formAnswer.questions[index].value.split(';').filter(v => v !== value).join(';');
+        } else if (typeof formAnswer.questions[index].value === 'string' && formAnswer.questions[index].value.length > 0) {
+          formAnswer.questions[index].value += `;${value}`;
+        } else {
+          formAnswer.questions[index].value = value;
+        }
+      } else {
+        formAnswer.questions[index].value = value;
+      }
     } else {
       formAnswer.questions.push({ label: question.label, value });
     }
@@ -199,7 +209,7 @@ class Form extends React.Component {
       case QuestionTypes.TEXT:
         return <TextInput
           value={selected}
-          onChangeText={(value) => this.setAnswer(question, value.replace('\n', '\\n'))}
+          onChangeText={(value) => this.setAnswer(question, value)}
           style={styles.text}
           multiline={true}
           textAlignVertical={'top'}
@@ -207,7 +217,9 @@ class Form extends React.Component {
           placeholderTextColor={colors.grey}
         />
       case QuestionTypes.CHOOSE_MULTIPLE:
-        return null;
+        return Array.isArray(question.options) && question.options.map((option, idx) => <TouchableOpacity key={`q${index}o${idx}`} activeOpacity={0.7} onPress={() => this.setAnswer(question, option.value)} style={[styles.option, selected && selected.includes(option.value) ? styles.selected : undefined]}>
+          <TextLabel type={'text'}>{option.label}</TextLabel>
+        </TouchableOpacity>)
     }
     return null;
   }
@@ -252,7 +264,7 @@ class Form extends React.Component {
           <ScrollView ref={'scrollView'} showsVerticalScrollIndicator={false}>
             {stage === Stages.INTRODUCTION && <View>
               <TextLabel type={'text'} bold style={styles.introductionTitle}>{form.introduction.title}</TextLabel>
-              {typeof form.introduction.imageUrl === 'string' && form.introduction.imageUrl.length && <View style={styles.imageView}>
+              {typeof form.introduction.imageUrl === 'string' && form.introduction.imageUrl.length > 0 && <View style={styles.imageView}>
                 <Image source={{ uri: form.introduction.imageUrl }} resizeMode={'contain'} style={styles.image} />
               </View>}
               <TextLabel type={'text'} style={styles.introductionText}>{form.introduction.text}</TextLabel>
@@ -262,14 +274,14 @@ class Form extends React.Component {
               {this.renderAnswer(question, index, selected)}
             </View>}
             {stage === Stages.RESULT && <View>
-              <TextLabel type={'text'} bold style={styles.resultTitle}>{form.resultTitle || i18n.t('Form.result')}</TextLabel>
+              <TextLabel type={'text'} bold style={styles.resultTitle}>{i18n.t('Form.result')}</TextLabel>
               {result.map((res, idx) => <View key={`result${idx}`} style={styles.resultDomain}>
-                {typeof res.title === 'string' && res.title.length && <TextLabel type={'text'}>{res.title}</TextLabel>}
-                {typeof res.imageUrl === 'string' && res.imageUrl.length && <View style={styles.imageView}>
+                {typeof res.title === 'string' && res.title.length > 0 && <TextLabel type={'text'}>{res.title}</TextLabel>}
+                {typeof res.imageUrl === 'string' && res.imageUrl.length > 0 && <View style={styles.imageView}>
                   <Image source={{ uri: res.imageUrl }} resizeMode={'contain'} style={styles.image} />
                 </View>}
-                {typeof res.text === 'string' && res.text.length && <TextLabel type={'subtitle'}>{res.text}</TextLabel>}
-                {typeof res.classification === 'string' && res.classification.length && <TextLabel type={'subtitle'}>{res.classification}</TextLabel>}
+                {typeof res.text === 'string' && res.text.length > 0 && <TextLabel type={'subtitle'}>{res.text}</TextLabel>}
+                {typeof res.classification === 'string' && res.classification.length > 0 && <TextLabel type={'subtitle'}>{res.classification}</TextLabel>}
               </View>)}
             </View>}
           </ScrollView>
