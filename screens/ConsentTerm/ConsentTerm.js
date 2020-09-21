@@ -18,13 +18,25 @@ class ConsentTerm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: false,
+      loading: true,
       processing: false,
+      fetchError: false,
+      consentTerm: '',
     }
   }
 
   static navigationOptions = {
     header: null,
+  }
+
+  componentDidMount = async () => {
+    const userId = this.props.navigation.getParam('userId');
+    const response = await UserService.getConsentTerm(userId);
+    if (response.success) {
+      this.setState({ loading: false, consentTerm: response.result });
+    } else {
+      this.setState({ loading: false, fetchError: true });
+    }
   }
 
   accept = async () => {
@@ -44,13 +56,12 @@ class ConsentTerm extends React.Component {
 
   render() {
     return (
-      <Screen loading={this.state.loading} navigation={this.props.navigation}>
+      <Screen loading={this.state.loading} navigation={this.props.navigation} error={this.state.fetchError}>
         <View style={{ height: Constants.statusBarHeight }} />
         <View style={styles.wrapper}>
-          <TextLabel type={'title'} style={styles.title}>{i18n.t('ConsentTerm.title')}</TextLabel>
           <WebView
-            source={{ uri: 'https://apidialogos.produtive.com.br/privacyPolicy' }}
-            style={{ width }}
+            source={{ html: this.state.consentTerm }}
+            style={styles.webView}
             javaScriptEnabled={true}
             domStorageEnabled={true}
             startInLoadingState={false}

@@ -8,6 +8,8 @@ export default class UserService {
   
   static post = (payload) => Request.post('/user', payload);
   
+  static getConsentTerm = (_id) => Request.get(`/user/consentTerm/${_id}`);
+
   static acceptConsentTerm = (_id) => Request.patch(`/user/consentTerm/accept/${_id}`);
 
   static setToken = (token) => AsyncStorage.setItem('token', token);

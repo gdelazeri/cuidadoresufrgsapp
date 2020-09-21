@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Cuidadores UFRGS",
-    "slug": "cuidadoresufrgs",
+    "name": "AMI",
+    "slug": "ami",
     "platforms": [
       "ios",
       "android"
@@ -9,7 +9,7 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "cuidadoresufrgs",
+    "scheme": "ami",
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
@@ -25,11 +25,11 @@
     "ios": {
       "supportsTablet": true,
       "buildNumber": "10000000",
-      "bundleIdentifier": "br.com.ufrgs.cuidadores"
+      "bundleIdentifier": "br.ufrgs.ami"
     },
     "android": {
       "versionCode": 10000000,
-      "package": "br.com.ufrgs.cuidadores"
+      "package": "br.ufrgs.ami"
     }
   }
 }
