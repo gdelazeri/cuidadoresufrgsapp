@@ -26,5 +26,9 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 20,
-  }
+  },
+  forgotPasswordView: {
+    // width: '100%',
+    alignItems: 'flex-end',
+  },
 });

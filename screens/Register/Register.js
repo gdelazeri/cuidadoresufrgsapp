@@ -111,7 +111,7 @@ class Register extends React.Component {
       this.props.setLoader(false);
       let error = i18n.t('Register.error');
       if (Array.isArray(response.errors) && response.errors.length > 0) {
-        error = response.errors.map((err) => `Erro ${err.code}: ${err.message}`).join('\n');
+        error = response.errors.map((err) => i18n.t('ModalError.errorCodeMessage', { code: err.code, message: err.message })).join('\n');
       }
       this.props.setModalConfirm({
         text: error,
@@ -208,6 +208,7 @@ class Register extends React.Component {
                   inputType={'form'}
                   value={user.password}
                   onChangeText={(password) => this.setState({ user: { ...user, password } })}
+                  secureTextEntry={true}
                 />
               </View>
               <View style={styles.field}>
@@ -216,6 +217,7 @@ class Register extends React.Component {
                   inputType={'form'}
                   value={this.state.passwordConfirm}
                   onChangeText={(passwordConfirm) => this.setState({ passwordConfirm })}
+                  secureTextEntry={true}
                 />
               </View>
               <View style={styles.btnCenter}>

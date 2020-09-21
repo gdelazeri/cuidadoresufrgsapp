@@ -5,7 +5,7 @@ export default {
   Login: {
     email: 'E-mail',
     password: 'Senha',
-    forgotPassword: 'Esqueceu sua senha?',
+    forgotPassword: 'Esqueci minha senha',
     errorLoginMessage: 'Senha e/ou usuário inválido',
     errorCredentialsMessage: 'Credenciais inválidas',
     errorProfile: 'Perfil não autorizado.',
@@ -26,6 +26,7 @@ export default {
   ModalError: {
     title: 'Ops :(',
     text: 'Ocorreu um erro inesperado',
+    errorCodeMessage: 'Erro {{code}}: {{message}}',
     btnContinue: 'Continuar',
   },
   Menu: {
@@ -80,6 +81,30 @@ export default {
     acceptError: 'Erro ao aceitar termo de consentimento',
     btnError: 'Ok',
     btnContinue: 'Aceito',
+  },
+  ForgotPasswordEmail: {
+    title: 'Esqueceu sua senha?',
+    emailInput: 'Informe seu e-mail',
+    btnContinue: 'Continuar',
+    error: 'Erro ao gerar token',
+    btnError: 'Ok',
+  },
+  ForgotPasswordToken: {
+    title: 'Código de verificação',
+    tokenInput: 'Informe o código',
+    btnContinue: 'Continuar',
+    error: 'Erro ao verificar o código',
+    btnError: 'Ok',
+  },
+  ForgotPasswordUpdate: {
+    title: 'Nova senha',
+    passwordInput: 'Digite uma nova senha',
+    passwordConfirmInput: 'Confirme a nova senha',
+    btnContinue: 'Continuar',
+    error: 'Erro ao atualizar senha',
+    btnError: 'Ok',
+    passwordUpdated: 'Senha atualizada com sucesso!',
+    btnLogin: 'Ok',
   },
   date: {
     jan: 'Janeiro',

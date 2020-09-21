@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { View } from 'react-native';
 import Constants from 'expo-constants';
+import { NavigationEvents } from 'react-navigation';
 
 import styles from './styles';
 import i18n from '../../i18n';
@@ -10,7 +11,6 @@ import TextLabel from '../../components/TextLabel';
 import HomeList from '../../components/HomeList';
 import ContentService from '../../services/ContentService';
 import FormService from '../../services/FormService';
-import { NavigationEvents } from 'react-navigation';
 
 class Home extends React.Component {
   constructor(props) {

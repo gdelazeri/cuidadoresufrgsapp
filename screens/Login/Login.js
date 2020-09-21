@@ -17,6 +17,7 @@ import TextLabel from '../../components/TextLabel';
 import CustomBtn from '../../components/CustomBtn';
 import UserService from '../../services/UserService';
 import NavigationService from '../../navigation/NavigationService';
+import isEmailValid from '../../utils/isEmailValid';
 
 const { width } = Dimensions.get('window');
 
@@ -59,7 +60,8 @@ class Login extends React.Component {
         this.setState({ loading: false });
       }
     } else {
-      this.setState({ loading: false });
+      const email = this.props.navigation.getParam('email');
+      this.setState({ loading: false, email });
     }
   }
 
@@ -67,7 +69,7 @@ class Login extends React.Component {
     const { email, password } = this.state;
     this.setState({ processing: true });
 
-    if (!this.isEmailValid(email) || password.length === 0) {
+    if (!isEmailValid(email) || password.length === 0) {
       this.setState({ processing: false });
       this.props.setModalConfirm({
         text: i18n.t('Login.errorCredentialsMessage'),
@@ -90,14 +92,16 @@ class Login extends React.Component {
       }
     } else {
       this.setState({ processing: false });
+      let error = i18n.t('Login.errorGeneric');
+      if (Array.isArray(response.errors) && response.errors.length > 0) {
+        error = response.errors[0].message;
+      }
       this.props.setModalConfirm({
-        text: i18n.t('Login.errorGeneric'),
+        text: error,
         btnSuccessText: i18n.t('Login.btnError'),
       });
     }
   }
-
-  isEmailValid = (email) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)
 
   render() {
     return (
@@ -125,6 +129,11 @@ class Login extends React.Component {
               secureTextEntry={true}
               onSubmitEditing={this.login}
             />
+            <View style={styles.forgotPasswordView}>
+              <TouchableOpacity onPress={() => this.props.navigation.navigate('ForgotPasswordEmail', { email: this.state.email })} activeOpacity={0.7}>
+                <TextLabel type={'subtitle'}>{i18n.t('Login.forgotPassword')}</TextLabel>
+              </TouchableOpacity>
+            </View>
           </View>
         
           <View style={styles.btnCenter}>
