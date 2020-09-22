@@ -10,7 +10,6 @@ export default StyleSheet.create({
   wrapper: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'space-between'
   },
   fields: {
     width: '100%',
@@ -19,6 +18,10 @@ export default StyleSheet.create({
     width: '100%',
     paddingHorizontal: 20,
     marginBottom: 30,
+  },
+  passwordRules: {
+    width: '100%',
+    paddingHorizontal: 20,
   },
   btnCenter: {
     alignItems: 'center',

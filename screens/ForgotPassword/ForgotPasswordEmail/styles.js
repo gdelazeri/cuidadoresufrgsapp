@@ -9,7 +9,6 @@ export default StyleSheet.create({
   wrapper: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'space-between'
   },
   field: {
     width: '100%',

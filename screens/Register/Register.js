@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import {
   Image,
-  Platform,
   Dimensions,
   Animated,
   ScrollView,
@@ -43,6 +42,7 @@ class Register extends React.Component {
         email: '',
         password: '',
       },
+      passwordRules: undefined,
     }
   }
 
@@ -51,14 +51,22 @@ class Register extends React.Component {
     header: null,
   }
 
+  componentDidMount = async () => {
+    const response = await UserService.passwordRules();
+    if (response.success) {
+      this.setState({ passwordRules: response.result });
+    }
+  }
+
   save = async () => {
     this.props.setLoader(true);
     const { user } = this.state;
-    if (user.birthDate) {
-      const split = user.birthDate.split('/');
-      user.birthDate = moment(`${split[2]}-${split[1]}-${split[0]}`);
+    const split = user.birthDate.split('/');
+    const userObj = {
+      ...user,
+      birthDate: moment(`${split[2]}-${split[1]}-${split[0]}`).format(),
     }
-    let response = await UserService.post(user);
+    let response = await UserService.post(userObj);
     if (response.success) {
       response = await UserService.login(user.email, user.password);
       await UserService.setToken(response.result.token);
@@ -147,6 +155,7 @@ class Register extends React.Component {
                     inputType={'form'}
                     value={user.uf}
                     onChangeText={(uf) => this.setState({ user: { ...user, uf: uf.toUpperCase() } })}
+                    maxLength={2}
                   />
                 </View>
               </View>
@@ -155,7 +164,7 @@ class Register extends React.Component {
                   text={i18n.t('Register.next')}
                   onPress={() => this.setState({ step: 1 })}
                   width={btnWidth}
-                  disabled={!(user.name.length > 3 && user.cpf.length === 14 && user.birthDate.length === 10 && user.city.length > 0 && user.uf.length === 2)}
+                  disabled={!(user.name.length > 3 && user.cpf.length === 14 && user.birthDate.length === 10 && user.birthDate.split('/').length === 3 && user.city.length > 0 && user.uf.length === 2)}
                 />
               </View>
             </View>}
@@ -166,6 +175,9 @@ class Register extends React.Component {
                   inputType={'form'}
                   value={user.email}
                   onChangeText={(email) => this.setState({ user: { ...user, email } })}
+                  keyboardType={'email-address'}
+                  autoCapitalize={'none'} 
+                  textContentType={'username'}
                 />
               </View>
               <View style={styles.field}>
@@ -186,6 +198,10 @@ class Register extends React.Component {
                   secureTextEntry={true}
                 />
               </View>
+              {this.state.passwordRules !== undefined && <View style={styles.passwordRules}>
+                <TextLabel bold type={'subtitle'}>{this.state.passwordRules.title}</TextLabel>
+                {Array.isArray(this.state.passwordRules.rules) && this.state.passwordRules.rules.map((text) => <TextLabel key={text} type={'subtitle'}>{text}</TextLabel>)}
+              </View>}
               <View style={styles.btnCenter}>
                 <CustomBtn
                   text={i18n.t('Register.next')}

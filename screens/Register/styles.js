@@ -33,6 +33,9 @@ export default StyleSheet.create({
     width: '48%',
     marginBottom: 30,
   },
+  passwordRules: {
+    marginBottom: 20,
+  },
   btnCenter: {
     justifyContent: 'center',
     alignItems: 'center',

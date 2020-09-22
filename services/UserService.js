@@ -20,5 +20,7 @@ export default class UserService {
   
   static passwordRecoverTokenCheck = (email, token) => Request.post(`/user/password/recoverToken/check/${email}`, { token });
 
-  static updatePassword = (email, token, password, passwordConfirm) => Request.patch(`/user/password/update/${email}`, { token, password, passwordConfirm });
+  static passwordUpdate = (email, token, password, passwordConfirm) => Request.patch(`/user/password/update/${email}`, { token, password, passwordConfirm });
+  
+  static passwordRules = () => Request.get('/user/password/rules');
 }

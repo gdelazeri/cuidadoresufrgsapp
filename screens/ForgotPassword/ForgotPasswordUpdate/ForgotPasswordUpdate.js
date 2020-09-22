@@ -20,12 +20,13 @@ class ForgotPasswordUpdate extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: false,
+      loading: true,
       fetchError: false,
       email: undefined,
       token: undefined,
       password: '',
       passwordConfirm: '',
+      passwordRules: undefined,
     }
   }
 
@@ -34,15 +35,21 @@ class ForgotPasswordUpdate extends React.Component {
     header: null,
   }
 
-  componentDidMount = () => {
+  componentDidMount = async () => {
     const email = this.props.navigation.getParam('email');
     const token = this.props.navigation.getParam('token');
     this.setState({ email, token });
+    const response = await UserService.passwordRules();
+    if (response.success) {
+      this.setState({ passwordRules: response.result, loading: false });
+    } else {
+      this.setState({ loading: false });
+    }
   }
 
   generateToken = async () => {
     this.props.setLoader(true);
-    const response = await UserService.updatePassword(this.state.email, this.state.token, this.state.password, this.state.passwordConfirm);
+    const response = await UserService.passwordUpdate(this.state.email, this.state.token, this.state.password, this.state.passwordConfirm);
     this.props.setLoader(false);
     if (response.success) {
       this.props.setModalConfirm({
@@ -96,12 +103,17 @@ class ForgotPasswordUpdate extends React.Component {
                 secureTextEntry={true}
               />
             </View>
+            {this.state.passwordRules !== undefined && <View style={styles.passwordRules}>
+              <TextLabel bold type={'subtitle'}>{this.state.passwordRules.title}</TextLabel>
+              {Array.isArray(this.state.passwordRules.rules) && this.state.passwordRules.rules.map((text) => <TextLabel key={text} type={'subtitle'}>{text}</TextLabel>)}
+            </View>}
           </View>
           <View style={styles.btnCenter}>
             <CustomBtn
               text={i18n.t('ForgotPasswordUpdate.btnContinue')}
               onPress={this.generateToken}
               width={(width * 0.7) - 30}
+              disabled={!(this.state.password.length > 0 && this.state.passwordConfirm.length > 0 && this.state.password === this.state.passwordConfirm)}
             />
           </View>
         </View>
