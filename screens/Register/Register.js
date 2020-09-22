@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import KeyboardSpacer from 'react-native-keyboard-spacer';
 import {
+  Image,
   Platform,
   Dimensions,
   Animated,
@@ -16,7 +16,6 @@ import i18n from '../../i18n';
 import Screen from '../../components/Screen';
 import TextLabel from '../../components/TextLabel';
 import FormTextInput from '../../components/FormTextInput';
-import DatePicker from '../../components/DatePicker';
 import CustomBtn from '../../components/CustomBtn';
 import UserService from '../../services/UserService';
 import Request from '../../middlewares/request';
@@ -33,15 +32,15 @@ class Register extends React.Component {
       fetchError: false,
       animatedValue: new Animated.Value(0),
       step: 0,
-      passwordConfirm: '',
+      passwordConfirm: '123',
       user: {
-        name: '',
-        cpf: '',
+        name: 'Eduardo Delazeri',
+        cpf: '042.841.528-00',
         birthDate: undefined,
-        city: '',
-        uf: '',
-        email: '',
-        password: '',
+        city: 'POA',
+        uf: 'RS',
+        email: 'dudu.dela@hotmail.com',
+        password: '123',
       },
     }
   }
@@ -97,15 +96,16 @@ class Register extends React.Component {
     let response = await UserService.post(user);
     if (response.success) {
       response = await UserService.login(user.email, user.password);
+      console.log(response.result);
       await UserService.setToken(response.result.token);
       Request.setToken(response.result.token);
-      const user = jwtDecode(response.result.token);
-      this.props.setUser(user);
+      const userDecoded = jwtDecode(response.result.token);
+      this.props.setUser(userDecoded);
       this.props.setLoader(false);
       if (response.result.consentTermAcceptedAt) {
         NavigationService.reset('LoggedNavigator');
       } else {
-        this.props.navigation.navigate('ConsentTerm', { userId: user._id });
+        this.props.navigation.navigate('ConsentTerm', { userId: userDecoded._id });
       }
     } else {
       this.props.setLoader(false);
@@ -126,14 +126,14 @@ class Register extends React.Component {
       <Screen loading={this.state.loading} error={this.state.fetchError} navigation={this.props.navigation}>
         <View style={styles.wrapper}>
           <View style={styles.logoView}>
-            {/* <Image
+            <Image
               source={require('../../assets/images/icon.png')}
               style={{
-                height: Dimensions.get('window').height * 0.1,
-                width: Dimensions.get('window').height * 0.1,
+                height: Dimensions.get('window').height * 0.15,
+                width: Dimensions.get('window').height * 0.15,
               }}
               resizeMode={'contain'}
-            /> */}
+            />
           </View>
           <ScrollView keyboardShouldPersistTaps={'handled'} contentContainerStyle={styles.scroll}>
             {this.state.step === 0 && <View>

@@ -25,6 +25,7 @@ Screen.propTypes = {
   loading: PropTypes.bool,
   error: PropTypes.bool,
   navigation: PropTypes.object,
+  reload: PropTypes.func,
 };
 
 export default Screen;

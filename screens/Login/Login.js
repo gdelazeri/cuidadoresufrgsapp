@@ -143,8 +143,9 @@ class Login extends React.Component {
               loading={this.state.processing}
               width={(width * 0.7) - 30}
             />
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('Register')} style={{ marginTop: 20 }} activeOpacity={0.7}>
-              <TextLabel type={'login'}>{i18n.t('Login.btnRegister')}</TextLabel>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('Register')} style={{ marginTop: 30 }} activeOpacity={0.7}>
+              <TextLabel textCenter type={'subtitle'}>{i18n.t('Login.firstAccess')}</TextLabel>
+              <TextLabel textCenter type={'subtitle'} style={styles.clickHere}>{i18n.t('Login.firstAccessClickHere')}</TextLabel>
             </TouchableOpacity>
           </View>
         </View>

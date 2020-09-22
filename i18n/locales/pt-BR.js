@@ -12,7 +12,8 @@ export default {
     errorGeneric: 'Ocorreu um erro inesperado',
     btnContinue: 'Entrar',
     btnError: 'Ok',
-    btnRegister: 'Cadastre-se'
+    firstAccess: 'Primeiro acesso?',
+    firstAccessClickHere: 'Clique aqui',
   },
   Screen: {
     fetchError: 'Ops, ocorreu um erro ao carregar as informações',

@@ -42,11 +42,15 @@ class Home extends React.Component {
     }
   }
 
+  reload = () => {
+    this.setState({ loading: true }, this.load);
+  }
+
   render() {
     return (
       <View>
         <NavigationEvents onDidFocus={this.load} />
-        <Screen loading={this.state.loading} navigation={this.props.navigation} error={this.state.fetchError}>
+        <Screen loading={this.state.loading} navigation={this.props.navigation} error={this.state.fetchError} reload={this.reload}>
           <View style={{ height: Constants.statusBarHeight }} />
           <View style={styles.header}>
             <TextLabel type={'title'}>{i18n.t('Home.hi')}</TextLabel>

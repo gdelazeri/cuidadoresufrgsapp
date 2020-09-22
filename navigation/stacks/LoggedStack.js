@@ -15,6 +15,7 @@ const LoggedStack = createStackNavigator({
   Form,
   FormList,
 }, {
+  initialRouteKey: 'Home',
   mode: 'card', 
   headerLayoutPreset: 'center',
   cardStyle: { backgroundColor: colors.background },

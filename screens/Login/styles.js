@@ -28,7 +28,10 @@ export default StyleSheet.create({
     marginTop: 20,
   },
   forgotPasswordView: {
-    // width: '100%',
     alignItems: 'flex-end',
+  },
+  clickHere: {
+    marginTop: 10,
+    textDecorationLine: 'underline',
   },
 });
