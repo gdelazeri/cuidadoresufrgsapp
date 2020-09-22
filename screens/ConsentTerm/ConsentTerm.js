@@ -26,6 +26,7 @@ class ConsentTerm extends React.Component {
   }
 
   static navigationOptions = {
+    headerStyle: { elevation: 0, shadowOpacity: 0 },
     header: null,
   }
 

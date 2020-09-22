@@ -17,6 +17,7 @@ import Screen from '../../components/Screen';
 import TextLabel from '../../components/TextLabel';
 import FormTextInput from '../../components/FormTextInput';
 import CustomBtn from '../../components/CustomBtn';
+import isEmailValid from '../../utils/isEmailValid';
 import UserService from '../../services/UserService';
 import Request from '../../middlewares/request';
 import NavigationService from '../../navigation/NavigationService';
@@ -32,58 +33,22 @@ class Register extends React.Component {
       fetchError: false,
       animatedValue: new Animated.Value(0),
       step: 0,
-      passwordConfirm: '123',
+      passwordConfirm: '',
       user: {
-        name: 'Eduardo Delazeri',
-        cpf: '042.841.528-00',
-        birthDate: undefined,
-        city: 'POA',
-        uf: 'RS',
-        email: 'dudu.dela@hotmail.com',
-        password: '123',
+        name: '',
+        cpf: '',
+        birthDate: '',
+        city: '',
+        uf: '',
+        email: '',
+        password: '',
       },
     }
   }
 
   static navigationOptions = {
+    headerStyle: { elevation: 0, shadowOpacity: 0 },
     header: null,
-  }
-
-  onKeyboardToggle = (active) => {
-    if (Platform.OS === 'ios') {
-      Animated.spring(this.state.animatedValue, {
-        toValue: active ? -75 : 0,
-        duration: 250,
-      }).start();
-    }
-  }
-
-  isUserInvalid = () => {
-    const { user } = this.state;
-    return (
-      user.name.length < 3
-      || user.cpf.length < 14
-      || !user.birthDate
-      || user.city.length === 0
-      || user.uf.length === 0
-    )
-  }
-
-  isCredentialInvalid = () => {
-    const { user, passwordConfirm } = this.state;
-    return (
-      user.email.length < 3
-      || !user.email.includes('@')
-      || user.password !== passwordConfirm
-    )
-  }
-
-  next = () => {
-    if (this.state.step === 0 && !this.isUserInvalid()) {
-      this.setState({ step: 1 });
-    } else if (!this.isCredentialInvalid()) {
-      this.save();
-    }
   }
 
   save = async () => {
@@ -91,12 +56,11 @@ class Register extends React.Component {
     const { user } = this.state;
     if (user.birthDate) {
       const split = user.birthDate.split('/');
-      user.birthDate = moment(`${split[2]}-${split[1]}-${split[0]}`).format();
+      user.birthDate = moment(`${split[2]}-${split[1]}-${split[0]}`);
     }
     let response = await UserService.post(user);
     if (response.success) {
       response = await UserService.login(user.email, user.password);
-      console.log(response.result);
       await UserService.setToken(response.result.token);
       Request.setToken(response.result.token);
       const userDecoded = jwtDecode(response.result.token);
@@ -121,7 +85,7 @@ class Register extends React.Component {
   }
 
   render() {
-    const { user } = this.state;
+    const { user, passwordConfirm } = this.state;
     return (
       <Screen loading={this.state.loading} error={this.state.fetchError} navigation={this.props.navigation}>
         <View style={styles.wrapper}>
@@ -165,6 +129,7 @@ class Register extends React.Component {
                   masked={true}
                   options={{ format: '99/99/9999' }}
                   type={'datetime'}
+                  placeholder={i18n.t('Register.birthDatePlaceholder')}
                 />
               </View>
               <View style={styles.fieldsInline}>
@@ -181,15 +146,16 @@ class Register extends React.Component {
                   <FormTextInput
                     inputType={'form'}
                     value={user.uf}
-                    onChangeText={(uf) => this.setState({ user: { ...user, uf } })}
+                    onChangeText={(uf) => this.setState({ user: { ...user, uf: uf.toUpperCase() } })}
                   />
                 </View>
               </View>
               <View style={styles.btnCenter}>
                 <CustomBtn
                   text={i18n.t('Register.next')}
-                  onPress={this.next}
+                  onPress={() => this.setState({ step: 1 })}
                   width={btnWidth}
+                  disabled={!(user.name.length > 3 && user.cpf.length === 14 && user.birthDate.length === 10 && user.city.length > 0 && user.uf.length === 2)}
                 />
               </View>
             </View>}
@@ -223,8 +189,9 @@ class Register extends React.Component {
               <View style={styles.btnCenter}>
                 <CustomBtn
                   text={i18n.t('Register.next')}
-                  onPress={this.next}
+                  onPress={this.save}
                   width={btnWidth}
+                  disabled={!(isEmailValid(user.email) && user.password.length > 0 && user.password === passwordConfirm)}
                 />
               </View>
             </View>}

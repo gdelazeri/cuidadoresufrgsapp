@@ -40,6 +40,7 @@ export default {
     name: 'Seu nome',
     cpf: 'CPF',
     birthDate: 'Nascimento',
+    birthDatePlaceholder: 'DD/MM/AAAA',
     city: 'Cidade',
     uf: 'Estado',
     email: 'Seu e-mail',
