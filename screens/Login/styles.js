@@ -4,23 +4,30 @@ import colors from '../../constants/colors';
 const { width, height } = Dimensions.get('window');
 
 export default StyleSheet.create({
-    wrapper: {
+  wrapper: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center'
   },
   iconImage: {
     resizeMode: 'contain',
-    width: width * 0.7,
-    height: height * 0.35,
+    alignSelf: 'center',
+    width: width * 0.3,
+    height: width * 0.3,
+    marginTop: -width * 0.15,
   },
   form: {
     width: width * 0.7,
-    padding: 15,
-    paddingVertical: 20,
+    paddingHorizontal: 15,
+    // paddingTop: 55,
+    paddingBottom: 25,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: colors.grey,
+    borderColor: colors.blue.spec2,
+    backgroundColor: colors.white,
+  },
+  formSpace: {
+    height: 20,
   },
   btnCenter: {
     alignItems: 'center',

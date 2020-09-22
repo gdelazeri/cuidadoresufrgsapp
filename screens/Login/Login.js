@@ -10,6 +10,7 @@ import jwtDecode from 'jwt-decode';
 
 import styles from './styles';
 import i18n from '../../i18n';
+import colors from '../../constants/colors';
 import Request from '../../middlewares/request';
 import Screen from '../../components/Screen';
 import FormTextInput from '../../components/FormTextInput';
@@ -109,8 +110,13 @@ class Login extends React.Component {
       <Screen loading={this.state.loading} navigation={this.props.navigation}>
         <View style={styles.wrapper}>
           <View style={styles.form}>
-            <TextLabel type={'login'}>{i18n.t('Login.email')}</TextLabel>
+            <Image
+              source={require('../../assets/images/icon.png')}
+              style={styles.iconImage}
+            />
             <FormTextInput
+              placeholder={i18n.t('Login.email')}
+              placeholderTextColor={colors.blue.spec3}
               inputType={'login'}
               value={this.state.email}
               onChangeText={(email) => this.setState({ email })}
@@ -119,8 +125,9 @@ class Login extends React.Component {
               textContentType={'username'}
               onSubmitEditing={this.login}
             />
-            <TextLabel type={'login'}>{i18n.t('Login.password')}</TextLabel>
             <FormTextInput
+              placeholder={i18n.t('Login.password')}
+              placeholderTextColor={colors.blue.spec3}
               inputType={'login'}
               value={this.state.password}
               onChangeText={(password) => this.setState({ password })}
@@ -132,7 +139,7 @@ class Login extends React.Component {
             />
             <View style={styles.forgotPasswordView}>
               <TouchableOpacity onPress={() => this.props.navigation.navigate('ForgotPasswordEmail', { email: this.state.email })} activeOpacity={0.7}>
-                <TextLabel type={'subtitle'}>{i18n.t('Login.forgotPassword')}</TextLabel>
+                <TextLabel type={'subtitle'} color={colors.blue.spec3}>{i18n.t('Login.forgotPassword')}</TextLabel>
               </TouchableOpacity>
             </View>
           </View>
@@ -143,6 +150,7 @@ class Login extends React.Component {
               onPress={this.login}
               loading={this.state.processing}
               width={(width * 0.7) - 30}
+              disabled={!(isEmailValid(this.state.email) && this.state.password.length > 0)}
             />
             <TouchableOpacity onPress={() => this.props.navigation.navigate('Register')} style={{ marginTop: 30 }} activeOpacity={0.7}>
               <TextLabel textCenter type={'subtitle'}>{i18n.t('Login.firstAccess')}</TextLabel>

@@ -23,7 +23,7 @@ const CustomBtn = ({
   let buttonStyle = styles.btnPrimary;
   if (secondary) {
     titleStyle = styles.textSecondary;
-    loadingStyle = { color: colors.primary };
+    loadingStyle = { color: colors.green };
     buttonStyle = styles.btnSecondary;
   }
   buttonStyle = {
@@ -53,6 +53,7 @@ const CustomBtn = ({
       buttonStyle={buttonStyle}
       containerStyle={{ height: 40, width: width || '50%', marginLeft: 0, marginRight: 0 }}
       disabled={disabled}
+      disabledStyle={styles.btnSecondary}
       disabledTitleStyle={styles.textDisabled}
       activeOpacity={0.7}
       icon={icon}

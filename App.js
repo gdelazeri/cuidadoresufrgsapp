@@ -22,10 +22,8 @@ export default class App extends React.Component {
   _loadResourcesAsync = async () => {
     return Promise.all([
       Asset.loadAsync([
-        require('./assets/images/bg.jpg'),
         require('./assets/images/icon.png'),
         require('./assets/images/splash.png'),
-        require('./assets/images/logo.png'),
       ]),
       Font.loadAsync({
         "Material Design Icons": require('react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf'),

@@ -8,20 +8,22 @@ export default StyleSheet.create({
     fontSize: 16,
   },
   textSecondary: {
-    color: colors.grey,
+    color: colors.blue.spec2,
     fontFamily: 'quicksand',
     fontSize: 16,
   },
   btnPrimary: {
     height: 40,
     paddingHorizontal: 20,
-    backgroundColor: colors.grey,
+    backgroundColor: colors.blue.spec3,
+    borderColor: colors.blue.spec3,
+    borderWidth: 1,
   },
   btnSecondary: {
     height: 40,
     paddingHorizontal: 20,
     backgroundColor: 'transparent',
-    borderColor: colors.grey,
+    borderColor: colors.blue.spec2,
     borderWidth: 1,
   },
   center: {
@@ -29,6 +31,6 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   textDisabled: {
-    color: colors.grey,
+    color: colors.blue.spec2,
   },
 });

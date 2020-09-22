@@ -13,7 +13,7 @@ const HomeItem = ({ item, onPress, width = Dimensions.get('window').width * 0.6 
     style={[styles.image, { width }]}
   >
     {item.finished && <View style={{ position: 'absolute', top: 5, right: 5, }}>
-      <Icon type={'material-community'} name={'check-circle'} color={colors.primary} />
+      <Icon type={'material-community'} name={'check-circle'} color={colors.green} />
     </View>}
   </ImageBackground>}
   <View style={styles.text}>

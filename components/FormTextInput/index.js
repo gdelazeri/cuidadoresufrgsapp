@@ -16,14 +16,14 @@ const FormTextInput = (props) => {
   } else if (props.masked) {
     return <TextInputMask
       underlineColorAndroid={'transparent'}
-      placeholderTextColor={colors.light}
+      placeholderTextColor={props.placeholderTextColor || colors.light}
       style={styles[props.inputType]}
       {...props}
     />
   } else {
     return <TextInput
       underlineColorAndroid={'transparent'}
-      placeholderTextColor={colors.light}
+      placeholderTextColor={props.placeholderTextColor || colors.light}
       style={styles[props.inputType]}
       {...props}
     />

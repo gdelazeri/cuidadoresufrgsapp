@@ -12,6 +12,7 @@ import jwtDecode from 'jwt-decode';
 
 import styles from './styles';
 import i18n from '../../i18n';
+import colors from '../../constants/colors';
 import Screen from '../../components/Screen';
 import TextLabel from '../../components/TextLabel';
 import FormTextInput from '../../components/FormTextInput';
@@ -110,7 +111,7 @@ class Register extends React.Component {
           <ScrollView keyboardShouldPersistTaps={'handled'} contentContainerStyle={styles.scroll}>
             {this.state.step === 0 && <View>
               <View style={styles.field}>
-                <TextLabel type={'subtitle'}>{i18n.t('Register.name')}</TextLabel>
+                <TextLabel type={'subtitle'} color={colors.blue.spec3}>{i18n.t('Register.name')}</TextLabel>
                 <FormTextInput
                   inputType={'form'}
                   value={user.name}
@@ -118,7 +119,7 @@ class Register extends React.Component {
                 />
               </View>
               <View style={styles.field}>
-                <TextLabel type={'subtitle'}>{i18n.t('Register.cpf')}</TextLabel>
+                <TextLabel type={'subtitle'} color={colors.blue.spec3}>{i18n.t('Register.cpf')}</TextLabel>
                 <FormTextInput
                   inputType={'form'}
                   value={user.cpf}
@@ -129,7 +130,7 @@ class Register extends React.Component {
                 />
               </View>
               <View style={styles.field}>
-                <TextLabel type={'subtitle'}>{i18n.t('Register.birthDate')}</TextLabel>
+                <TextLabel type={'subtitle'} color={colors.blue.spec3}>{i18n.t('Register.birthDate')}</TextLabel>
                 <FormTextInput
                   inputType={'form'}
                   value={user.birthDate}
@@ -142,7 +143,7 @@ class Register extends React.Component {
               </View>
               <View style={styles.fieldsInline}>
                 <View style={styles.field70}>
-                  <TextLabel type={'subtitle'}>{i18n.t('Register.city')}</TextLabel>
+                  <TextLabel type={'subtitle'} color={colors.blue.spec3}>{i18n.t('Register.city')}</TextLabel>
                   <FormTextInput
                     inputType={'form'}
                     value={user.city}
@@ -150,7 +151,7 @@ class Register extends React.Component {
                   />
                 </View>
                 <View style={styles.field30}>
-                  <TextLabel type={'subtitle'}>{i18n.t('Register.uf')}</TextLabel>
+                  <TextLabel type={'subtitle'} color={colors.blue.spec3}>{i18n.t('Register.uf')}</TextLabel>
                   <FormTextInput
                     inputType={'form'}
                     value={user.uf}
@@ -170,7 +171,7 @@ class Register extends React.Component {
             </View>}
             {this.state.step === 1 && <View>
               <View style={styles.field}>
-                <TextLabel type={'subtitle'}>{i18n.t('Register.email')}</TextLabel>
+                <TextLabel type={'subtitle'} color={colors.blue.spec3}>{i18n.t('Register.email')}</TextLabel>
                 <FormTextInput
                   inputType={'form'}
                   value={user.email}
@@ -181,7 +182,7 @@ class Register extends React.Component {
                 />
               </View>
               <View style={styles.field}>
-                <TextLabel type={'subtitle'}>{i18n.t('Register.password')}</TextLabel>
+                <TextLabel type={'subtitle'} color={colors.blue.spec3}>{i18n.t('Register.password')}</TextLabel>
                 <FormTextInput
                   inputType={'form'}
                   value={user.password}
@@ -190,7 +191,7 @@ class Register extends React.Component {
                 />
               </View>
               <View style={styles.field}>
-                <TextLabel type={'subtitle'}>{i18n.t('Register.passwordConfirm')}</TextLabel>
+                <TextLabel type={'subtitle'} color={colors.blue.spec3}>{i18n.t('Register.passwordConfirm')}</TextLabel>
                 <FormTextInput
                   inputType={'form'}
                   value={this.state.passwordConfirm}
