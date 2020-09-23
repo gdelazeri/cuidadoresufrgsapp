@@ -58,6 +58,7 @@ export default {
     uf: 'Estado',
     email: 'E-mail',
     password: 'Senha',
+    changePassword: 'Alterar senha',
     logout: 'Sair',
     logoutText: 'Deseja realmente sair do App?',
     logoutSuccess: 'Sair',
@@ -67,6 +68,11 @@ export default {
     removeSuccess: 'Apagar',
     removeCancel: 'Cancelar',
     removeError: 'Erro ao apagar sua conta'
+  },
+  ProfileEdit: {
+    saveError: 'Erro ao editar',
+    btnError: 'Ok',
+    btnSave: 'Salvar',
   },
   Home: {
     hi: 'Olá,',

@@ -5,16 +5,16 @@ export default StyleSheet.create({
   textPrimary: {
     color: '#fff',
     fontFamily: 'quicksand',
-    fontSize: 15,
+    fontSize: 16,
   },
   textSecondary: {
     color: colors.blue.spec2,
     fontFamily: 'quicksand',
-    fontSize: 15,
+    fontSize: 16,
   },
   btnPrimary: {
     height: 40,
-    paddingHorizontal: 20,
+    paddingHorizontal: 10,
     backgroundColor: colors.blue.spec3,
     borderColor: colors.blue.spec3,
     borderWidth: 1,

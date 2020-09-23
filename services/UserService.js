@@ -7,6 +7,8 @@ export default class UserService {
   static refreshToken = () => Request.post('/user/login/refresh');
   
   static post = (payload) => Request.post('/user', payload);
+
+  static put = (payload) => Request.put('/user', payload);
   
   static get = () => Request.get('/user');
   

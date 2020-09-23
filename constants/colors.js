@@ -5,7 +5,7 @@ export default {
   text: '#333333',
   grey: '#797d82',
   light: '#C4C4C4',
-  card: '#E6E6E6',
+  card: '#F1E6FF',
   blue: {
     spec1: '#C5E6EF',
     spec2: '#99BDDD',

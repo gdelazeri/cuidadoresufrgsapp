@@ -1,11 +1,15 @@
 import { StyleSheet, Dimensions } from 'react-native';
-import colors from '../../constants/colors';
 
-const { width, height } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 export default StyleSheet.create({
   wrapper: {
     paddingHorizontal: 20,
+  },
+  header: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
   },
   info: {
     width: width * 0.9,
@@ -20,5 +24,11 @@ export default StyleSheet.create({
   },
   field: {
     marginBottom: 15,
+  },
+  iconEdit: {
+    justifyContent: 'center',
+    width: 30,
+    height: 30,
+    margin: 15
   }
 });
