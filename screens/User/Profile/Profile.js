@@ -155,9 +155,11 @@ class Profile extends React.Component {
                   onPress={this.logoutPress}
                 />
               </View>
-              <TouchableOpacity onPress={this.removePress} activeOpacity={0.7}>
-                <TextLabel textCenter type={'text'} color={colors.light}>{i18n.t('Profile.remove')}</TextLabel>
-              </TouchableOpacity>
+              <View style={styles.field}>
+                <TouchableOpacity onPress={this.removePress} activeOpacity={0.7}>
+                  <TextLabel textCenter type={'text'} color={colors.light}>{i18n.t('Profile.remove')}</TextLabel>
+                </TouchableOpacity>
+              </View>
             </View>
           </ScrollView>
         </Screen>

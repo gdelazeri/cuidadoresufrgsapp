@@ -30,5 +30,8 @@ export default StyleSheet.create({
     width: 30,
     height: 30,
     margin: 15
+  },
+  remove: {
+    marginBottom: 15,
   }
 });
