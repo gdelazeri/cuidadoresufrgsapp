@@ -4,7 +4,7 @@ export default {
   green: '#2bb673',
   text: '#333333',
   grey: '#797d82',
-  light: '#E6E6E6',
+  light: '#C4C4C4', // ##C4C4C4
   blue: {
     spec1: '#c5e6ef',
     spec2: '#99bddd',

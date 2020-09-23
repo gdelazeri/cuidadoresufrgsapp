@@ -11,6 +11,7 @@ export default StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
     marginBottom: 20,
     marginTop: 20,
+    paddingBottom: 16,
   },
   form: {
     height: 30,

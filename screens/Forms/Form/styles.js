@@ -13,11 +13,12 @@ export default StyleSheet.create({
   box: {
     borderWidth: 1,
     borderRadius: 10,
-    borderColor: colors.light,
+    borderColor: colors.blue.spec2,
     padding: 15,
     paddingVertical: 0,
     marginHorizontal: 15,
     height: Dimensions.get('window').height * 0.5,
+    backgroundColor: colors.white,
   },
   question: {
     paddingHorizontal: 15,
@@ -25,14 +26,16 @@ export default StyleSheet.create({
     marginTop: 15,
   },
   introductionTitle: {
-    marginBottom: 10,
+    paddingHorizontal: 15,
+    marginBottom: 15,
     marginTop: 15,
   },
   introductionText: {
     marginBottom: 15,
   },
   resultTitle: {
-    marginBottom: 10,
+    paddingHorizontal: 15,
+    marginBottom: 15,
     marginTop: 15,
   },
   resultDomain: {
@@ -50,7 +53,7 @@ export default StyleSheet.create({
   option: {
     borderWidth: 1,
     borderRadius: 10,
-    borderColor: colors.light,
+    borderColor: colors.blue.spec2,
     paddingHorizontal: 20,
     paddingVertical: 10,
     marginBottom: 15,
@@ -68,6 +71,7 @@ export default StyleSheet.create({
   },
   selected: {
     backgroundColor: colors.light,
+    borderColor: colors.light,
   },
   pagination: {
     paddingHorizontal: 20,

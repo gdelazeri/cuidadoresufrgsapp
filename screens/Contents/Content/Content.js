@@ -7,11 +7,11 @@ import {
   RefreshControl,
   ImageBackground,
   Dimensions,
-  AsyncStorage,
 } from 'react-native';
 import AutoHeightImage from 'react-native-auto-height-image';
 
 import styles from './styles';
+import colors from '../../../constants/colors';
 import formatDate from '../../../utils/formatDate';
 import Screen from '../../../components/Screen';
 import TextLabel from '../../../components/TextLabel';
@@ -103,7 +103,7 @@ class Content extends React.Component {
 
   render() {
     return (
-      <Screen loading={this.state.loading} navigation={this.props.navigation} error={this.state.fetchError} reload={this.reload}>
+      <Screen loading={this.state.loading} navigation={this.props.navigation} error={this.state.fetchError} reload={this.reload} backgroundColor={colors.white}>
         <View style={{ height: Constants.statusBarHeight }} />
         <FlatList
           ref={'FlatList'}

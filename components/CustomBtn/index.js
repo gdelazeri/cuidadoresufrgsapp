@@ -21,6 +21,7 @@ const CustomBtn = ({
   let titleStyle = styles.textPrimary;
   let loadingStyle = { color: '#fff' };
   let buttonStyle = styles.btnPrimary;
+  const height = 48;
   if (secondary) {
     titleStyle = styles.textSecondary;
     loadingStyle = { color: colors.green };
@@ -31,7 +32,7 @@ const CustomBtn = ({
     ...customStyle,
     borderRadius: 20,
     width: '100%',
-    height: 40,
+    height,
   }
   titleStyle = {
     ...titleStyle,
@@ -48,10 +49,10 @@ const CustomBtn = ({
       loadingProps={loadingStyle}
       loading={loading}
       onPress={onPress}
-      title={text}
+      title={text.toUpperCase()}
       titleStyle={titleStyle}
       buttonStyle={buttonStyle}
-      containerStyle={{ height: 40, width: width || '50%', marginLeft: 0, marginRight: 0 }}
+      containerStyle={{ height, width: width || 188, marginLeft: 0, marginRight: 0 }}
       disabled={disabled}
       disabledStyle={styles.btnSecondary}
       disabledTitleStyle={styles.textDisabled}

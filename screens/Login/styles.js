@@ -14,12 +14,11 @@ export default StyleSheet.create({
     alignSelf: 'center',
     width: width * 0.3,
     height: width * 0.3,
-    marginTop: -width * 0.15,
+    marginTop: -width * 0.18,
   },
   form: {
     width: width * 0.7,
     paddingHorizontal: 15,
-    // paddingTop: 55,
     paddingBottom: 25,
     borderRadius: 10,
     borderWidth: 1,
@@ -32,7 +31,7 @@ export default StyleSheet.create({
   btnCenter: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 20,
+    marginTop: 80,
   },
   forgotPasswordView: {
     alignItems: 'flex-end',

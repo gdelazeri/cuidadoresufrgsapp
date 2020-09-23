@@ -26,6 +26,7 @@ Screen.propTypes = {
   error: PropTypes.bool,
   navigation: PropTypes.object,
   reload: PropTypes.func,
+  backgroundColor: PropTypes.string,
 };
 
 export default Screen;

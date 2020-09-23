@@ -4,7 +4,6 @@ import {
   View,
   TouchableOpacity,
   Image,
-  Dimensions,
 } from 'react-native';
 import jwtDecode from 'jwt-decode';
 
@@ -19,8 +18,6 @@ import CustomBtn from '../../components/CustomBtn';
 import UserService from '../../services/UserService';
 import NavigationService from '../../navigation/NavigationService';
 import isEmailValid from '../../utils/isEmailValid';
-
-const { width } = Dimensions.get('window');
 
 class Login extends React.Component {
   constructor(props) {
@@ -73,10 +70,6 @@ class Login extends React.Component {
 
     if (!isEmailValid(email) || password.length === 0) {
       this.setState({ processing: false });
-      this.props.setModalConfirm({
-        text: i18n.t('Login.errorCredentialsMessage'),
-        btnSuccessText: i18n.t('Login.btnError'),
-      });
       return;
     }
 
@@ -149,12 +142,11 @@ class Login extends React.Component {
               text={i18n.t('Login.btnContinue')}
               onPress={this.login}
               loading={this.state.processing}
-              width={(width * 0.7) - 30}
               disabled={!(isEmailValid(this.state.email) && this.state.password.length > 0)}
             />
             <TouchableOpacity onPress={() => this.props.navigation.navigate('Register')} style={{ marginTop: 30 }} activeOpacity={0.7}>
-              <TextLabel textCenter type={'subtitle'}>{i18n.t('Login.firstAccess')}</TextLabel>
-              <TextLabel textCenter type={'subtitle'} style={styles.clickHere}>{i18n.t('Login.firstAccessClickHere')}</TextLabel>
+              <TextLabel textCenter type={'subtitle'} color={colors.light}>{i18n.t('Login.firstAccess')}</TextLabel>
+              <TextLabel textCenter type={'subtitle'} color={colors.light} style={styles.clickHere}>{i18n.t('Login.firstAccessClickHere')}</TextLabel>
             </TouchableOpacity>
           </View>
         </View>

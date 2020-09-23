@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 import { View, FlatList, TouchableOpacity } from 'react-native';
 
 import styles from './styles';
+import colors from '../../constants/colors';
 import i18n from '../../i18n';
 import TextLabel from '../TextLabel';
 import HomeItem from '../HomeItem';
 
 const HomeList = ({ list = [], listScreen, itemScreen, title, navigation, width }) => <View>
   <View style={styles.header}>
-    <TextLabel type={'title'}>{title}</TextLabel>
+    <TextLabel type={'title'} color={colors.blue.spec3}>{title}</TextLabel>
     {typeof listScreen === 'string' && <TouchableOpacity onPress={() => navigation.navigate(listScreen)}>
       <TextLabel type={'subtitle'} bold>{i18n.t('Home.seeAll')}</TextLabel>
     </TouchableOpacity>}

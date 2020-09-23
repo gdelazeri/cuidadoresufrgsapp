@@ -6,6 +6,7 @@ import { NavigationEvents } from 'react-navigation';
 
 import styles from './styles';
 import i18n from '../../i18n';
+import colors from '../../constants/colors';
 import Screen from '../../components/Screen';
 import TextLabel from '../../components/TextLabel';
 import HomeList from '../../components/HomeList';
@@ -32,7 +33,7 @@ class Home extends React.Component {
   load = async (refreshing = false) => {
     this.setState({ refreshing });
     const responseContent = await ContentService.list(0, 5, undefined, true);
-    const responseForm = await FormService.list(this.props.user._id, 0, 5, undefined, true);
+    const responseForm = await FormService.list(this.props.user._id, 0, 1, undefined);
     if (responseContent.success && responseForm.success) {
       const contents = responseContent.result;
       const forms = responseForm.result;
@@ -53,8 +54,8 @@ class Home extends React.Component {
         <Screen loading={this.state.loading} navigation={this.props.navigation} error={this.state.fetchError} reload={this.reload}>
           <View style={{ height: Constants.statusBarHeight }} />
           <View style={styles.header}>
-            <TextLabel type={'title'}>{i18n.t('Home.hi')}</TextLabel>
-            <TextLabel type={'titleHighlight'}>{this.props.user.name.split(' ')[0]}</TextLabel>
+            <TextLabel type={'title'} color={colors.blue.spec2}>{i18n.t('Home.hi')}</TextLabel>
+            <TextLabel type={'titleHighlight'} color={colors.blue.spec3}>{this.props.user.name.split(' ')[0]}</TextLabel>
           </View>
           <HomeList
             list={this.state.forms}

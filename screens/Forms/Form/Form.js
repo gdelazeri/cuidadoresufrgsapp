@@ -255,26 +255,26 @@ class Form extends React.Component {
     return (
       <Screen loading={this.state.loading} navigation={this.props.navigation} error={this.state.fetchError} reload={this.reload}>
         <View style={{ height: Constants.statusBarHeight }} />
-        <BackBtn navigation={this.props.navigation} />
+        <BackBtn navigation={this.props.navigation} color={colors.blue.spec3} backgroundColor={colors.background} />
         <View style={styles.header}>
-          <TextLabel type={'titleHighlight'}>{form.title}</TextLabel>
+          <TextLabel type={'titleHighlight'} color={colors.blue.spec3}>{form.title}</TextLabel>
           <TextLabel type={'text'} style={styles.description}>{form.description}</TextLabel>
         </View>
         <View style={styles.box}>
           <ScrollView ref={'scrollView'} showsVerticalScrollIndicator={false}>
             {stage === Stages.INTRODUCTION && <View>
-              <TextLabel type={'text'} bold style={styles.introductionTitle}>{form.introduction.title}</TextLabel>
+              <TextLabel type={'text'} bold style={styles.introductionTitle} color={colors.blue.spec3}>{form.introduction.title}</TextLabel>
               {typeof form.introduction.imageUrl === 'string' && form.introduction.imageUrl.length > 0 && <View style={styles.imageView}>
                 <Image source={{ uri: form.introduction.imageUrl }} resizeMode={'contain'} style={styles.image} />
               </View>}
               <TextLabel type={'text'} style={styles.introductionText}>{form.introduction.text}</TextLabel>
             </View>}
             {stage === Stages.QUESTIONS && question && <View>
-              <TextLabel type={'text'} bold style={styles.question}>{question.label}</TextLabel>
+              <TextLabel type={'text'} bold style={styles.question} color={colors.blue.spec3}>{question.label}</TextLabel>
               {this.renderAnswer(question, index, selected)}
             </View>}
             {stage === Stages.RESULT && <View>
-              <TextLabel type={'text'} bold style={styles.resultTitle}>{i18n.t('Form.result')}</TextLabel>
+              <TextLabel type={'text'} bold style={styles.resultTitle} color={colors.blue.spec3}>{i18n.t('Form.result')}</TextLabel>
               {result.map((res, idx) => <View key={`result${idx}`} style={styles.resultDomain}>
                 {typeof res.title === 'string' && res.title.length > 0 && <TextLabel type={'text'}>{res.title}</TextLabel>}
                 {typeof res.imageUrl === 'string' && res.imageUrl.length > 0 && <View style={styles.imageView}>
@@ -288,11 +288,11 @@ class Form extends React.Component {
         </View>
         {stage !== Stages.RESULT && Array.isArray(form.questions) && <View style={styles.pagination}>
           <TouchableOpacity disabled={stage === Stages.INTRODUCTION} style={styles.paginationBtn} onPress={this.back}>
-            <IconChevron side={'left'} color={stage === Stages.INTRODUCTION ? colors.light : colors.grey} />
+            <IconChevron side={'left'} color={stage === Stages.INTRODUCTION ? colors.light : colors.blue.spec3} />
           </TouchableOpacity>
-          {stage === Stages.QUESTIONS && <TextLabel type={'text'} style={styles.paginationBtn} bold>{index+1}/{form.questions.length}</TextLabel>}
+          {stage === Stages.QUESTIONS && <TextLabel type={'text'} style={styles.paginationBtn} bold color={colors.blue.spec3}>{index+1}/{form.questions.length}</TextLabel>}
           <TouchableOpacity disabled={nextDisabled} style={styles.paginationBtn} onPress={this.next}>
-            <IconChevron side={'right'} color={nextDisabled ? colors.light : colors.grey} />
+            <IconChevron side={'right'} color={nextDisabled ? colors.light : colors.blue.spec3} />
           </TouchableOpacity>
         </View>}
         {stage === Stages.RESULT && <View style={styles.pagination}>
