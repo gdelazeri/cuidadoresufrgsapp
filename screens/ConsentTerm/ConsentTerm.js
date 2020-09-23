@@ -11,6 +11,7 @@ import CustomBtn from '../../components/CustomBtn';
 import TextLabel from '../../components/TextLabel';
 import UserService from '../../services/UserService';
 import NavigationService from '../../navigation/NavigationService';
+import colors from '../../constants/colors';
 
 const { width } = Dimensions.get('window');
 
@@ -57,7 +58,7 @@ class ConsentTerm extends React.Component {
 
   render() {
     return (
-      <Screen loading={this.state.loading} navigation={this.props.navigation} error={this.state.fetchError}>
+      <Screen loading={this.state.loading} navigation={this.props.navigation} error={this.state.fetchError} backgroundColor={colors.white}>
         <View style={{ height: Constants.statusBarHeight }} />
         <View style={styles.wrapper}>
           <WebView

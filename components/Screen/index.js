@@ -8,17 +8,24 @@ import colors from '../../constants/colors';
 import TextLabel from '../../components/TextLabel';
 import CustomBtn from '../CustomBtn';
 
-const Error = (props) => <View style={styles.center}>
+const Error = ({ reload }) => <View style={styles.center}>
   <TextLabel type='fetchError'>{i18n.t('Screen.fetchError')}</TextLabel>
-  <CustomBtn text={i18n.t('Screen.retry')} onPress={props.reload} />
+  <CustomBtn text={i18n.t('Screen.retry')} onPress={reload} />
 </View>
 
-const Screen = (props)  => <View style={styles.wrapper}>
-  {props.loading && <View style={styles.center}>
+const Screen = ({
+  loading,
+  error,
+  navigation,
+  reload,
+  backgroundColor = colors.background,
+  children,
+})  => <View style={[styles.wrapper, { backgroundColor }]}>
+  {loading && <View style={styles.center}>
     <ActivityIndicator size="large" color={colors.grey} />
   </View>}
-  {!props.loading && props.error && <Error props />}
-  {!props.loading && !props.error && props.children}
+  {!loading && error && <Error reload={reload} />}
+  {!loading && !error && children}
 </View>
 
 Screen.propTypes = {
