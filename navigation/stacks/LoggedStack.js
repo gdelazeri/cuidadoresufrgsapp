@@ -7,6 +7,7 @@ import Content from '../../screens/Contents/Content';
 import ContentList from '../../screens/Contents/ContentList';
 import Form from '../../screens/Forms/Form';
 import FormList from '../../screens/Forms/FormList';
+import Profile from '../../screens/Profile';
 
 const LoggedStack = createStackNavigator({
   Home,
@@ -14,6 +15,7 @@ const LoggedStack = createStackNavigator({
   ContentList,
   Form,
   FormList,
+  Profile,
 }, {
   initialRouteKey: 'Home',
   mode: 'card', 

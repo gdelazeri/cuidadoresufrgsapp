@@ -18,6 +18,8 @@ class Request {
 
   patch = async (path, body) => this.request('PATCH', path, body);
 
+  delete = async (path) => this.request('DELETE', path);
+
   setToken = (token) => {
     if (token) {
       this.headers.Authorization = `Bearer ${token}`;

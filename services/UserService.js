@@ -8,6 +8,10 @@ export default class UserService {
   
   static post = (payload) => Request.post('/user', payload);
   
+  static get = () => Request.get('/user');
+  
+  static delete = () => Request.delete('/user');
+  
   static getConsentTerm = (_id) => Request.get(`/user/consentTerm/${_id}`);
 
   static acceptConsentTerm = (_id) => Request.patch(`/user/consentTerm/accept/${_id}`);
