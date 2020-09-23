@@ -7,6 +7,7 @@ import {
   RefreshControl,
   ImageBackground,
   Dimensions,
+  ScrollView,
 } from 'react-native';
 import AutoHeightImage from 'react-native-auto-height-image';
 
@@ -17,6 +18,7 @@ import Screen from '../../../components/Screen';
 import TextLabel from '../../../components/TextLabel';
 import BackBtn from '../../../components/BackBtn';
 import HomeList from '../../../components/HomeList';
+import WebViewAutoHeight from '../../../components/WebViewAutoHeight';
 import i18n from '../../../i18n';
 import ContentService from '../../../services/ContentService';
 const SIMILARS_SIZE = 4;
@@ -79,6 +81,25 @@ class Content extends React.Component {
     return resp;
   }
 
+  renderHeader = (content) => <View>
+    <ImageBackground
+      source={{ uri: content.imageUrl }}
+      style={styles.image}
+    >
+      <BackBtn navigation={this.props.navigation} />
+    </ImageBackground>
+    <View style={styles.contentHeader}>
+      <TextLabel type={'titleHighlight'}>{content.title}</TextLabel>
+      <View style={styles.source}>
+        {typeof content.source === 'string' && <TextLabel type={'subtitle'}>{content.source}</TextLabel>}
+        <TextLabel type={'subtitle'}>{formatDate(content.createdAt)}</TextLabel>
+      </View>
+      {typeof content.subtitle === 'string' && <View style={styles.source}>
+        <TextLabel type={'subtitle'} bold style={styles.textSubtitle}>{content.subtitle}</TextLabel>
+      </View>}
+    </View>
+  </View>
+
   renderBody = (body) => {
     switch (body.type) {
       case 'TEXT':
@@ -105,28 +126,10 @@ class Content extends React.Component {
     return (
       <Screen loading={this.state.loading} navigation={this.props.navigation} error={this.state.fetchError} reload={this.reload} backgroundColor={colors.white}>
         <View style={{ height: Constants.statusBarHeight }} />
-        <FlatList
+        {typeof this.state.content.text !== 'string' && <FlatList
           ref={'FlatList'}
           refreshControl={<RefreshControl refreshing={this.state.refreshing} onRefresh={() => this.load(true)} />}
-          ListHeaderComponent={<View>
-            <ImageBackground
-              source={{ uri: this.state.content.imageUrl }}
-              style={styles.image}
-            >
-              <BackBtn navigation={this.props.navigation} />
-            </ImageBackground>
-          
-            <View style={styles.contentHeader}>
-              <TextLabel type={'titleHighlight'}>{this.state.content.title}</TextLabel>
-              <View style={styles.source}>
-                {typeof this.state.content.source === 'string' && <TextLabel type={'subtitle'}>{this.state.content.source}</TextLabel>}
-                <TextLabel type={'subtitle'}>{formatDate(this.state.content.createdAt)}</TextLabel>
-              </View>
-              {typeof this.state.content.subtitle === 'string' && <View style={styles.source}>
-                <TextLabel type={'subtitle'} bold style={styles.textSubtitle}>{this.state.content.subtitle}</TextLabel>
-              </View>}
-            </View>
-          </View>}
+          ListHeaderComponent={this.renderHeader(this.state.content)}
           data={this.state.content.body}
           renderItem={({ item }) => this.renderBody(item)}
           keyExtractor={(item, index) => `body${index}`}
@@ -138,7 +141,13 @@ class Content extends React.Component {
               navigation={this.props.navigation}
             />
           </View>}
-        />
+        />}
+        {typeof this.state.content.text === 'string' && <ScrollView>
+          {this.renderHeader(this.state.content)}
+          <View style={styles.contentBody}>
+            <WebViewAutoHeight html={this.state.content.text} padding={30} />
+          </View>
+        </ScrollView>}
       </Screen>
     );
   }

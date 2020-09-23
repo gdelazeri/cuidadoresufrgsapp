@@ -8,7 +8,10 @@ export default StyleSheet.create({
   },
   contentHeader: {
     paddingHorizontal: 15,
-    paddingVertical: 10,
+    paddingTop: 10,
+  },
+  contentBody: {
+    paddingHorizontal: 15,
   },
   text: {
     paddingHorizontal: 15,
@@ -25,5 +28,10 @@ export default StyleSheet.create({
   similars: {
     marginTop: 10,
     paddingVertical: 15
+  },
+  webView: {
+    flex: 1,
+    paddingHorizontal: 20,
+    minHeight: 1000,
   },
 });
