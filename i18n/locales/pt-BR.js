@@ -50,6 +50,14 @@ export default {
     error: 'Ocorreu um erro ao salvar o seu cadastro.',
     btnError: 'Ok',
   },
+  Profile: {
+    name: 'Seu nome',
+    cpf: 'CPF',
+    birthDate: 'Nascimento',
+    city: 'Cidade',
+    uf: 'Estado',
+    email: 'Seu e-mail',
+  },
   Home: {
     hi: 'Olá,',
     contents: 'Artigos',

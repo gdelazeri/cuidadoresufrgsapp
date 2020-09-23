@@ -4,6 +4,7 @@ import { View, FlatList, RefreshControl, Keyboard } from 'react-native';
 import Constants from 'expo-constants';
 
 import styles from './styles';
+import colors from '../../../constants/colors';
 import i18n from '../../../i18n';
 import Screen from '../../../components/Screen';
 import TextLabel from '../../../components/TextLabel';
@@ -67,8 +68,8 @@ class FormList extends React.Component {
       <Screen loading={this.state.loading} navigation={this.props.navigation} error={this.state.fetchError}>
         <View style={{ height: Constants.statusBarHeight }} />
         <View style={styles.header}>
-          <BackBtn navigation={this.props.navigation} />
-          <TextLabel type={'titleHighlight'}>{i18n.t('FormList.forms')}</TextLabel>
+          <BackBtn navigation={this.props.navigation} color={colors.blue.spec3} backgroundColor={colors.background} />
+          <TextLabel type={'titleHighlight'} color={colors.blue.spec3}>{i18n.t('FormList.forms')}</TextLabel>
         </View>
         <Search
           searchText={this.state.search}

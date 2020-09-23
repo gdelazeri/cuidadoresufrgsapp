@@ -13,12 +13,12 @@ const Search = ({ updateSearch, searchText }) => <SearchBar
   value={searchText}
   round={true}
   lightTheme={true}
-  containerStyle={{ backgroundColor: 'white' }}
-  inputContainerStyle={{ backgroundColor: colors.light, padding: 0, margin: 0, borderRadius: 10 }}
+  containerStyle={{ backgroundColor: colors.background }}
+  inputContainerStyle={{ backgroundColor: colors.card, padding: 0, margin: 0, borderRadius: 10 }}
   containerStyle={
     Platform.OS === 'android' ?
-    { marginLeft: 0, marginRight: 0, paddingLeft: 10, paddingRight: 10, backgroundColor: 'white' } :
-    { margin: 0, padding: 0, paddingLeft: 5, backgroundColor: 'white' }
+    { marginLeft: 0, marginRight: 0, paddingLeft: 10, paddingRight: 10, backgroundColor: colors.background } :
+    { margin: 0, padding: 0, paddingLeft: 5, backgroundColor: colors.background }
   }
   onClear={() => updateSearch('')}
   onCancel={() => updateSearch('')}

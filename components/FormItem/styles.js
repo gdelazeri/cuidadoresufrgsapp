@@ -4,7 +4,7 @@ import colors from '../../constants/colors';
 export default StyleSheet.create({
   wrapper: {
     borderRadius: 12,
-    backgroundColor: colors.light,
+    backgroundColor: colors.card,
     overflow: 'hidden',
   },
   image: {

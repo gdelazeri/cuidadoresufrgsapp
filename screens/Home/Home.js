@@ -12,6 +12,7 @@ import TextLabel from '../../components/TextLabel';
 import HomeList from '../../components/HomeList';
 import ContentService from '../../services/ContentService';
 import FormService from '../../services/FormService';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 class Home extends React.Component {
   constructor(props) {
@@ -53,10 +54,10 @@ class Home extends React.Component {
         <NavigationEvents onDidFocus={this.load} />
         <Screen loading={this.state.loading} navigation={this.props.navigation} error={this.state.fetchError} reload={this.reload}>
           <View style={{ height: Constants.statusBarHeight }} />
-          <View style={styles.header}>
+          <TouchableOpacity style={styles.header} onPress={() => this.props.navigation.navigate('Profile')} activeOpacity={0.7}>
             <TextLabel type={'title'} color={colors.blue.spec2}>{i18n.t('Home.hi')}</TextLabel>
             <TextLabel type={'titleHighlight'} color={colors.blue.spec3}>{this.props.user.name.split(' ')[0]}</TextLabel>
-          </View>
+          </TouchableOpacity>
           <HomeList
             list={this.state.forms}
             listScreen={'FormList'}
