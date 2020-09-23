@@ -3,7 +3,7 @@ import colors from '../../constants/colors';
 
 export default StyleSheet.create({
   login: {
-    height: 30,
+    height: 40,
     color: colors.blue.spec3,
     fontFamily: 'quicksand',
     fontSize: 16,
@@ -11,7 +11,7 @@ export default StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
     marginBottom: 20,
     marginTop: 20,
-    paddingBottom: 16,
+    paddingBottom: 10,
   },
   form: {
     height: 30,
