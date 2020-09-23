@@ -101,10 +101,7 @@ class Register extends React.Component {
           <View style={styles.logoView}>
             <Image
               source={require('../../assets/images/icon.png')}
-              style={{
-                height: Dimensions.get('window').height * 0.15,
-                width: Dimensions.get('window').height * 0.15,
-              }}
+              style={styles.iconImage}
               resizeMode={'contain'}
             />
           </View>

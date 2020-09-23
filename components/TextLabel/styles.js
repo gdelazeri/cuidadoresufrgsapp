@@ -26,6 +26,7 @@ export default StyleSheet.create({
     color: colors.text,
     fontFamily: 'quicksand',
     fontSize: 16,
+    lineHeight: 26,
   },
   menu: {  // text style 4
     color: colors.grey,

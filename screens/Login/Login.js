@@ -103,37 +103,39 @@ class Login extends React.Component {
       <Screen loading={this.state.loading} navigation={this.props.navigation}>
         <View style={styles.wrapper}>
           <View style={styles.form}>
-            <Image
-              source={require('../../assets/images/icon.png')}
-              style={styles.iconImage}
-            />
-            <FormTextInput
-              placeholder={i18n.t('Login.email')}
-              placeholderTextColor={colors.blue.spec3}
-              inputType={'login'}
-              value={this.state.email}
-              onChangeText={(email) => this.setState({ email })}
-              keyboardType={'email-address'}
-              autoCapitalize={'none'} 
-              textContentType={'username'}
-              onSubmitEditing={this.login}
-            />
-            <FormTextInput
-              placeholder={i18n.t('Login.password')}
-              placeholderTextColor={colors.blue.spec3}
-              inputType={'login'}
-              value={this.state.password}
-              onChangeText={(password) => this.setState({ password })}
-              keyboardType='visible-password'
-              autoCapitalize={'none'} 
-              textContentType={'password'}
-              secureTextEntry={true}
-              onSubmitEditing={this.login}
-            />
-            <View style={styles.forgotPasswordView}>
-              <TouchableOpacity onPress={() => this.props.navigation.navigate('ForgotPasswordEmail', { email: this.state.email })} activeOpacity={0.7}>
-                <TextLabel type={'subtitle'} color={colors.blue.spec3}>{i18n.t('Login.forgotPassword')}</TextLabel>
-              </TouchableOpacity>
+            <View style={styles.formContent}>
+              <Image
+                source={require('../../assets/images/icon.png')}
+                style={styles.iconImage}
+              />
+              <FormTextInput
+                placeholder={i18n.t('Login.email')}
+                placeholderTextColor={colors.blue.spec3}
+                inputType={'login'}
+                value={this.state.email}
+                onChangeText={(email) => this.setState({ email })}
+                keyboardType={'email-address'}
+                autoCapitalize={'none'} 
+                textContentType={'username'}
+                onSubmitEditing={this.login}
+              />
+              <FormTextInput
+                placeholder={i18n.t('Login.password')}
+                placeholderTextColor={colors.blue.spec3}
+                inputType={'login'}
+                value={this.state.password}
+                onChangeText={(password) => this.setState({ password })}
+                keyboardType='visible-password'
+                autoCapitalize={'none'} 
+                textContentType={'password'}
+                secureTextEntry={true}
+                onSubmitEditing={this.login}
+              />
+              <View style={styles.forgotPasswordView}>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate('ForgotPasswordEmail', { email: this.state.email })} activeOpacity={0.7}>
+                  <TextLabel type={'subtitle'} color={colors.blue.spec3}>{i18n.t('Login.forgotPassword')}</TextLabel>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
         

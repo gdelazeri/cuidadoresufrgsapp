@@ -4,11 +4,11 @@ import colors from '../../../constants/colors';
 export default StyleSheet.create({
   header: {
     paddingHorizontal: 15,
-    paddingTop: 30,
-    paddingBottom: 30,
+    marginTop: 88,
+    marginBottom: 24,
   },
   description: {
-    paddingTop: 10,
+    paddingTop: 8,
   },
   box: {
     borderWidth: 1,
@@ -17,13 +17,12 @@ export default StyleSheet.create({
     padding: 15,
     paddingVertical: 0,
     marginHorizontal: 15,
-    height: Dimensions.get('window').height * 0.5,
     backgroundColor: colors.white,
   },
   question: {
     paddingHorizontal: 15,
     marginBottom: 15,
-    marginTop: 15,
+    marginTop: 54,
   },
   introductionTitle: {
     paddingHorizontal: 15,
@@ -74,8 +73,15 @@ export default StyleSheet.create({
     borderColor: colors.light,
   },
   pagination: {
+    height: 48,
     paddingHorizontal: 20,
-    paddingVertical: 10,
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  buttons: {
+    height: 80,
+    paddingHorizontal: 20,
     justifyContent: 'space-between',
     flexDirection: 'row',
     flexWrap: 'wrap',

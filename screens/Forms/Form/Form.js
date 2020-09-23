@@ -260,53 +260,57 @@ class Form extends React.Component {
           <TextLabel type={'titleHighlight'} color={colors.blue.spec3}>{form.title}</TextLabel>
           <TextLabel type={'text'} style={styles.description}>{form.description}</TextLabel>
         </View>
-        <View style={styles.box}>
-          <ScrollView ref={'scrollView'} showsVerticalScrollIndicator={false}>
-            {stage === Stages.INTRODUCTION && <View>
-              <TextLabel type={'text'} bold style={styles.introductionTitle} color={colors.blue.spec3}>{form.introduction.title}</TextLabel>
-              {typeof form.introduction.imageUrl === 'string' && form.introduction.imageUrl.length > 0 && <View style={styles.imageView}>
-                <Image source={{ uri: form.introduction.imageUrl }} resizeMode={'contain'} style={styles.image} />
-              </View>}
-              <TextLabel type={'text'} style={styles.introductionText}>{form.introduction.text}</TextLabel>
-            </View>}
-            {stage === Stages.QUESTIONS && question && <View>
-              <TextLabel type={'text'} bold style={styles.question} color={colors.blue.spec3}>{question.label}</TextLabel>
-              {this.renderAnswer(question, index, selected)}
-            </View>}
-            {stage === Stages.RESULT && <View>
-              <TextLabel type={'text'} bold style={styles.resultTitle} color={colors.blue.spec3}>{i18n.t('Form.result')}</TextLabel>
-              {result.map((res, idx) => <View key={`result${idx}`} style={styles.resultDomain}>
-                {typeof res.title === 'string' && res.title.length > 0 && <TextLabel type={'text'}>{res.title}</TextLabel>}
-                {typeof res.imageUrl === 'string' && res.imageUrl.length > 0 && <View style={styles.imageView}>
-                  <Image source={{ uri: res.imageUrl }} resizeMode={'contain'} style={styles.image} />
+        <View style={{ flexGrow: 1 }}>
+          <View style={{ flex: 1 }}>
+            <View style={styles.box}>
+              <ScrollView ref={'scrollView'} showsVerticalScrollIndicator={false}>
+                {stage === Stages.INTRODUCTION && <View>
+                  <TextLabel type={'text'} bold style={styles.introductionTitle} color={colors.blue.spec3}>{form.introduction.title}</TextLabel>
+                  {typeof form.introduction.imageUrl === 'string' && form.introduction.imageUrl.length > 0 && <View style={styles.imageView}>
+                    <Image source={{ uri: form.introduction.imageUrl }} resizeMode={'contain'} style={styles.image} />
+                  </View>}
+                  <TextLabel type={'text'} style={styles.introductionText}>{form.introduction.text}</TextLabel>
                 </View>}
-                {typeof res.text === 'string' && res.text.length > 0 && <TextLabel type={'subtitle'}>{res.text}</TextLabel>}
-                {typeof res.classification === 'string' && res.classification.length > 0 && <TextLabel type={'subtitle'}>{res.classification}</TextLabel>}
-              </View>)}
-            </View>}
-          </ScrollView>
+                {stage === Stages.QUESTIONS && question && <View>
+                  <TextLabel type={'text'} bold style={styles.question} color={colors.blue.spec3}>{question.label}</TextLabel>
+                  {this.renderAnswer(question, index, selected)}
+                </View>}
+                {stage === Stages.RESULT && <View>
+                  <TextLabel type={'text'} bold style={styles.resultTitle} color={colors.blue.spec3}>{i18n.t('Form.result')}</TextLabel>
+                  {result.map((res, idx) => <View key={`result${idx}`} style={styles.resultDomain}>
+                    {typeof res.title === 'string' && res.title.length > 0 && <TextLabel type={'text'}>{res.title}</TextLabel>}
+                    {typeof res.imageUrl === 'string' && res.imageUrl.length > 0 && <View style={styles.imageView}>
+                      <Image source={{ uri: res.imageUrl }} resizeMode={'contain'} style={styles.image} />
+                    </View>}
+                    {typeof res.text === 'string' && res.text.length > 0 && <TextLabel type={'subtitle'}>{res.text}</TextLabel>}
+                    {typeof res.classification === 'string' && res.classification.length > 0 && <TextLabel type={'subtitle'}>{res.classification}</TextLabel>}
+                  </View>)}
+                </View>}
+              </ScrollView>
+            </View>
+          </View>
+          {stage !== Stages.RESULT && Array.isArray(form.questions) && <View style={styles.pagination}>
+            {stage !== Stages.INTRODUCTION ? <TouchableOpacity style={styles.paginationBtn} onPress={this.back}>
+              <IconChevron side={'left'} color={colors.blue.spec3} />
+            </TouchableOpacity> : <View />}
+            {stage === Stages.QUESTIONS && <TextLabel type={'text'} style={styles.paginationBtn} bold color={colors.blue.spec3}>{index+1}/{form.questions.length}</TextLabel>}
+            <TouchableOpacity disabled={nextDisabled} style={styles.paginationBtn} onPress={this.next}>
+              <IconChevron side={'right'} color={nextDisabled ? colors.light : colors.blue.spec3} />
+            </TouchableOpacity>
+          </View>}
+          {stage === Stages.RESULT && <View style={styles.buttons}>
+            <CustomBtn
+              text={i18n.t('Form.remake')}
+              width={Dimensions.get('window').width/3}
+              onPress={this.reset}
+            />
+            <CustomBtn
+              text={i18n.t('Form.finish')}
+              width={Dimensions.get('window').width/3}
+              onPress={this.finish}
+            />
+          </View>}
         </View>
-        {stage !== Stages.RESULT && Array.isArray(form.questions) && <View style={styles.pagination}>
-          <TouchableOpacity disabled={stage === Stages.INTRODUCTION} style={styles.paginationBtn} onPress={this.back}>
-            <IconChevron side={'left'} color={stage === Stages.INTRODUCTION ? colors.light : colors.blue.spec3} />
-          </TouchableOpacity>
-          {stage === Stages.QUESTIONS && <TextLabel type={'text'} style={styles.paginationBtn} bold color={colors.blue.spec3}>{index+1}/{form.questions.length}</TextLabel>}
-          <TouchableOpacity disabled={nextDisabled} style={styles.paginationBtn} onPress={this.next}>
-            <IconChevron side={'right'} color={nextDisabled ? colors.light : colors.blue.spec3} />
-          </TouchableOpacity>
-        </View>}
-        {stage === Stages.RESULT && <View style={styles.pagination}>
-          <CustomBtn
-            text={i18n.t('Form.remake')}
-            width={Dimensions.get('window').width/3}
-            onPress={this.reset}
-          />
-          <CustomBtn
-            text={i18n.t('Form.finish')}
-            width={Dimensions.get('window').width/3}
-            onPress={this.finish}
-          />
-        </View>}
       </Screen>
     );
   }

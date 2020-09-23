@@ -17,7 +17,7 @@ export default ({ html, padding = 0 }) => {
       onMessage={onWebViewMessage}
       injectedJavaScript='window.ReactNativeWebView.postMessage(document.body.scrollHeight)'
       source={{ html }}
-      style={{ width: Dimensions.get('window').width - padding, height: webViewHeight + padding }}
+      style={{ width: Dimensions.get('window').width - padding, height: webViewHeight + padding*2 }}
     />
   )
 }

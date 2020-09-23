@@ -9,12 +9,18 @@ export default StyleSheet.create({
     padding: 20,
   },
   logoView: {
-    height: Dimensions.get('window').height * 0.25,
+    paddingVertical: 60,
     alignItems: 'center',
     justifyContent: 'center',
   },
+  iconImage: {
+    resizeMode: 'contain',
+    alignSelf: 'center',
+    width: 85,
+    height: 85,
+  },
   field: {
-    marginBottom: 30,
+    marginBottom: 55,
   },
   fieldsInline: {
     flexDirection: 'row',
