@@ -5,12 +5,12 @@ export default StyleSheet.create({
   textPrimary: {
     color: '#fff',
     fontFamily: 'quicksand',
-    fontSize: 16,
+    fontSize: 15,
   },
   textSecondary: {
     color: colors.blue.spec2,
     fontFamily: 'quicksand',
-    fontSize: 16,
+    fontSize: 15,
   },
   btnPrimary: {
     height: 40,

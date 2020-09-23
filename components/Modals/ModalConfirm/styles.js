@@ -1,19 +1,20 @@
 import { StyleSheet, Dimensions } from 'react-native';
+const overlayWidth = Dimensions.get('window').width * 0.75 - 40;
 
 export default StyleSheet.create({
   overlay: {
-    padding: 10,
+    padding: 20,
     alignItems: 'center',
     justifyContent: 'center',
   },
   text: {
-    marginBottom: 15,
+    marginBottom: 20,
   },
   twoButtons: {
-    width: '100%',
+    width: overlayWidth,
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
   },
   oneButton: {
     width: Dimensions.get('window').width * 0.7 - 10,

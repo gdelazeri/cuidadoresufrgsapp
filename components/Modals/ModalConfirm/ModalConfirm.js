@@ -9,14 +9,17 @@ import TextLabel from '../../TextLabel';
 import CustomBtn from '../../CustomBtn';
 
 const btnWidth = (Dimensions.get('window').width * 0.7 / 2) - 20;
+const overlayWidth = Dimensions.get('window').width * 0.75;
 
 const ModalConfirm = ({
   modalConfirm,
   setModalConfirm,
 }) => (
-  <Overlay height={'auto'} isVisible={Object.keys(modalConfirm).length > 0} width={Dimensions.get('window').width * 0.7} overlayStyle={styles.overlay}>
+  <Overlay height={'auto'} isVisible={Object.keys(modalConfirm).length > 0} width={overlayWidth} overlayStyle={styles.overlay}>
     <View>
-      <TextLabel type={'label'} textCenter style={styles.text}>{modalConfirm.text || i18n.t('ModalConfirm.text')}</TextLabel>
+      <View style={styles.text}>
+        <TextLabel type={'text'} textCenter>{modalConfirm.text || i18n.t('ModalConfirm.text')}</TextLabel>
+      </View>
       {modalConfirm.btnSuccess && modalConfirm.btnCancel && <View style={styles.twoButtons}>
         <CustomBtn
           secondary
