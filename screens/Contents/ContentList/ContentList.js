@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { View, FlatList, RefreshControl, Keyboard } from 'react-native';
+import { ActivityIndicator, View, FlatList, RefreshControl, Keyboard } from 'react-native';
 import Constants from 'expo-constants';
 
 import styles from './styles';
@@ -13,6 +13,7 @@ import BackBtn from '../../../components/BackBtn';
 import Search from '../../../components/Search';
 import ContentService from '../../../services/ContentService';
 const WAIT_INTERVAL = 400;  // ms
+const PAGE_SIZE = 15;
 
 class ContentList extends React.Component {
   constructor(props) {
@@ -21,6 +22,9 @@ class ContentList extends React.Component {
       loading: true,
       fetchError: false,
       refreshing: false,
+      page: 0,
+      hasMore: false,
+      loadingMore: false,
       contents: [],
       search: '',
     }
@@ -37,15 +41,34 @@ class ContentList extends React.Component {
 
   load = async (refreshing = false) => {
     this.setState({ refreshing });
-    const { search } = this.state;
-    const response = await ContentService.listAll(search);
+    const { search, page } = this.state;
+    const response = await ContentService.list(page, PAGE_SIZE, search);
     if (response.success) {
-      const contents = response.result;
-      this.setState({ contents, refreshing: false, loading: false, fetchError: false });
+      this.setState((prevState) => ({
+        contents: refreshing ? [...response.result] : [...prevState.contents, ...response.result],
+        hasMore: response.result.length === PAGE_SIZE,
+        loading: false,
+        refreshing: false,
+        fetchError: false,
+        loadingMore: false,
+      }));
     } else {
-      this.setState({ refreshing: false, loading: false, fetchError: false });
+      this.setState({ refreshing: false, loading: false, fetchError: false, loadingMore: false });
     }
   }
+
+  loadMore = () => {
+    const { loadingMore, hasMore } = this.state;
+    if (!loadingMore && hasMore) {
+      this.setState(
+        (prevState) => ({
+          loadingMore: true,
+          page: prevState.page + 1,
+        }),
+        this.load,
+      );
+    }
+  };
   
   async updateSearch(search) {
     clearTimeout(this.timer);
@@ -55,12 +78,22 @@ class ContentList extends React.Component {
       Keyboard.dismiss();
     } else {
       this.timer = setTimeout(async () => {
-        const response = await ContentService.listAll(search);
+        const page = 1;
+        const response = await ContentService.list(page, PAGE_SIZE, search);
         if (response.success) {
-          this.setState({ contents: response.result });
+          this.setState({ page, contents: response.result, hasMore: response.result.length === PAGE_SIZE });
         }
       }, WAIT_INTERVAL);
     }
+  }
+
+  renderLoaderMore = () => this.state.loadingMore && <View style={styles.inlineCenter}>
+    <ActivityIndicator color={colors.grey} />
+    <TextLabel type={'subtitle'} style={styles.loadingMoreText}>{i18n.t('ContentList.loadingMore')}</TextLabel>
+  </View>
+
+  refresh = () => {
+    this.setState({ page: 0 }, () => this.load(true));
   }
 
   render() {
@@ -76,7 +109,7 @@ class ContentList extends React.Component {
           updateSearch={(search) => this.updateSearch(search)}
         />
         <FlatList
-          refreshControl={<RefreshControl refreshing={this.state.refreshing} onRefresh={() => this.load(true)} />}
+          refreshControl={<RefreshControl refreshing={this.state.refreshing} onRefresh={this.refresh} />}
           data={this.state.contents}
           contentContainerStyle={styles.list}
           renderItem={({ item }) => <ContentItem item={item} onPress={() => this.props.navigation.navigate('Content', { _id: item._id })} />}
@@ -85,6 +118,9 @@ class ContentList extends React.Component {
           ListEmptyComponent={() => <View style={styles.center}>
             <TextLabel type={'subtitle'} textCenter>{i18n.t('ContentList.empty')}</TextLabel>
           </View>}
+          onEndReached={this.loadMore}
+          onEndReachedThreshold={0.1}
+          ListFooterComponent={this.renderLoaderMore}
         />
       </Screen>
     );

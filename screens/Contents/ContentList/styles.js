@@ -16,5 +16,13 @@ export default StyleSheet.create({
   center: {
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  inlineCenter: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+  },
+  loadingMoreText: {
+    marginLeft: 8,
   }
 });

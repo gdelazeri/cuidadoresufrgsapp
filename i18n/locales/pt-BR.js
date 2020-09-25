@@ -90,6 +90,7 @@ export default {
   FormList: {
     forms: 'Testes',
     empty: 'Nenhum conteúdo foi encontrado',
+    loadingMore: 'Carregando mais...'
   },
   Form: {
     result: 'Resultado',
@@ -101,6 +102,7 @@ export default {
   ContentList: {
     contents: 'Artigos',
     empty: 'Nenhum conteúdo foi encontrado',
+    loadingMore: 'Carregando mais...'
   },
   Content: {
     similars: 'Conteúdos Relacionados',
