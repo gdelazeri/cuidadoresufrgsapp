@@ -6,6 +6,7 @@ export default StyleSheet.create({
     borderRadius: 12,
     backgroundColor: colors.card,
     overflow: 'hidden',
+    width: Dimensions.get('window').width - 40,
   },
   image: {
     resizeMode: 'cover',
