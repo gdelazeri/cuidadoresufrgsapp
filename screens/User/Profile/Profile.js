@@ -134,22 +134,24 @@ class Profile extends React.Component {
                   <TextLabel type={'subtitle'} color={colors.blue.spec3}>{i18n.t('Profile.birthDate')}</TextLabel>
                   <TextLabel type={'text'} color={colors.blue.spec3}>{formatDate(this.state.user.birthDate)}</TextLabel>
                 </View>
-                <View style={styles.field}>
-                  <TextLabel type={'subtitle'} color={colors.blue.spec3}>{i18n.t('Profile.city')}</TextLabel>
-                  <TextLabel type={'text'} color={colors.blue.spec3}>{this.state.user.city}</TextLabel>
-                </View>
-                <View style={styles.field}>
-                  <TextLabel type={'subtitle'} color={colors.blue.spec3}>{i18n.t('Profile.uf')}</TextLabel>
-                  <TextLabel type={'text'} color={colors.blue.spec3}>{this.state.user.uf}</TextLabel>
+                <View style={styles.fieldsInline}>
+                  <View style={styles.field70}>
+                    <TextLabel type={'subtitle'} color={colors.blue.spec3}>{i18n.t('Profile.city')}</TextLabel>
+                    <TextLabel type={'text'} color={colors.blue.spec3}>{this.state.user.city}</TextLabel>
+                  </View>
+                  <View style={styles.field30}>
+                    <TextLabel type={'subtitle'} color={colors.blue.spec3}>{i18n.t('Profile.uf')}</TextLabel>
+                    <TextLabel type={'text'} color={colors.blue.spec3}>{this.state.user.uf}</TextLabel>
+                  </View>
                 </View>
               </View>
-              <View style={styles.field}>
+              <View style={styles.fieldBtn}>
                 <CustomBtn
                   text={i18n.t('Profile.changePassword')}
-                  onPress={this.logoutPress}
+                  onPress={() => this.props.navigation.navigate('ChangePassword')}
                 />
               </View>
-              <View style={styles.field}>
+              <View style={styles.fieldBtn}>
                 <CustomBtn
                   text={i18n.t('Profile.logout')}
                   onPress={this.logoutPress}

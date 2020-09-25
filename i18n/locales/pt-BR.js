@@ -74,6 +74,13 @@ export default {
     btnError: 'Ok',
     btnSave: 'Salvar',
   },
+  ChangePassword: {
+    password: 'Informe a nova senha',
+    passwordConfirm: 'Repita a nova senha',
+    saveError: 'Erro ao alterar senha',
+    btnError: 'Ok',
+    btnSave: 'Salvar',
+  },
   Home: {
     hi: 'Olá,',
     contents: 'Artigos',

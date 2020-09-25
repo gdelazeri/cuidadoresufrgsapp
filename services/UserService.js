@@ -10,6 +10,8 @@ export default class UserService {
 
   static put = (payload) => Request.put('/user', payload);
   
+  static changePassword = (password) => Request.patch('/user/password', { password });
+  
   static get = () => Request.get('/user');
   
   static delete = () => Request.delete('/user');

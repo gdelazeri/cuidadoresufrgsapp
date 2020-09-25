@@ -29,15 +29,15 @@ export default StyleSheet.create({
   },
   field30: {
     width: '28%',
-    marginBottom: 30,
+    marginBottom: 55,
   },
   field70: {
     width: '68%',
-    marginBottom: 30,
+    marginBottom: 55,
   },
   field50: {
     width: '48%',
-    marginBottom: 30,
+    marginBottom: 55,
   },
   passwordRules: {
     marginBottom: 20,

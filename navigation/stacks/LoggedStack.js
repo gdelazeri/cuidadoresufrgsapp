@@ -9,6 +9,7 @@ import Form from '../../screens/Forms/Form';
 import FormList from '../../screens/Forms/FormList';
 import Profile from '../../screens/User/Profile';
 import ProfileEdit from '../../screens/User/ProfileEdit';
+import ChangePassword from '../../screens/User/ChangePassword';
 
 const LoggedStack = createStackNavigator({
   Home,
@@ -18,6 +19,7 @@ const LoggedStack = createStackNavigator({
   FormList,
   Profile,
   ProfileEdit,
+  ChangePassword,
 }, {
   initialRouteKey: 'Home',
   mode: 'card', 
