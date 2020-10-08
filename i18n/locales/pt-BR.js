@@ -140,6 +140,10 @@ export default {
     passwordUpdated: 'Senha atualizada com sucesso!',
     btnLogin: 'Ok',
   },
+  NeedUpdate: {
+    text: 'Seu aplicativo está desatualizado!',
+    btnUpdate: 'Atualizar'
+  },
   date: {
     jan: 'Janeiro',
     feb: 'Fevereiro',

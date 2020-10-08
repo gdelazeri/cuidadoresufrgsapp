@@ -35,7 +35,6 @@ class Request {
         body: JSON.stringify(body),
         headers: this.headers,
       })
-
       if (resp && resp.ok) {
         const response = await resp.json();
         return response;

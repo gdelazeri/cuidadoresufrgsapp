@@ -39,15 +39,11 @@ class Profile extends React.Component {
   }
 
   loadUser = async () => {
-    try {
-      const response = await UserService.get();
-      if (response.success) {
-        this.setState({ loading: false, user: response.result });
-      } else {
-        this.setState({ loading: false, fetchError: true });
-      }
-    } catch (e) {
-      console.log(e);
+    const response = await UserService.get();
+    if (response.success) {
+      this.setState({ loading: false, user: response.result });
+    } else {
+      this.setState({ loading: false, fetchError: true });
     }
   }
 

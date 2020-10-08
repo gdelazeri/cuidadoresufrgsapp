@@ -6,6 +6,7 @@ import {
   Image,
 } from 'react-native';
 import jwtDecode from 'jwt-decode';
+import Constants from 'expo-constants';
 
 import styles from './styles';
 import i18n from '../../i18n';
@@ -18,6 +19,7 @@ import CustomBtn from '../../components/CustomBtn';
 import UserService from '../../services/UserService';
 import NavigationService from '../../navigation/NavigationService';
 import isEmailValid from '../../utils/isEmailValid';
+import AppSettingService from '../../services/AppSettingService';
 
 class Login extends React.Component {
   constructor(props) {
@@ -35,8 +37,13 @@ class Login extends React.Component {
     header: null,
   }
 
-  componentDidMount = () => {
-    this.loginToken();
+  componentDidMount = async () => {
+    const response = await AppSettingService.needUpdate(Constants.manifest.version);
+    if (response.success && response.result) {
+      NavigationService.reset('NeedUpdateNavigator');
+    } else {
+      this.loginToken();
+    }
   }
 
   loginToken = async () => {

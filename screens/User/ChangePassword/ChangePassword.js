@@ -46,7 +46,6 @@ class ChangePassword extends React.Component {
       this.props.navigation.goBack();
     } else {
       let error = i18n.t('ChangePassword.saveError');
-      console.log(response);
       if (Array.isArray(response.errors) && response.errors.length > 0) {
         error = response.errors.map((err) => i18n.t('ModalError.errorCodeMessage', { code: err.code, message: err.message })).join('\n');
       }
