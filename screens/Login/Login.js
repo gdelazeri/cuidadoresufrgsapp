@@ -7,6 +7,8 @@ import {
 } from 'react-native';
 import jwtDecode from 'jwt-decode';
 import Constants from 'expo-constants';
+import { Notifications } from 'expo';
+import * as Permissions from 'expo-permissions';
 
 import styles from './styles';
 import i18n from '../../i18n';
@@ -46,6 +48,24 @@ class Login extends React.Component {
     }
   }
 
+  getNotificationToken = async (userId) => {
+    try {
+      const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+      let finalStatus = existingStatus;
+      if (existingStatus !== 'granted') {
+        const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+        finalStatus = status;
+      }
+      if (finalStatus !== 'granted') {
+        return;
+      }
+      const notificationToken = await Notifications.getExpoPushTokenAsync();
+      await UserService.put({ _id: userId, notificationToken })
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   loginToken = async () => {
     const token = await UserService.getToken();
     if (token) {
@@ -56,6 +76,7 @@ class Login extends React.Component {
         Request.setToken(response.result.token);
         const user = jwtDecode(response.result.token);
         this.props.setUser(user);
+        await this.getNotificationToken(user._id);
         this.setState({ loading: false });
         if (response.result.consentTermAcceptedAt) {
           NavigationService.reset('LoggedNavigator');
@@ -86,6 +107,7 @@ class Login extends React.Component {
       Request.setToken(response.result.token);
       const user = jwtDecode(response.result.token);
       this.props.setUser(user);
+      await this.getNotificationToken(user._id);
       this.setState({ processing: false });
       if (response.result.consentTermAcceptedAt) {
         NavigationService.reset('LoggedNavigator');
