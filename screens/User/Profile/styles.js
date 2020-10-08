@@ -49,5 +49,10 @@ export default StyleSheet.create({
   },
   remove: {
     marginBottom: 15,
+  },
+  version: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    paddingBottom: 10,
   }
 });

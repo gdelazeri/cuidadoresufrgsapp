@@ -158,6 +158,9 @@ class Profile extends React.Component {
                   <TextLabel textCenter type={'text'} color={colors.light}>{i18n.t('Profile.remove')}</TextLabel>
                 </TouchableOpacity>
               </View>
+              <View style={styles.version}>
+                <TextLabel type={'subtitle'}>v{Constants.manifest.version}</TextLabel>
+              </View>
             </View>
           </ScrollView>
         </Screen>
