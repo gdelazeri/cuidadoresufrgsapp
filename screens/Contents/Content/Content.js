@@ -138,6 +138,7 @@ class Content extends React.Component {
               list={this.state.similars}
               title={i18n.t('Content.similars')}
               seeAll={false}
+              itemScreen={'Content'}
               navigation={this.props.navigation}
             />
           </View>}
@@ -147,6 +148,15 @@ class Content extends React.Component {
           <View style={styles.contentBody}>
             <WebViewAutoHeight html={this.state.content.text} padding={30} />
           </View>
+          {this.state.similars.length > 0 && <View style={styles.similars}>
+            <HomeList
+              list={this.state.similars}
+              title={i18n.t('Content.similars')}
+              seeAll={false}
+              itemScreen={'Content'}
+              navigation={this.props.navigation}
+            />
+          </View>}
         </ScrollView>}
       </Screen>
     );
