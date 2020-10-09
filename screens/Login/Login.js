@@ -154,7 +154,6 @@ class Login extends React.Component {
                 inputType={'login'}
                 value={this.state.password}
                 onChangeText={(password) => this.setState({ password })}
-                keyboardType='visible-password'
                 autoCapitalize={'none'} 
                 textContentType={'password'}
                 secureTextEntry={true}
