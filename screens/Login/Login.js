@@ -1,14 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  View,
-  TouchableOpacity,
-  Image,
-} from 'react-native';
+import { Image, Keyboard, View, TouchableOpacity, Platform, Animated, Easing, TouchableWithoutFeedback } from 'react-native';
 import jwtDecode from 'jwt-decode';
 import Constants from 'expo-constants';
 import { Notifications } from 'expo';
 import * as Permissions from 'expo-permissions';
+import KeyboardSpacer from 'react-native-keyboard-spacer';
 
 import styles from './styles';
 import i18n from '../../i18n';
@@ -29,6 +26,7 @@ class Login extends React.Component {
     this.state = {
       loading: true,
       processing: false,
+      animatedValue: new Animated.Value(0),
       email: '',
       password: '',
     }
@@ -127,59 +125,83 @@ class Login extends React.Component {
     }
   }
 
+  onKeyboardToggle = (active) => {
+    if (Platform.OS === 'ios') {
+      Animated.spring(this.state.animatedValue, {
+        toValue: active ? -112 : 0,
+        duration: 250,
+      }).start();
+    } else {
+      Animated.timing(this.state.animatedValue, {
+        toValue: active ? -112 : 0,
+        duration: 100,
+        easing: Easing.ease,
+        delay: 0,
+      }).start();
+    }
+  }
+
   render() {
     return (
       <Screen loading={this.state.loading} navigation={this.props.navigation}>
-        <View style={styles.wrapper}>
-          <View style={styles.form}>
-            <View style={styles.formContent}>
-              <Image
-                source={require('../../assets/images/icon.png')}
-                style={styles.iconImage}
-              />
-              <FormTextInput
-                placeholder={i18n.t('Login.email')}
-                placeholderTextColor={colors.blue.spec3}
-                inputType={'login'}
-                value={this.state.email}
-                onChangeText={(email) => this.setState({ email })}
-                keyboardType={'email-address'}
-                autoCapitalize={'none'} 
-                textContentType={'username'}
-                onSubmitEditing={this.login}
-              />
-              <FormTextInput
-                placeholder={i18n.t('Login.password')}
-                placeholderTextColor={colors.blue.spec3}
-                inputType={'login'}
-                value={this.state.password}
-                onChangeText={(password) => this.setState({ password })}
-                autoCapitalize={'none'} 
-                textContentType={'password'}
-                secureTextEntry={true}
-                onSubmitEditing={this.login}
-              />
-              <View style={styles.forgotPasswordView}>
-                <TouchableOpacity onPress={() => this.props.navigation.navigate('ForgotPasswordEmail', { email: this.state.email })} activeOpacity={0.7}>
-                  <TextLabel type={'subtitle'} color={colors.blue.spec3}>{i18n.t('Login.forgotPassword')}</TextLabel>
-                </TouchableOpacity>
+        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+          <View style={styles.wrapper}>
+            <View style={styles.form}>
+              <Animated.View style={{ marginTop: this.state.animatedValue }}>
+                <View style={styles.logoView}>
+                  <Image
+                    source={require('../../assets/images/icon.png')}
+                    style={styles.iconImage}
+                    inputType={'login'}
+                    resizeMode={'contain'}
+                  />
+                </View>
+              </Animated.View>
+              <View style={styles.formContent}>
+                <FormTextInput
+                  placeholder={i18n.t('Login.email')}
+                  placeholderTextColor={colors.blue.spec3}
+                  value={this.state.email}
+                  onChangeText={(email) => this.setState({ email })}
+                  keyboardType={'email-address'}
+                  autoCapitalize={'none'} 
+                  textContentType={'username'}
+                  onSubmitEditing={this.login}
+                />
+                <FormTextInput
+                  placeholder={i18n.t('Login.password')}
+                  placeholderTextColor={colors.blue.spec3}
+                  inputType={'login'}
+                  value={this.state.password}
+                  onChangeText={(password) => this.setState({ password })}
+                  autoCapitalize={'none'} 
+                  textContentType={'password'}
+                  secureTextEntry={true}
+                  onSubmitEditing={this.login}
+                />
+                <View style={styles.forgotPasswordView}>
+                  <TouchableOpacity onPress={() => this.props.navigation.navigate('ForgotPasswordEmail', { email: this.state.email })} activeOpacity={0.7}>
+                    <TextLabel type={'subtitle'} color={colors.blue.spec3}>{i18n.t('Login.forgotPassword')}</TextLabel>
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
+          
+            <View style={styles.btnCenter}>
+              <CustomBtn
+                text={i18n.t('Login.btnContinue')}
+                onPress={this.login}
+                loading={this.state.processing}
+                disabled={!(isEmailValid(this.state.email) && this.state.password.length > 0)}
+              />
+              <TouchableOpacity onPress={() => this.props.navigation.navigate('Register')} style={{ marginTop: 30 }} activeOpacity={0.7}>
+                <TextLabel textCenter type={'subtitle'} color={colors.light}>{i18n.t('Login.firstAccess')}</TextLabel>
+                <TextLabel textCenter type={'subtitle'} color={colors.light} style={styles.clickHere}>{i18n.t('Login.firstAccessClickHere')}</TextLabel>
+              </TouchableOpacity>
+            </View>
+            <KeyboardSpacer onToggle={this.onKeyboardToggle} />
           </View>
-        
-          <View style={styles.btnCenter}>
-            <CustomBtn
-              text={i18n.t('Login.btnContinue')}
-              onPress={this.login}
-              loading={this.state.processing}
-              disabled={!(isEmailValid(this.state.email) && this.state.password.length > 0)}
-            />
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('Register')} style={{ marginTop: 30 }} activeOpacity={0.7}>
-              <TextLabel textCenter type={'subtitle'} color={colors.light}>{i18n.t('Login.firstAccess')}</TextLabel>
-              <TextLabel textCenter type={'subtitle'} color={colors.light} style={styles.clickHere}>{i18n.t('Login.firstAccessClickHere')}</TextLabel>
-            </TouchableOpacity>
-          </View>
-        </View>
+        </TouchableWithoutFeedback>
       </Screen>
     );
   }

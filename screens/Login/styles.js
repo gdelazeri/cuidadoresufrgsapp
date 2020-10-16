@@ -14,7 +14,12 @@ export default StyleSheet.create({
     alignSelf: 'center',
     width: 85,
     height: 85,
-    marginTop: -50,
+    // marginTop: -50,
+  },
+  logoView: {
+    paddingVertical: 60,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   form: {
     width: '100%',
