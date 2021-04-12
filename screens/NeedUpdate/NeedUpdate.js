@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { View, Image, Platform, Linking } from 'react-native';
+import { View, Image, Platform } from 'react-native';
+import * as Linking from 'expo-linking'
 
 import styles from './styles';
 import i18n from '../../i18n';

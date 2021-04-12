@@ -167,6 +167,7 @@ class Login extends React.Component {
                   autoCapitalize={'none'} 
                   textContentType={'username'}
                   onSubmitEditing={this.login}
+                  inputType={'login'}
                 />
                 <FormTextInput
                   placeholder={i18n.t('Login.password')}

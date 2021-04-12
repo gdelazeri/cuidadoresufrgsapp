@@ -4,7 +4,7 @@ import colors from '../../../constants/colors';
 export default StyleSheet.create({
   header: {
     paddingHorizontal: 15,
-    marginTop: 88,
+    marginTop: 8,
     marginBottom: 24,
   },
   description: {
