@@ -31,6 +31,7 @@
     "expo-linking": "~2.0.1",
     "expo-localization": "~9.1.0",
     "expo-media-library": "~10.0.0",
+    "expo-notifications": "~0.8.2",
     "expo-permissions": "~10.0.0",
     "expo-splash-screen": "~0.8.1",
     "i18n-js": "3.7.1",

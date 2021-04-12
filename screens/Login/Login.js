@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Image, Keyboard, View, TouchableOpacity, Platform, Animated, Easing, TouchableWithoutFeedback } from 'react-native';
 import jwtDecode from 'jwt-decode';
 import Constants from 'expo-constants';
-import { Notifications } from 'expo';
+import * as Notifications from 'expo-notifications'
 import * as Permissions from 'expo-permissions';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 
