@@ -6,7 +6,7 @@
       "ios",
       "android"
     ],
-    "version": "0.1.0",
+    "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "ami",
@@ -24,11 +24,11 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "buildNumber": "00010000",
+      "buildNumber": "10000000",
       "bundleIdentifier": "br.ufrgs.ami"
     },
     "android": {
-      "versionCode": 10000,
+      "versionCode": 10000000,
       "package": "br.ufrgs.ami"
     }
   }
